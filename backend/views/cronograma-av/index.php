@@ -9,7 +9,7 @@ use backend\models\CronogramaAv;
 /* @var $searchModel backend\models\CronogramaAvSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cronograma Avs';
+$this->title = 'Avance de Cronograma';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cronograma-av-index">
