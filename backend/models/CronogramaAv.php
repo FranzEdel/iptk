@@ -20,7 +20,9 @@ use Yii;
  * @property int $oct
  * @property int $nov
  * @property int $dic
- * @property int $total
+ * @property int $programados
+ * @property string $total
+ * @property string $avance
  * @property int $recursos_h
  * @property int $actividad
  *
@@ -43,7 +45,8 @@ class CronogramaAv extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'total', 'recursos_h', 'actividad'], 'integer'],
+            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'recursos_h', 'actividad'], 'integer'],
+            [['total', 'avance'], 'number'],
             [['recursos_h', 'actividad'], 'required'],
             [['actividad'], 'exist', 'skipOnError' => true, 'targetClass' => Actividades::className(), 'targetAttribute' => ['actividad' => 'id_a']],
             [['recursos_h'], 'exist', 'skipOnError' => true, 'targetClass' => RecursosHumanos::className(), 'targetAttribute' => ['recursos_h' => 'id_rh']],
@@ -57,33 +60,24 @@ class CronogramaAv extends \yii\db\ActiveRecord
     {
         return [
             'id_ca' => 'Id Ca',
-            'ene' => 'Enero',
-            'feb' => 'Febrero',
-            'mar' => 'Marzo',
-            'abr' => 'Abril',
-            'may' => 'Mayo',
-            'jun' => 'Junio',
-            'jul' => 'Julio',
-            'ago' => 'Agosto',
-            'sep' => 'Septiembre',
-            'oct' => 'Octubre',
-            'nov' => 'Noviembre',
-            'dic' => 'Diciembre',
+            'ene' => 'Ene',
+            'feb' => 'Feb',
+            'mar' => 'Mar',
+            'abr' => 'Abr',
+            'may' => 'May',
+            'jun' => 'Jun',
+            'jul' => 'Jul',
+            'ago' => 'Ago',
+            'sep' => 'Sep',
+            'oct' => 'Oct',
+            'nov' => 'Nov',
+            'dic' => 'Dic',
+            'programados' => 'Programados',
             'total' => 'Total',
+            'avance' => 'Avance',
             'recursos_h' => 'Recursos H',
             'actividad' => 'Actividad',
         ];
-    }
-
-    public function getAvance()
-    {
-        $cont = 0;
-        
-        if($this->ene > 0){
-            $cont = $cont + 1;
-        }
-
-        return $cont;
     }
 
     /**

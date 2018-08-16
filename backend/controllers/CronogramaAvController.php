@@ -67,10 +67,12 @@ class CronogramaAvController extends Controller
         $model = new CronogramaAv();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->total = $model->ene + $model->feb + $model->mar + $model->abr + 
+            $model->programados = $this->contProgramadosUp($model);
+            $model->total = ($model->ene + $model->feb + $model->mar + $model->abr + 
                             $model->may + $model->jun + $model->jul + $model->ago + 
-                            $model->sep + $model->oct + $model->nov + $model->dic;
-            $model->total = $model->total / CantPro();
+                            $model->sep + $model->oct + $model->nov + $model->dic);
+            $model->avance = $this->calAvance($model);
+            
             $model->save();
             return $this->redirect(['view', 'id' => $model->id_ca]);
         }
@@ -80,10 +82,16 @@ class CronogramaAvController extends Controller
         ]);
     }
 
-    public function CantPro()
-    {
+    public function calAvance($model){
+        if($model->programados == 0){
+            return 0;
+        } else{
+            return $model->total / $model->programados;
+        }
+    }
+
+    public function contProgramadosUp($model){
         $cont = 0;
-        $model = new CronogramaAv();
 
         if($model->ene > 0){
             $cont++;
@@ -123,6 +131,7 @@ class CronogramaAvController extends Controller
         }
 
         return $cont;
+
     }
 
     /**
@@ -137,9 +146,12 @@ class CronogramaAvController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->total = $model->ene + $model->feb + $model->mar + $model->abr + 
+            $model->programados = $this->contProgramadosUp($model);
+            $model->total = ($model->ene + $model->feb + $model->mar + $model->abr + 
                             $model->may + $model->jun + $model->jul + $model->ago + 
-                            $model->sep + $model->oct + $model->nov + $model->dic;
+                            $model->sep + $model->oct + $model->nov + $model->dic);
+            $model->avance = $this->calAvance($model);
+            
             $model->save();
             return $this->redirect(['view', 'id' => $model->id_ca]);
         }

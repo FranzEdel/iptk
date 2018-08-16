@@ -149,15 +149,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
             ],
-            'total',
+            //'programados',
+            //'total',
+            [
+                'attribute' => 'avance',
+                'value' => function($model){
+                    return "{$model->avance}%";
+                },
+                'contentOptions' => function($model){
+                                        return [
+                                            'class' => 'progress-bar progress-bar-success progress-bar-striped',
+                                            'style' => [
+                                                'width' => "{$model->avance}%",
+                                            ],
+                                        ];
+                                    },
+            ],
             //'recursos_h',
             //'actividad',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-</div>
-
-<div>
-    <?= CronogramaAv::instance()->getAvance(); ?>
 </div>
