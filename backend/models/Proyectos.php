@@ -47,9 +47,9 @@ class Proyectos extends \yii\db\ActiveRecord
     {
         return [
             'id_p' => 'Id P',
-            'nombre_p' => 'Nombre P',
+            'nombre_p' => 'Nombre del Proyecto',
             'objetivo_general' => 'Objetivo General',
-            'fecha_ini' => 'Fecha Ini',
+            'fecha_ini' => 'Fecha Inicio',
             'fecha_fin' => 'Fecha Fin',
             'estado' => 'Estado',
         ];

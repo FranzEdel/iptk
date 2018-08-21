@@ -25,12 +25,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_p',
-            'nombre_p',
-            'objetivo_general:ntext',
+            //'id_p',
+            [
+                'attribute' => 'nombre_p',
+                'contentOptions' => [
+                    'style' => [
+                        'max-width' => '400px',
+                        'white-space' => 'normal',
+                    ],
+                ],
+            ],
+            [
+                'attribute' => 'objetivo_general',
+                'contentOptions' => [
+                    'style' => [
+                        'max-width' => '700px',
+                        'white-space' => 'normal',
+                    ],
+                ],
+            ],
+            
             'fecha_ini',
             'fecha_fin',
-            //'estado',
+            'estado',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

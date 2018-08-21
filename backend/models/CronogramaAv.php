@@ -80,6 +80,18 @@ class CronogramaAv extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getTotalAvance(){
+        $query = (new \yii\db\Query())->from('cronograma_a');
+        $ava = $query->average('avance');
+        return number_format($ava, 2);
+    }
+
+    public function getPor(){
+        $query = (new \yii\db\Query())->from('cronograma_a');
+        $ava = $query->average('avance');
+        return number_format($ava, 2) . ' %';
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

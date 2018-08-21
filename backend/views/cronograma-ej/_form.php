@@ -14,29 +14,60 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'item')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ene')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-lg-2">
+            <?= $form->field($model, 'ene')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'feb')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'feb')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'mar')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'mar')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'abr')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'abr')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'may')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'may')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'jun')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'jun')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'jul')->textInput(['maxlength' => true]) ?>
+    </div>
 
-    <?= $form->field($model, 'ago')->textInput(['maxlength' => true]) ?>
+    <div class="row">
 
-    <?= $form->field($model, 'sep')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'jul')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'oct')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'ago')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'nov')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'sep')->textInput(['maxlength' => true]) ?>
+        </div>
 
-    <?= $form->field($model, 'dic')->textInput(['maxlength' => true]) ?>
+        <div class="col-lg-2">
+            <?= $form->field($model, 'oct')->textInput(['maxlength' => true]) ?>
+        </div>
+
+        <div class="col-lg-2">
+            <?= $form->field($model, 'nov')->textInput(['maxlength' => true]) ?>
+        </div>
+
+        <div class="col-lg-2">
+            <?= $form->field($model, 'dic')->textInput(['maxlength' => true]) ?>
+        </div>
+
+    </div>
 
     <?= $form->field($model, 'recursos_h')->textInput() ?>
 

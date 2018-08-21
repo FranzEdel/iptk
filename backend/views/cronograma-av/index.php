@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 use backend\models\CronogramaAv;
+use backend\models\Actividades;
+use yii\bootstrap\Progress;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\CronogramaAvSearch */
@@ -23,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id_ca',
+            'actividad0.nombre',
             [
                 'attribute' => 'ene',
                 'label' => 'Ene',
@@ -161,6 +163,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'class' => 'progress-bar progress-bar-success progress-bar-striped',
                                             'style' => [
                                                 'width' => "{$model->avance}%",
+                                                'font-weight' => 'bold',
+                                                'color' => 'black',
                                             ],
                                         ];
                                     },
@@ -171,4 +175,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+</div>
+
+
+<h4>Avance General del Proyecto</h4>
+<div>
+    <?php
+         echo Progress::widget([
+            'label' => CronogramaAv::getPor(),
+            'percent' => CronogramaAv::getTotalAvance(),
+            'barOptions' => ['class' => 'progress-bar-success'],
+            'options' => [
+                    'class' => 'progress-striped',
+                    'style' => [
+                        'font-weight' => 'bold',
+                        'color' => 'black',
+                    ],  
+                ]
+        ]); 
+    ?>
 </div>
