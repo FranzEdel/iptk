@@ -1,5 +1,2 @@
 <?php
-
-    echo "Hola desde objetivos " . $model;
-
-?>
+print_r ($model);

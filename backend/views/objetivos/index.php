@@ -42,11 +42,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                 },
             ],
-
-            'nombre:ntext',
-            'indicador:ntext',
+            [
+                'attribute' => 'nombre',
+                'contentOptions' => [
+                    'style' => [
+                        'max-width' => '600px',
+                        'white-space' => 'normal',
+                    ],
+                ],
+            ],
+            [
+                'attribute' => 'indicador',
+                'contentOptions' => [
+                    'style' => [
+                        'max-width' => '600px',
+                        'white-space' => 'normal',
+                    ],
+                ],
+            ],
             //'proyecto',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

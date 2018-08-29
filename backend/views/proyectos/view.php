@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 use yii\bootstrap\Tabs;
+use backend\models\Objetivos;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Proyectos */
@@ -44,23 +45,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'items' => [
             [
                 'label' => 'Objetivos',
-                'content' => $this->render('_obj', ['model' => $model->id_p]),
+                'content' => 'Todos los objetivos de los proyectos ',
                 'active' => true
             ],
             [
                 'label' => 'Actividades',
-                'content' => 'Anim pariatur cliche 2...',
-                'options' => ['id' => 'myveryownID'],
-            ],
-            [
-                'label' => 'Cronograma',
-                'content' => 'Anim pariatur cliche 2...',
+                'content' => 'Aqui va todas las actividades',
                 'options' => ['id' => 'myveryownID'],
             ],
             [
                 'label' => 'Calendario',
-                'content' => 'Anim pariatur cliche 2...',
-                'options' => ['id' => 'myveryownID'],
+                'content' => 'Calendario con eventos del proyecto',
             ],
             
         ],

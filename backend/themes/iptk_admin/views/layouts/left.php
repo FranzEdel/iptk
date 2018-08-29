@@ -30,16 +30,20 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
+                    ['label' => 'Menu Principal', 'options' => ['class' => 'header']],
+                    ['label' => 'Proyectos', 'icon' => 'book', 'url' => ['/proyectos']],
+                    ['label' => 'Objetivos', 'icon' => 'tags', 'url' => ['/objetivos']],
+                    ['label' => 'Actividades', 'icon' => 'tasks', 'url' => ['/actividades']],
+                    ['label' => 'Cronograma Avance', 'icon' => 'dashboard', 'url' => ['/cronograma-av']],
+                    ['label' => 'Cronograma Ejecución', 'icon' => 'dashboard', 'url' => ['/cronograma-ej']],
+                    ['label' => 'Eventos', 'icon' => 'calendar', 'url' => ['/eventos']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
-                        'label' => 'Some tools',
-                        'icon' => 'share',
+                        'label' => 'Administracion',
+                        'icon' => 'wrench',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
+                            ['label' => 'Usuarios', 'icon' => 'user', 'url' => ['/user'],],
                             ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
                             [
                                 'label' => 'Level One',

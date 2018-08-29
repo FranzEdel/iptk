@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use backend\models\Objetivos;
+
 /**
  * ProyectosController implements the CRUD actions for Proyectos model.
  */
@@ -52,8 +54,11 @@ class ProyectosController extends Controller
      */
     public function actionView($id)
     {
+        $modelObj = Objetivos::find()->where(['proyecto' => $id])->count();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'modelObj' => $modelObj,
         ]);
     }
 
