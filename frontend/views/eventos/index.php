@@ -25,21 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= \yii2fullcalendar\yii2fullcalendar::widget([
                 'options' => [
                   'lang' => 'es',
+                 
                 ],
                 'events' => $eventos
               ]);
     ?>
     
     <?php Pjax::end(); ?>
-</div>
-<div>
-    <?php
-         echo Progress::widget([
-            'bars' => [
-                ['percent' => 30, 'options' => ['class' => 'progress-bar-danger']],
-                ['percent' => 30, 'label' => 'test', 'options' => ['class' => 'progress-bar-success']],
-                ['percent' => 40, 'options' => ['class' => 'progress-bar-warning']],
-    ]
-        ]); 
-    ?>
 </div>

@@ -66,4 +66,5 @@ class Objetivos extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Resultados::className(), ['objetivo_e' => 'id_o']);
     }
+
 }

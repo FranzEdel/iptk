@@ -44,6 +44,21 @@ class ObjetivosController extends Controller
         ]);
     }
 
+    public function actionTabObjetivos($id)
+    {
+        $searchModelObj = new ObjetivosSearch();
+        $dataProviderObj = $searchModelObj->searchById(Yii::$app->request->queryParams, $id);
+
+        return $this->renderPartial('view', [
+            'searchModelObj' => $searchModelObj,
+            'dataProviderObj' => $dataProviderObj,
+        ]);
+    }
+    public function actionAb()
+    {
+        return 'hola del controller';
+    }
+
      public function actionCrono()
     {
 
@@ -80,6 +95,7 @@ class ObjetivosController extends Controller
             'model' => $model,
         ]);
     }
+
 
     /**
      * Updates an existing Objetivos model.

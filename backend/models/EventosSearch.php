@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Objetivos;
+use backend\models\Eventos;
 
 /**
- * ObjetivosSearch represents the model behind the search form of `backend\models\Objetivos`.
+ * EventosSearch represents the model behind the search form of `backend\models\Eventos`.
  */
-class ObjetivosSearch extends Objetivos
+class EventosSearch extends Eventos
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class ObjetivosSearch extends Objetivos
     public function rules()
     {
         return [
-            [['id_o', 'proyecto'], 'integer'],
-            [['nombre', 'indicador'], 'safe'],
+            [['id', 'proyecto'], 'integer'],
+            [['titulo', 'descripcion', 'fecha_creacion'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ObjetivosSearch extends Objetivos
      */
     public function search($params)
     {
-        $query = Objetivos::find();
+        $query = Eventos::find();
 
         // add conditions that should always apply here
 
@@ -59,19 +59,20 @@ class ObjetivosSearch extends Objetivos
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_o' => $this->id_o,
+            'id' => $this->id,
+            'fecha_creacion' => $this->fecha_creacion,
             'proyecto' => $this->proyecto,
         ]);
 
-        $query->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'indicador', $this->indicador]);
+        $query->andFilterWhere(['like', 'titulo', $this->titulo])
+            ->andFilterWhere(['like', 'descripcion', $this->descripcion]);
 
         return $dataProvider;
     }
 
     public function searchById($params, $id)
     {
-        $query = Objetivos::find()->where(['proyecto' => $id]);
+        $query = Eventos::find()->where(['proyecto' => $id]);
 
         // add conditions that should always apply here
 
@@ -87,15 +88,6 @@ class ObjetivosSearch extends Objetivos
             return $dataProvider;
         }
 
-        // grid filtering conditions
-        /*$query->andFilterWhere([
-            'id_o' => $this->id_o,
-            'proyecto' => $this->proyecto,
-        ]);
-
-        $query->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'indicador', $this->indicador]);
-        */
         return $dataProvider;
     }
 }

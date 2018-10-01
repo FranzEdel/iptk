@@ -18,6 +18,7 @@
         "yiisoft/yii2": "~2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "2amigos/yii2-date-picker-widget" : "*",
         "marekpetras/yii2-calendarview-widget": "^1.0",
         "unclead/yii2-multiple-input": "~2.0",
         "dmstr/yii2-adminlte-asset": "^2.1",
@@ -25,7 +26,11 @@
         "kartik-v/yii2-krajee-base": "*",
         "kartik-v/yii2-grid": "*",
         "kartik-v/yii2-detail-view": "*",
-        "kartik-v/yii2-tabs-x": "*"
+        "kartik-v/yii2-tabs-x": "*",
+        "symfony/dom-crawler": "2.8",
+        "symfony/css-selector": "2.8",
+        "wbraganca/yii2-dynamicform": "*",
+        "philippfrenzel/yii2fullcalendar": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

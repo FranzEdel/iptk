@@ -3,19 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Proyectos;
-use backend\models\ProyectosSearch;
+use backend\models\Eventos;
+use backend\models\EventosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use backend\models\ObjetivosSearch;
-use backend\models\Eventos;
-
 /**
- * ProyectosController implements the CRUD actions for Proyectos model.
+ * EventosController implements the CRUD actions for Eventos model.
  */
-class ProyectosController extends Controller
+class EventosController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,43 +30,20 @@ class ProyectosController extends Controller
     }
 
     /**
-     * Lists all Proyectos models.
+     * Lists all Eventos models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProyectosSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-
-    /**
-     * Displays a single Proyectos model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        //Objetivos ById
-        $searchModel = new ObjetivosSearch();
-        $dataProvider = $searchModel->searchById(Yii::$app->request->queryParams, $id);
-
-        //Eventos ById
-        $eventos = Eventos::find()->where(['proyecto' => $id])->all();
+        $eventos = Eventos::find()->all();
 
         $datos = [];
 
         foreach ($eventos as $eve) {
             $evento = new \yii2fullcalendar\models\Event();
             $evento->id = $eve->id;
-            $evento->title = $eve['titulo'];
-            $evento->start = $eve['fecha_creacion'];
+            $evento->title = $eve->titulo;
+            $evento->start = $eve->fecha_creacion;
             $evento->borderColor = 'black';
             $evento->color = 'red';
             $evento->backgroundColor = 'orange';
@@ -77,27 +51,46 @@ class ProyectosController extends Controller
 
         }
 
-        //Envio
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        return $this->render('index', [
+            'eventos' => $datos,
+        ]);
+    }
+
+    public function actionLista()
+    {
+        $searchModel = new EventosSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('lista', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'eventos' => $datos,
-            
         ]);
     }
 
     /**
-     * Creates a new Proyectos model.
+     * Displays a single Eventos model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Eventos model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Proyectos();
+        $model = new Eventos();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_p]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -106,7 +99,7 @@ class ProyectosController extends Controller
     }
 
     /**
-     * Updates an existing Proyectos model.
+     * Updates an existing Eventos model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -117,7 +110,7 @@ class ProyectosController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_p]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -126,7 +119,7 @@ class ProyectosController extends Controller
     }
 
     /**
-     * Deletes an existing Proyectos model.
+     * Deletes an existing Eventos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -140,15 +133,15 @@ class ProyectosController extends Controller
     }
 
     /**
-     * Finds the Proyectos model based on its primary key value.
+     * Finds the Eventos model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Proyectos the loaded model
+     * @return Eventos the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Proyectos::findOne($id)) !== null) {
+        if (($model = Eventos::findOne($id)) !== null) {
             return $model;
         }
 

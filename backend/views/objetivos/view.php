@@ -6,33 +6,37 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Objetivos */
 
-$this->title = $model->id_o;
+$this->title = 'Detalle';
 $this->params['breadcrumbs'][] = ['label' => 'Objetivos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="objetivos-view">
+<div class="box box-success box-solid">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-tasks"></i> <?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::a('Lista Objetivos', ['index'], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('Actualizar', ['update', 'id' => $model->id_o], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Eliminar', ['delete', 'id' => $model->id_o], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </p>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_o], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_o], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                //'id_o',
+                'nombre:ntext',
+                'indicador:ntext',
+                'proyecto0.nombre_p',
             ],
         ]) ?>
-    </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id_o',
-            'nombre:ntext',
-            'indicador:ntext',
-            'proyecto',
-        ],
-    ]) ?>
-
+    </div>
 </div>

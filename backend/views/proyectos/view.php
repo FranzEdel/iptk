@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-use yii\bootstrap\Tabs;
+use kartik\tabs\TabsX;
+use yii\helpers\Url;
 use backend\models\Objetivos;
 
 /* @var $this yii\web\View */
@@ -34,31 +35,49 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'id_p',
                 'nombre_p',
                 'objetivo_general:ntext',
-                'fecha_ini',
-                'fecha_fin',
+                [
+                    'attribute' => 'fecha_ini',
+                    'contentOption' => ['class' => 'col-lg-6'],
+                ],
+                [
+                    'attribute' => 'fecha_fin',
+                    'contentOption' => ['class' => 'col-lg-6'],
+                ],
                 'estado',
             ],
         ]) ?>
     </div>
     <div>
-    <?= Tabs::widget([
-        'items' => [
+    <?php
+        
+        $contenidoObj = $this->render('_obj', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+
+        $contenidoEve = $this->render('_eve',[
+            'eventos' => $eventos,
+        ]);
+
+        $items = [
             [
-                'label' => 'Objetivos',
-                'content' => 'Todos los objetivos de los proyectos ',
-                'active' => true
+                'label'=>'<i class="fa fa-home"></i> Objetivos',
+                'content'=> $contenidoObj,
+                'active'=>true
             ],
             [
-                'label' => 'Actividades',
-                'content' => 'Aqui va todas las actividades',
-                'options' => ['id' => 'myveryownID'],
-            ],
-            [
-                'label' => 'Calendario',
-                'content' => 'Calendario con eventos del proyecto',
+                'label'=>'<i class="fa fa-user"></i> Eventos',
+                'content'=> $contenidoEve,
+                //'linkOptions'=>['data-url'=>\yii\helpers\Url::to(['/site/tabs-data'])]
             ],
             
-        ],
-    ]); ?>
+        ];
+        // Ajax Tabs Above
+        echo TabsX::widget([
+            'items'=>$items,
+            'position'=>TabsX::POS_ABOVE,
+            'encodeLabels'=>false
+        ]);
+    ?>
     </div>
 </div>

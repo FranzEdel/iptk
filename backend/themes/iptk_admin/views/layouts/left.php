@@ -37,6 +37,7 @@
                     ['label' => 'Cronograma Avance', 'icon' => 'dashboard', 'url' => ['/cronograma-av']],
                     ['label' => 'Cronograma Ejecución', 'icon' => 'dashboard', 'url' => ['/cronograma-ej']],
                     ['label' => 'Eventos', 'icon' => 'calendar', 'url' => ['/eventos']],
+                    ['label' => 'Gráficos', 'icon' => 'signal', 'url' => ['/graficos']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
                         'label' => 'Administracion',
@@ -44,24 +45,7 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Usuarios', 'icon' => 'user', 'url' => ['/user'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
+                            ['label' => 'historial', 'icon' => 'random', 'url' => ['/debug'],],
                         ],
                     ],
                 ],
