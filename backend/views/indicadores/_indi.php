@@ -33,7 +33,7 @@ $this->title = 'Indicadores de: ' . $resultado;
                         $searchModel->indicador = $model->id_i;
                         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                         
-                        return Yii::$app->controller->renderPartial('_acti', [
+                        return Yii::$app->controller->renderPartial('../actividades/_acti', [
                             'searchModel' => $searchModel,
                             'dataProvider' => $dataProvider,
                             'id' => $searchModel->indicador,
@@ -45,7 +45,7 @@ $this->title = 'Indicadores de: ' . $resultado;
 
                 'nombre',
                 //'resultado',
-                [
+                /*[
                     'label' => 'Acciones',
                     'format' => 'raw',
                     'value' => function($data){
@@ -60,9 +60,29 @@ $this->title = 'Indicadores de: ' . $resultado;
                         ]);
                         return Html::a($btn_edit . ' ' . $btn_delete, '#');
                     }
-                ],
+                ],*/
 
-               // ['class' => 'yii\grid\ActionColumn'],
+               [
+                   'class' => 'yii\grid\ActionColumn',
+                   'template' => '{view} {update} {delete}',
+                    'urlCreator' => function ($action, $model, $key, $index) {
+
+                        if ($action === 'view') {
+                            $url = Yii::$app->urlManager->createUrl(['indicadores/view', 'id' => $model->id_i]); 
+                            return $url;
+                        }
+
+                        if ($action === 'update') {
+                            $url = Yii::$app->urlManager->createUrl(['indicadores/update', 'id' => $model->id_i]); 
+                            return $url;
+                        }
+
+                        if ($action === 'delete') {
+                            $url = Yii::$app->urlManager->createUrl(['indicadores/delete', 'id' => $model->id_i]); 
+                            return $url;
+                        }
+                    },
+                ],
             ],
         ]); ?>
     </div>

@@ -25,9 +25,13 @@ use Yii;
  * @property string $avance
  * @property int $recursos_h
  * @property int $actividad
+ * @property int $objetivo
+ * @property int $proyecto
  *
  * @property Actividades $actividad0
  * @property RecursosHumanos $recursosH
+ * @property Objetivos $objetivo0
+ * @property Proyectos $proyecto0
  */
 class CronogramaAv extends \yii\db\ActiveRecord
 {
@@ -45,11 +49,13 @@ class CronogramaAv extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'recursos_h', 'actividad'], 'integer'],
+            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'recursos_h', 'actividad', 'objetivo', 'proyecto'], 'integer'],
             [['total', 'avance'], 'number'],
-            [['recursos_h', 'actividad'], 'required'],
+            [['recursos_h', 'actividad', 'objetivo', 'proyecto'], 'required'],
             [['actividad'], 'exist', 'skipOnError' => true, 'targetClass' => Actividades::className(), 'targetAttribute' => ['actividad' => 'id_a']],
             [['recursos_h'], 'exist', 'skipOnError' => true, 'targetClass' => RecursosHumanos::className(), 'targetAttribute' => ['recursos_h' => 'id_rh']],
+            [['objetivo'], 'exist', 'skipOnError' => true, 'targetClass' => Objetivos::className(), 'targetAttribute' => ['objetivo' => 'id_o']],
+            [['proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => Proyectos::className(), 'targetAttribute' => ['proyecto' => 'id_p']],
         ];
     }
 
@@ -77,10 +83,36 @@ class CronogramaAv extends \yii\db\ActiveRecord
             'avance' => 'Avance',
             'recursos_h' => 'Recursos H',
             'actividad' => 'Actividad',
+            'objetivo' => 'Objetivo',
+            'proyecto' => 'Proyecto',
         ];
     }
 
-    public function getTotalAvance(){
+    public function getTotalAvanceGeneral($id_p){
+        $query = (new \yii\db\Query())->from('cronograma_a')->where(['proyecto' => $id_p]);
+        $ava = $query->average('avance');
+        return number_format($ava, 2);
+    }
+
+    public function getPorGeneral($id_p){
+        $query = (new \yii\db\Query())->from('cronograma_a')->where(['proyecto' => $id_p]);
+        $ava = $query->average('avance');
+        return number_format($ava, 2) . ' %';
+    }
+
+    public function getTotalAvanceObjetivo($id_o){
+        $query = (new \yii\db\Query())->from('cronograma_a')->where(['objetivo' => $id_o]);
+        $ava = $query->average('avance');
+        return number_format($ava, 2);
+    }
+
+    public function getPorObjetivo($id_o){
+        $query = (new \yii\db\Query())->from('cronograma_a')->where(['objetivo' => $id_o]);
+        $ava = $query->average('avance');
+        return number_format($ava, 2) . ' %';
+    }
+
+    public function getTotal(){
         $query = (new \yii\db\Query())->from('cronograma_a');
         $ava = $query->average('avance');
         return number_format($ava, 2);
@@ -106,5 +138,21 @@ class CronogramaAv extends \yii\db\ActiveRecord
     public function getRecursosH()
     {
         return $this->hasOne(RecursosHumanos::className(), ['id_rh' => 'recursos_h']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getObjetivo0()
+    {
+        return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProyecto0()
+    {
+        return $this->hasOne(Proyectos::className(), ['id_p' => 'proyecto']);
     }
 }

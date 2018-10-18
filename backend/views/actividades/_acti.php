@@ -22,32 +22,10 @@ $this->title = 'Actividades del Indicador: ' . $indicador;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'columns' => [
-                [
-                    'class' => 'kartik\grid\ExpandRowColumn',
-                    'value' => function ($model, $key, $index, $column){
-                        return GridView::ROW_COLLAPSED;
-                    },
-                    'detail' => function ($model, $key, $index, $column){
-                        $searchModelAv = new CronogramaAvSearch();
-                        $searchModelAv->actividad = $model->id_a;
-                        $dataProviderAv = $searchModelAv->search(Yii::$app->request->queryParams);
-
-                        $searchModelEj = new CronogramaEjSearch();
-                        $searchModelEj->actividad = $model->id_a;
-                        $dataProviderEj = $searchModelEj->search(Yii::$app->request->queryParams);
-                        
-                        return Yii::$app->controller->renderPartial('_crono', [
-                            'searchModelAv' => $searchModelAv,
-                            'dataProviderAv' => $dataProviderAv,
-                            'searchModelEj' => $searchModelEj,
-                            'dataProviderEj' => $dataProviderEj,
-                        ]);
-                    },
-                ],
-
+                ['class' => 'yii\grid\SerialColumn'],
                 'nombre',
                 //'indicador',
-                [
+                /*[
                     'label' => 'Acciones',
                     'format' => 'raw',
                     'value' => function($data){
@@ -62,9 +40,29 @@ $this->title = 'Actividades del Indicador: ' . $indicador;
                         ]);
                         return Html::a($btn_edit . ' ' . $btn_delete, '#');
                     }
-                ],
+                ],*/
 
-                //['class' => 'yii\grid\ActionColumn'],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{view} {update} {delete}',
+                    'urlCreator' => function ($action, $model, $key, $index) {
+
+                        if ($action === 'view') {
+                            $url = Yii::$app->urlManager->createUrl(['actividades/view', 'id' => $model->id_a]); 
+                            return $url;
+                        }
+
+                        if ($action === 'update') {
+                            $url = Yii::$app->urlManager->createUrl(['actividades/update', 'id' => $model->id_a]); 
+                            return $url;
+                        }
+
+                        if ($action === 'delete') {
+                            $url = Yii::$app->urlManager->createUrl(['actividades/delete', 'id' => $model->id_a]); 
+                            return $url;
+                        }
+                    },
+                ],
             ],
         ]); ?>
     </div>

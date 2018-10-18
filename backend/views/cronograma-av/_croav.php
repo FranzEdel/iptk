@@ -30,8 +30,8 @@ $this->title = 'Avance general de Actividades';
                 <div>
                     <?php
                         echo Progress::widget([
-                            'label' => CronogramaAv::getPor(),
-                            'percent' => CronogramaAv::getTotal(),
+                            'label' => CronogramaAv::getPorGeneral($id_p),
+                            'percent' => CronogramaAv::getTotalAvanceGeneral($id_p),
                             'barOptions' => ['class' => 'progress-bar-success'],
                             'options' => [
                                     'class' => 'progress-striped',
@@ -47,8 +47,8 @@ $this->title = 'Avance general de Actividades';
         </div>
         
         <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            //'filterModel' => $searchModel,
+            'dataProvider' => $dataProviderAv,
+            //'filterModel' => $searchModelAv,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 

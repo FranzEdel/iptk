@@ -14,8 +14,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'avance')->textInput() ?>
-
     <?= $form->field($model, 'objetivo_e')->textInput() ?>
 
     <div class="form-group">

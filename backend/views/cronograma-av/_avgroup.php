@@ -6,32 +6,26 @@ use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use backend\models\Actividades;
 use backend\models\Objetivos;
-use backend\models\CronogramaEj;
+use backend\models\CronogramaAv;
+use yii\bootstrap\Progress;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\CronogramaEjSearch */
+/* @var $searchModel backend\models\CronogramaAvSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cronograma Ejecutado';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
-<div class="cronograma-ej-index">
+<div class="cronograma-av-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Nuevo Cronograma', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
-            'dataProvider'=>$dataProvider,
-            'filterModel'=>$searchModel,
+            'dataProvider'=>$dataProviderAv,
+            'filterModel'=>$searchModelAv,
             'showPageSummary'=>true,
             'pjax'=>true,
             'striped'=>true,
             'hover'=>true,
-            'panel'=>['type'=>'primary', 'heading'=>'Ejecución general de los Objetivos'],
+            'panel'=>['type'=>'primary', 'heading'=>'<h4>Avance general de los Objetivos</h4>'],
             'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns'=>[
                 ['class'=>'kartik\grid\SerialColumn'],
@@ -72,31 +66,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'filterInputOptions'=>['placeholder'=>'Any category'],
                     'group'=>true,  // enable grouping
-                    'subGroupOf'=>1 // supplier column index is the parent group
+                    'subGroupOf'=>1, // supplier column index is the parent group
                 ],
                 [
-                    'attribute'=>'item',
-                    'contentOptions' => [
-                        'style' => [
-                            'max-width' => '200px',
-                            'white-space' => 'normal',
-                        ],
-                    ],
-                    'pageSummary'=>'Total Ejecutado',
-                    'pageSummaryOptions'=>['class'=>'text-right'],
-                ],
-                [
-                    'attribute'=>'total',
-                    'contentOptions' => [
-                        'style' => [
-                            'max-width' => '150px',
-                            'white-space' => 'normal',
-                        ],
-                    ],
-                    'hAlign'=>'right',
-                    'format'=>['decimal', 2],
-                    'pageSummary'=>true,
-                    'pageSummaryFunc'=> GridView::F_SUM,
+                    'attribute' => 'avance',
+                    'value' => function($model){
+                        return "{$model->avance}%";
+                    },
+                    'contentOptions' => function($model){
+                                            return [
+                                                'class' => 'progress-bar progress-bar-success progress-bar-striped',
+                                                'style' => [
+                                                    'width' => "{$model->avance}%",
+                                                    'font-weight' => 'bold',
+                                                    'color' => 'black',
+                                                ],
+                                            ];
+                                        },
+                    
                 ],
             ],
         ]); ?>

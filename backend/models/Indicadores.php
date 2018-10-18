@@ -64,4 +64,9 @@ class Indicadores extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Resultados::className(), ['id_r' => 'resultado']);
     }
+
+    public function getNombreI()
+    {
+        return $this->nombre;
+    }
 }

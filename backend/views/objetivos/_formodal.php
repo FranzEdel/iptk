@@ -25,7 +25,7 @@ use backend\models\Proyectos;
     ) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success', 'id' => 'formsAjax']) ?>
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-remove"></i>Cancelar</button>
     </div>
 
@@ -43,11 +43,11 @@ $('form#{$model->formName()}').on('beforeSubmit', function(e){
         \$form.serialize()
     )
     .done(function(result){
-        result = JSON.parse(result);
+        result =  jQuery.parseJSON(result);
         if(result.status == 'Success'){
             $(\$form).trigger("reset");
-            $(document).find('#modal').modal('hide');
-            $.pjax.reload({container:'#tabsGrid'});
+            $(document).find('#modalObj').modal('hide');
+            $.pjax.reload({ container:'#tabsGrid'});
         }else{
             $(\$form).trigger("reset");
             $("#message").html(result.message);

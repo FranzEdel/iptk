@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Eventos';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="box box-danger box-solid">
     <div class="box-header">
@@ -19,8 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
         <p>
-            <?= Html::a('Nuevo Evento', ['create'], ['class' => 'btn btn-success']) ?>
-            <?= Html::a('Todos los Eventos', ['lista'], ['class' => 'btn btn-warning']) ?>
+            <?= Html::a('Nuevo Evento', ['eventos/create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Todos los Eventos', ['eventos/lista'], ['class' => 'btn btn-warning']) ?>
         </p>
 
         <?= \yii2fullcalendar\yii2fullcalendar::widget([

@@ -10,6 +10,11 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use backend\models\ObjetivosSearch;
+use backend\models\ResultadosSearch;
+use backend\models\IndicadoresSearch;
+use backend\models\ActividadesSearch;
+use backend\models\CronogramaAvSearch;
+use backend\models\CronogramaEjSearch;
 use backend\models\Eventos;
 
 /**
@@ -57,8 +62,34 @@ class ProyectosController extends Controller
     public function actionView($id)
     {
         //Objetivos ById
+        //$searchModel = new ObjetivosSearch();
+        //$dataProvider = $searchModel->searchById(Yii::$app->request->queryParams, $id);
+
         $searchModel = new ObjetivosSearch();
-        $dataProvider = $searchModel->searchById(Yii::$app->request->queryParams, $id);
+        $searchModel->proyecto = $id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $searchModelRe = new ResultadosSearch();
+        $searchModelRe->objetivo_e = $searchModel->id_o;
+        $dataProviderRe = $searchModelRe->search(Yii::$app->request->queryParams);
+
+        $searchModelIn = new IndicadoresSearch();
+        $searchModelIn->resultado = $searchModelRe->id_r;
+        $dataProviderIn = $searchModelIn->search(Yii::$app->request->queryParams);
+
+        $searchModelAc = new CronogramaAvSearch();
+        $searchModelAc->proyecto = $id;
+        $searchModelAc->objetivo = $searchModel->id_o;
+        $dataProviderAc = $searchModelAc->search(Yii::$app->request->queryParams);
+
+
+        //Cronograma de Avance en General
+        $searchModelAv = new CronogramaAvSearch();
+        $dataProviderAv = $searchModelAv->searchByPro(Yii::$app->request->queryParams, $id);
+
+        //Cronograma de Ejecucion en General
+        $searchModelEj = new CronogramaEjSearch();
+        $dataProviderEj = $searchModelEj->searchByPro(Yii::$app->request->queryParams, $id);
 
         //Eventos ById
         $eventos = Eventos::find()->where(['proyecto' => $id])->all();
@@ -77,12 +108,20 @@ class ProyectosController extends Controller
 
         }
 
-        //Envio
+        //Envio a la vista
         return $this->render('view', [
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'eventos' => $datos,
+            'searchModelAc' => $searchModelAc,
+            'dataProviderAc' => $dataProviderAc,
+            'searchModelAv' => $searchModelAv,
+            'dataProviderAv' => $dataProviderAv,
+            'searchModelEj' => $searchModelEj,
+            'dataProviderEj' => $dataProviderEj,
+            'objetivo' => $searchModel->nombre,
+            'proyectoId' => $searchModel->id_o,
             
         ]);
     }
@@ -96,13 +135,17 @@ class ProyectosController extends Controller
     {
         $model = new Proyectos();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_p]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                echo json_encode(['status' => 'Success', 'message' => 'Registro realizado']);
+            }else{
+                echo json_encode(['status' => 'Error', 'message' => 'Registro no realizado']);
+            }
+        } else {
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -116,7 +159,9 @@ class ProyectosController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id_p]);
         }
 
@@ -132,11 +177,20 @@ class ProyectosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDeleteRespaldo($id)
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+        
+        if (!Yii::$app->request->isAjax) {
+            return $this->redirect(['index']);
+        }
     }
 
     /**

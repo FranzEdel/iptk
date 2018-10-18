@@ -24,9 +24,13 @@ use Yii;
  * @property string $total
  * @property int $recursos_h
  * @property int $actividad
+ * @property int $objetivo
+ * @property int $proyecto
  *
  * @property Actividades $actividad0
  * @property RecursosHumanos $recursosH
+ * @property Objetivos $objetivo0
+ * @property Proyectos $proyecto0
  */
 class CronogramaEj extends \yii\db\ActiveRecord
 {
@@ -45,11 +49,13 @@ class CronogramaEj extends \yii\db\ActiveRecord
     {
         return [
             [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'total'], 'number'],
-            [['recursos_h', 'actividad'], 'required'],
-            [['recursos_h', 'actividad'], 'integer'],
+            [['recursos_h', 'actividad', 'objetivo', 'proyecto'], 'required'],
+            [['recursos_h', 'actividad', 'objetivo', 'proyecto'], 'integer'],
             [['item'], 'string', 'max' => 200],
             [['actividad'], 'exist', 'skipOnError' => true, 'targetClass' => Actividades::className(), 'targetAttribute' => ['actividad' => 'id_a']],
             [['recursos_h'], 'exist', 'skipOnError' => true, 'targetClass' => RecursosHumanos::className(), 'targetAttribute' => ['recursos_h' => 'id_rh']],
+            [['objetivo'], 'exist', 'skipOnError' => true, 'targetClass' => Objetivos::className(), 'targetAttribute' => ['objetivo' => 'id_o']],
+            [['proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => Proyectos::className(), 'targetAttribute' => ['proyecto' => 'id_p']],
         ];
     }
 
@@ -76,11 +82,19 @@ class CronogramaEj extends \yii\db\ActiveRecord
             'total' => 'Total',
             'recursos_h' => 'Recursos H',
             'actividad' => 'Actividad',
+            'objetivo' => 'Objetivo',
+            'proyecto' => 'Proyecto',
         ];
     }
 
-    public function getTotal(){
-        $query = (new \yii\db\Query())->from('cronograma_e');
+    public function getTotalPro($id_p){
+        $query = (new \yii\db\Query())->from('cronograma_e')->where(['proyecto' => $id_p]);
+        $sum = $query->sum('total');
+        return number_format($sum, 2) . ' Bs';
+    }
+
+    public function getTotalObj($id_o){
+        $query = (new \yii\db\Query())->from('cronograma_e')->where(['objetivo' => $id_o]);
         $sum = $query->sum('total');
         return number_format($sum, 2) . ' Bs';
     }
@@ -99,5 +113,21 @@ class CronogramaEj extends \yii\db\ActiveRecord
     public function getRecursosH()
     {
         return $this->hasOne(RecursosHumanos::className(), ['id_rh' => 'recursos_h']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getObjetivo0()
+    {
+        return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProyecto0()
+    {
+        return $this->hasOne(Proyectos::className(), ['id_p' => 'proyecto']);
     }
 }

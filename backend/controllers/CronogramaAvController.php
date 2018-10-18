@@ -44,6 +44,17 @@ class CronogramaAvController extends Controller
         ]);
     }
 
+    public function actionIndexById()
+    {
+        $searchModel = new CronogramaAvSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single CronogramaAv model.
      * @param integer $id
@@ -159,6 +170,20 @@ class CronogramaAvController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionChart()
+    {   
+        $data = Yii::$app->db->createCommand('select 
+                regional,
+                sum(msisdn) as jmlmsisdn,
+                sum(bill_amount_1) as jmlba,
+                sum(cb_bill_1) as jmlcb,
+                sum(cb_bucket_1) as jmlcbu
+                from dash_summary_aging_tracking 
+                group by regional')->queryAll();
+
+        return $this->render('chart');
     }
 
     /**

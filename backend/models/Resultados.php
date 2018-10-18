@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $id_r
  * @property string $nombre
- * @property int $avance
  * @property int $objetivo_e
  *
  * @property IndicadoresR[] $indicadoresRs
@@ -32,7 +31,7 @@ class Resultados extends \yii\db\ActiveRecord
     {
         return [
             [['nombre', 'objetivo_e'], 'required'],
-            [['avance', 'objetivo_e'], 'integer'],
+            [['objetivo_e'], 'integer'],
             [['nombre'], 'string', 'max' => 200],
             [['objetivo_e'], 'exist', 'skipOnError' => true, 'targetClass' => Objetivos::className(), 'targetAttribute' => ['objetivo_e' => 'id_o']],
         ];
@@ -46,7 +45,6 @@ class Resultados extends \yii\db\ActiveRecord
         return [
             'id_r' => 'Id R',
             'nombre' => 'Nombre',
-            'avance' => 'Avance',
             'objetivo_e' => 'Objetivo E',
         ];
     }

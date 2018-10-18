@@ -4,35 +4,31 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
-use backend\models\Proyectos;
+use backend\models\Objetivos;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Objetivos */
+/* @var $model backend\models\Resultados */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="objetivos-form">
+<div class="resultados-form">
 
     <?php $form = ActiveForm::begin(['id' => $model->formName()]); ?>
 
-    <?= $form->field($model, 'nombre')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;']) ?>
-
-    <?= $form->field($model, 'indicador')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;']) ?>
-
-    <?= $form->field($model, 'proyecto')->dropDownList(
-                                        ArrayHelper::map(Proyectos::find()->all(),'id_p','nombre_p'),
-                                        ['prompt' => '-- Proyecto --']
+    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'objetivo_e')->dropDownList(
+                                        ArrayHelper::map(Objetivos::find()->all(),'id_o','nombre'),
+                                        ['prompt' => '-- Objetivo --']
     ) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-remove"></i>Cancelar</button>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
-
 <?php 
 $script = <<< JS
 
@@ -43,11 +39,11 @@ $('form#{$model->formName()}').on('beforeSubmit', function(e){
         \$form.serialize()
     )
     .done(function(result){
-        result = JSON.parse(result);
+        result =  jQuery.parseJSON(result);
         if(result.status == 'Success'){
             $(\$form).trigger("reset");
-            $(document).find('#modal').modal('hide');
-            $.pjax.reload({container:'#tabsGrid'});
+            $(document).find('#modalRe').modal('hide');
+            $.pjax.reload({ container:'#tabasGrid'});
         }else{
             $(\$form).trigger("reset");
             $("#message").html(result.message);

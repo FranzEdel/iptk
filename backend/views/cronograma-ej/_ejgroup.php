@@ -12,26 +12,17 @@ use backend\models\CronogramaEj;
 /* @var $searchModel backend\models\CronogramaEjSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cronograma Ejecutado';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cronograma-ej-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Nuevo Cronograma', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?= GridView::widget([
-            'dataProvider'=>$dataProvider,
-            'filterModel'=>$searchModel,
+            'dataProvider'=>$dataProviderEj,
+            'filterModel'=>$searchModelEj,
             'showPageSummary'=>true,
             'pjax'=>true,
             'striped'=>true,
             'hover'=>true,
-            'panel'=>['type'=>'primary', 'heading'=>'Ejecución general de los Objetivos'],
+            'panel'=>['type'=>'info', 'heading'=>'<h4>Ejecución general de los Objetivos</h4>'],
             'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns'=>[
                 ['class'=>'kartik\grid\SerialColumn'],

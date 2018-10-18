@@ -96,6 +96,23 @@ class ObjetivosController extends Controller
         ]);
     }
 
+    public function actionCreatemodal()
+    {
+        $model = new Objetivos();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                echo json_encode(['status' => 'Success', 'message' => 'Registro realizado']);
+            }else{
+                echo json_encode(['status' => 'Error', 'message' => 'Registro no realizado']);
+            }
+        } else {
+            return $this->renderAjax('createmodal', [
+                'model' => $model,
+            ]);
+        }
+    }
+
 
     /**
      * Updates an existing Objetivos model.
@@ -129,6 +146,22 @@ class ObjetivosController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionDeletemodelRespaldo($id, $id_p)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['proyectos/view', 'id' => $id_p]);
+    }
+
+    public function actionDeletemodel($id, $id_p)
+    {
+        $this->findModel($id)->delete();
+
+        if (!Yii::$app->request->isAjax) {
+            return $this->redirect(['proyectos/view', 'id' => $id_p]);
+        }
     }
 
     /**

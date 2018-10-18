@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "proyectos".
  *
@@ -53,6 +54,18 @@ class Proyectos extends \yii\db\ActiveRecord
             'fecha_fin' => 'Fecha Fin',
             'estado' => 'Estado',
         ];
+    }
+
+    public function beforeSave($insert){
+        //DE FORMA INDIVIDUAL
+        //$this->algunatributo = strtoupper($this->algunatributo);
+
+
+        //TODOS LOS ATRIBUTOS    
+        $this->attributes = array_map('strtoupper',$this->attributes);
+        
+        return parent::beforeSave($insert);
+
     }
 
     /**

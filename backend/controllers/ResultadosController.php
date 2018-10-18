@@ -75,6 +75,25 @@ class ResultadosController extends Controller
         ]);
     }
 
+    public function actionCreatemodal()
+    {
+        $model = new Resultados();
+
+        if ($model->load(Yii::$app->request->post())) {
+            //$model->objetivo = $id_o;
+
+            if($model->save()){
+                echo json_encode(['status' => 'Success', 'message' => 'Registro realizado']);
+            }else{
+                echo json_encode(['status' => 'Error', 'message' => 'Registro no realizado']);
+            }
+        } else {
+            return $this->renderAjax('createmodal', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     /**
      * Updates an existing Resultados model.
      * If update is successful, the browser will be redirected to the 'view' page.

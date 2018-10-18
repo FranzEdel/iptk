@@ -18,7 +18,7 @@ class ResultadosSearch extends Resultados
     public function rules()
     {
         return [
-            [['id_r', 'avance', 'objetivo_e'], 'integer'],
+            [['id_r', 'objetivo_e'], 'integer'],
             [['nombre'], 'safe'],
         ];
     }
@@ -60,7 +60,6 @@ class ResultadosSearch extends Resultados
         // grid filtering conditions
         $query->andFilterWhere([
             'id_r' => $this->id_r,
-            'avance' => $this->avance,
             'objetivo_e' => $this->objetivo_e,
         ]);
 
