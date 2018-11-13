@@ -57,17 +57,49 @@ $this->params['breadcrumbs'][] = $this->title;
         $contenidoObj = $this->renderAjax('../objetivos/_obj', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            //'id_p' => $model->id_p,
+            'id_p' => $model->id_p,
+        ]);
+
+        $contenidoRe = $this->renderAjax('../resultados/_res', [
+            'searchModel' => $searchModelRe,
+            'dataProvider' => $dataProviderRe,
+            'id_p' => $model->id_p,
+        ]);
+
+        $contenidoIn = $this->renderAjax('../indicadores/_ind', [
+            'searchModel' => $searchModelIn,
+            'dataProvider' => $dataProviderIn,
+            'id_p' => $model->id_p,
+        ]);
+
+        $contenidoAc = $this->renderAjax('../actividades/_act', [
+            'searchModel' => $searchModelAc,
+            'dataProvider' => $dataProviderAc,
+            'id_p' => $model->id_p,
+        ]);
+
+        $contenidoAv = $this->render('../cronograma-av/_croav', [
+            'searchModel' => $searchModelAv,
+            'dataProvider' => $dataProviderAv,
+            'id_p' => $model->id_p,
+        ]);
+
+        $contenidoEj = $this->render('../cronograma-ej/_croej', [
+            'searchModel' => $searchModelEj,
+            'dataProvider' => $dataProviderEj,
+            'id_p' => $model->id_p,
         ]);
 
         $contenidoGroupAv = $this->renderAjax('../cronograma-av/_avgroup', [
-            'searchModelAv' => $searchModelAv,
-            'dataProviderAv' => $dataProviderAv,
+            'searchModel' => $searchModelAv,
+            'dataProvider' => $dataProviderAv,
+            'id_p' => $model->id_p,
         ]);
 
         $contenidoGroupEj = $this->render('../cronograma-ej/_ejgroup', [
             'searchModelEj' => $searchModelEj,
             'dataProviderEj' => $dataProviderEj,
+            'id_p' => $model->id_p,
         ]);
 
 
@@ -75,32 +107,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'eventos' => $eventos,
         ]);
 
-        $contenidoAv = $this->render('../cronograma-av/_croav', [
-            'searchModelAv' => $searchModelAv,
-            'dataProviderAv' => $dataProviderAv,
-            'id_p' => $model->id_p,
-        ]);
-
-        $contenidoEj = $this->render('../cronograma-ej/_croej', [
-            'searchModelEj' => $searchModelEj,
-            'dataProviderEj' => $dataProviderEj,
-            'id_p' => $model->id_p,
-        ]);
+        
 
         $items = [
             [
                 'label'=>'<i class="fa fa-tags"></i> Objetivos',
                 'content'=> $contenidoObj,
-                'active'=>true,
-                'id' => 'objGrid'
+                'active' => true,
+            ],
+            [
+                'label'=>'<i class="fa fa-cog"></i> Resultados',
+                'content'=> $contenidoRe,
+            ],
+            [
+                'label'=>'<i class="fa fa-leaf"></i> Indicadores',
+                'content'=> $contenidoIn,
             ],
             [
                 'label'=>'<i class="fa fa-list-alt"></i> Actividades',
-                'content'=> $contenidoGroupAv,
-            ],
-            [
-                'label'=>'<i class="glyphicon glyphicon-pushpin"></i> Items',
-                'content'=> $contenidoGroupEj,
+                'content'=> $contenidoAc,
             ],
             [
                 'label'=>'<i class="fa fa-tasks"></i> Avance',
@@ -111,13 +136,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'content'=>  $contenidoEj,
             ],
             [
+                'label'=>'<i class="glyphicon glyphicon-tasks"></i> PAT Avance',
+                'content'=> $contenidoGroupAv,
+            ],
+            [
+                'label'=>'<i class="glyphicon glyphicon-pushpin"></i> PAT Ejecución',
+                'content'=> $contenidoGroupEj,
+            ],
+            [
                 'label'=>'<i class="fa fa-calendar"></i> Eventos',
                 'content'=> $contenidoEve,
             ],
-            [
-                'label'=>'<i class="fa fa-signal"></i> Gráficas',
-                'content'=> 'Graficas',
-            ],
+
             
         ];
         // Ajax Tabs Above

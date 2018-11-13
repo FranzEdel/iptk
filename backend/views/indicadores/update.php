@@ -5,17 +5,18 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Indicadores */
 
-$this->title = 'Update Indicadores: ' . $model->id_i;
+$this->title = 'Actualizar Indicador: ';
 $this->params['breadcrumbs'][] = ['label' => 'Indicadores', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_i, 'url' => ['view', 'id' => $model->id_i]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
-<div class="indicadores-update">
+<div class="box box-success box-solid">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-leaf"></i> <?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
 </div>

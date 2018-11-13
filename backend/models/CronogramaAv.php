@@ -23,7 +23,6 @@ use Yii;
  * @property int $programados
  * @property string $total
  * @property string $avance
- * @property int $recursos_h
  * @property int $actividad
  * @property int $objetivo
  * @property int $proyecto
@@ -49,11 +48,10 @@ class CronogramaAv extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'recursos_h', 'actividad', 'objetivo', 'proyecto'], 'integer'],
+            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'actividad', 'objetivo', 'proyecto'], 'integer'],
             [['total', 'avance'], 'number'],
-            [['recursos_h', 'actividad', 'objetivo', 'proyecto'], 'required'],
+            [['actividad', 'objetivo', 'proyecto'], 'required'],
             [['actividad'], 'exist', 'skipOnError' => true, 'targetClass' => Actividades::className(), 'targetAttribute' => ['actividad' => 'id_a']],
-            [['recursos_h'], 'exist', 'skipOnError' => true, 'targetClass' => RecursosHumanos::className(), 'targetAttribute' => ['recursos_h' => 'id_rh']],
             [['objetivo'], 'exist', 'skipOnError' => true, 'targetClass' => Objetivos::className(), 'targetAttribute' => ['objetivo' => 'id_o']],
             [['proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => Proyectos::className(), 'targetAttribute' => ['proyecto' => 'id_p']],
         ];
@@ -81,8 +79,7 @@ class CronogramaAv extends \yii\db\ActiveRecord
             'programados' => 'Programados',
             'total' => 'Total',
             'avance' => 'Avance',
-            'recursos_h' => 'Recursos H',
-            'actividad' => 'Actividad',
+            'actividad' => 'Nombre Actividad',
             'objetivo' => 'Objetivo',
             'proyecto' => 'Proyecto',
         ];

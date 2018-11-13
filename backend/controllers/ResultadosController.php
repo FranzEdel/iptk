@@ -35,13 +35,58 @@ class ResultadosController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Resultados();
         $searchModel = new ResultadosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
+    }
+
+    public function actionFiltro($id=0)
+    {
+        return $this->redirect(['index2', 'id' => $id]);
+    }
+
+    public function actionIndex2($id='0')
+    {
+        $model = new Resultados();
+
+        $searchModel = new ResultadosSearch();
+        if($id != '0'){
+            $searchModel->proyecto = $id;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionLists($id)
+    {
+        $countResultados = Resultados::find()
+                ->where(['objetivo_e' => $id])
+                ->count();
+
+        $resultados = Resultados::find()
+                ->where(['objetivo_e' => $id])
+                ->all();
+        
+        if($countResultados > 0)
+        {
+            foreach($resultados as $resultado){
+                echo "<option value='".$resultado->id_r."'>".$resultado->nombre."</option>";
+            }
+        }else{
+            echo "<option> - </option>";
+        }
+        
     }
 
     /**
@@ -54,6 +99,14 @@ class ResultadosController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionViewmodal($id, $id_p)
+    {
+        return $this->renderAjax('viewmodal', [
+            'model' => $this->findModel($id),
+            'id_p' => $id_p,
         ]);
     }
 
@@ -75,21 +128,22 @@ class ResultadosController extends Controller
         ]);
     }
 
-    public function actionCreatemodal()
+    public function actionCreatemodal($id_p)
     {
         $model = new Resultados();
 
         if ($model->load(Yii::$app->request->post())) {
-            //$model->objetivo = $id_o;
-
+            $model->proyecto = $id_p;
             if($model->save()){
                 echo json_encode(['status' => 'Success', 'message' => 'Registro realizado']);
             }else{
                 echo json_encode(['status' => 'Error', 'message' => 'Registro no realizado']);
             }
+            return $this->redirect(['proyectos/view', 'id' => $id_p]);
         } else {
             return $this->renderAjax('createmodal', [
                 'model' => $model,
+                'id_p' => $id_p,
             ]);
         }
     }
@@ -114,6 +168,22 @@ class ResultadosController extends Controller
         ]);
     }
 
+    public function actionUpdatemodal($id, $id_p)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->proyecto = $id_p;
+            $model->save();
+            return $this->redirect(['proyectos/view', 'id' => $id_p]);
+        }
+
+        return $this->renderAjax('updatemodal', [
+            'model' => $model,
+            'id_p' => $id_p,
+        ]);
+    }
+
     /**
      * Deletes an existing Resultados model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -126,6 +196,14 @@ class ResultadosController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionDeletemodal($id, $id_p)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['proyectos/view', 'id' => $id_p]);
+ 
     }
 
     /**

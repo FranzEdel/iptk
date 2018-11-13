@@ -82,4 +82,14 @@ class Objetivos extends \yii\db\ActiveRecord
         return $this->hasMany(Resultados::className(), ['objetivo_e' => 'id_o']);
     }
 
+    public function getIndicadores()
+    {
+        return $this->hasMany(Indicadores::className(), ['objetivo' => 'id_o']);
+    }
+
+    public function getActividades()
+    {
+        return $this->hasMany(Actividades::className(), ['objetivo' => 'id_o']);
+    }
+
 }

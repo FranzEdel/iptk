@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\widgets\ActiveForm;
 use backend\models\ObjetivosSearch;
 use backend\models\ResultadosSearch;
 use backend\models\IndicadoresSearch;
@@ -65,21 +66,24 @@ class ProyectosController extends Controller
         //$searchModel = new ObjetivosSearch();
         //$dataProvider = $searchModel->searchById(Yii::$app->request->queryParams, $id);
 
+        //Objetivos
         $searchModel = new ObjetivosSearch();
         $searchModel->proyecto = $id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        //Resultados
         $searchModelRe = new ResultadosSearch();
-        $searchModelRe->objetivo_e = $searchModel->id_o;
+        $searchModelRe->proyecto = $id;
         $dataProviderRe = $searchModelRe->search(Yii::$app->request->queryParams);
 
+        //Indicadores
         $searchModelIn = new IndicadoresSearch();
-        $searchModelIn->resultado = $searchModelRe->id_r;
+        $searchModelIn->proyecto = $id;
         $dataProviderIn = $searchModelIn->search(Yii::$app->request->queryParams);
-
-        $searchModelAc = new CronogramaAvSearch();
+        
+        //Actividades
+        $searchModelAc = new ActividadesSearch();
         $searchModelAc->proyecto = $id;
-        $searchModelAc->objetivo = $searchModel->id_o;
         $dataProviderAc = $searchModelAc->search(Yii::$app->request->queryParams);
 
 
@@ -113,6 +117,10 @@ class ProyectosController extends Controller
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'searchModelRe' => $searchModelRe,
+            'dataProviderRe' => $dataProviderRe,
+            'searchModelIn' => $searchModelIn,
+            'dataProviderIn' => $dataProviderIn,
             'eventos' => $datos,
             'searchModelAc' => $searchModelAc,
             'dataProviderAc' => $dataProviderAc,
@@ -134,6 +142,11 @@ class ProyectosController extends Controller
     public function actionCreate()
     {
         $model = new Proyectos();
+
+        if( Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) ) {
+            Yii::$app->response->format = 'json';
+            return Activeform::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post())) {
             if($model->save()){

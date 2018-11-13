@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 use backend\models\CronogramaAv;
 use backend\models\Actividades;
@@ -14,25 +14,22 @@ use yii\bootstrap\Progress;
 $this->title = 'Avance general de Actividades';
 
 ?>
-<div class="box box-danger box-solid">
+<div class="box box-success box-solid">
     <div class="box-header">
-        <h4><i class="fa fa-tasks"></i> <?= Html::encode($this->title) ?></h4>
-    </div>
-    <div class="box-body">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <p>
-                    <?= Html::a('<i class="fa fa-plus"></i> Nuevo Resultado', ['cronograma-av/create'], ['class' => 'btn btn-info']) ?>
+                    <h4><i class="fa fa-book"></i> Avance General del Proyecto</h4>
                 </p>
             </div>
-            <div class="col-lg-6">
-                <h4>Avance General del Proyecto</h4>
+            <div class="col-lg-8">
                 <div>
+                    <p>
                     <?php
                         echo Progress::widget([
                             'label' => CronogramaAv::getPorGeneral($id_p),
                             'percent' => CronogramaAv::getTotalAvanceGeneral($id_p),
-                            'barOptions' => ['class' => 'progress-bar-success'],
+                            'barOptions' => ['class' => 'progress-bar-info'],
                             'options' => [
                                     'class' => 'progress-striped',
                                     'style' => [
@@ -42,19 +39,45 @@ $this->title = 'Avance general de Actividades';
                                 ]
                         ]); 
                     ?>
+                    </p>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="box-body">
         
         <?= GridView::widget([
-            'dataProvider' => $dataProviderAv,
-            //'filterModel' => $searchModelAv,
+            'dataProvider'=>$dataProvider,
+            'filterModel'=>$searchModel,
+            'exportConfig' => [
+                GridView::EXCEL => 'inactive',
+                GridView::PDF => 'inactive',
+            ],
+            //'showPageSummary'=>true,
+            'pjax'=>true,
+            'striped'=>true,
+            'hover'=>true,
+            'panel'=>[
+                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>  <b>Lista principal de todos las Actividades</b></h3>',
+                'type'=>'success',
+                'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nueva Actividad', ['actividades/createmodal', 'id_p' => $id_p], ['class' => 'btn btn-success']),
+                'footer'=>false
+            ],
+            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                ['class'=>'kartik\grid\SerialColumn'],
 
                 [
                     'attribute' => 'actividad',
                     'value' => 'actividad0.nombre',
+                    'width' => '250px', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'ene',
@@ -65,7 +88,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->ene . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'feb',
@@ -76,7 +105,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->feb . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'mar',
@@ -87,7 +122,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->mar . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'abr',
@@ -98,7 +139,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->abr . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'may',
@@ -109,7 +156,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->may . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'jun',
@@ -120,7 +173,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->jun . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'ago',
@@ -131,7 +190,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->ago . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'sep',
@@ -142,7 +207,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->sep . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'oct',
@@ -153,7 +224,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->oct . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'nov',
@@ -164,7 +241,13 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->nov . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute' => 'dic',
@@ -175,10 +258,14 @@ $this->title = 'Avance general de Actividades';
                         } else {
                             return $model->dic . ' %';
                         }
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
-                //'programados',
-                //'total',
                 [
                     'attribute' => 'avance',
                     'value' => function($model){
@@ -191,14 +278,36 @@ $this->title = 'Avance general de Actividades';
                                                     'width' => "{$model->avance}%",
                                                     'font-weight' => 'bold',
                                                     'color' => 'black',
+                                                    'white-space' => 'normal',
+                                                    'vertical-align' => 'middle',
                                                 ],
                                             ];
                                         },
                 ],
-                //'recursos_h',
-                //'actividad',
-
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'label' => 'Acciones',
+                    'format' => 'raw',
+                    'value' => function($data){
+                        $id = $data['id_ca'];
+                        $id_p = $data['proyecto'];
+                        $btn_view = Html::a('<i class="fa fa-eye"></i>', ['cronograma-av/viewmodal', 'id' => $id, 'id_p' => $id_p], ['class' => 'btn btn-warning', 'title' => 'Ver']);
+                        $btn_edit = Html::a('<i class="fa fa-pencil"></i>', ['cronograma-av/updatemodal', 'id' => $id, 'id_p' => $id_p], ['class' => 'btn btn-success', 'title' => 'Actualizar']);
+                        $btn_delete = Html::a('<i class="fa fa-trash"></i>', ['cronograma-av/deletemodal', 'id' => $id, 'id_p' => $id_p], [
+                            'class' => 'btn btn-danger',
+                            'title' => 'Eliminar',
+                            'data' => [
+                                'confirm' => '¿Esta seguro que desea eliminar la Actividad?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                        return Html::a($btn_view . ' ' .$btn_edit . ' ' . $btn_delete, '#');
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
+                ],
             ],
         ]); ?>
         </div>

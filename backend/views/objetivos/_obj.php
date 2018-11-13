@@ -18,59 +18,31 @@ use yii\helpers\Url;
 $this->title = 'Objetivos';
 ?>
 
-
 <div class="box box-success box-solid">
     <div class="box-header">
         <h3 class="box-title"><i class="fa fa-tags"></i> <?= Html::encode($this->title) ?></h3>
     </div>
     <div class="box-body">
-
-        <p>
-            <?= Html::button('<i class="fa fa-plus"></i> Nuevo Objetivo', ['value' => Url::to('index.php?r=objetivos/createmodal'), 'class' => 'btn btn-info', 'id' => 'modalButtonObj']) ?>
-        </p>
-        <?php 
-            Modal::begin([
-                //'header' => '<h4>Nuevo Proyecto</h4>',
-                'id' => 'modalObj',
-                'size' => 'modal-lg',
-            ]);
-                echo "<div id='modalContentObj'></div>";
-            Modal::end();
-         ?>
-        
-        
-        <div class="col-lg-12">
         <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'pjax'         => true,
-            'pjaxSettings' =>[
-                'neverTimeout'=>true,
-                'options'=>[
-                        'id'=>'objGrid',
-                ]
-            ], 
+            'dataProvider'=>$dataProvider,
+            'filterModel'=>$searchModel,
+            'exportConfig' => [
+                GridView::EXCEL => 'inactive',
+                GridView::PDF => 'inactive',
+            ],
+            //'showPageSummary'=>true,
+            'pjax'=>true,
+            'striped'=>true,
+            'hover'=>true,
+            'panel'=>[
+                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-tags"></i><b> Lista principal de todos los Objetivos</b></h3>',
+                'type'=>'success',
+                'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nuevo Objetivo', ['objetivos/createmodal', 'id_p' => $id_p], ['class' => 'btn btn-success']),
+                'footer'=>false
+            ],
+            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns' => [
-                [
-                    'class' => 'kartik\grid\ExpandRowColumn',
-                    'value' => function ($model, $key, $index, $column){
-                        return GridView::ROW_COLLAPSED;
-                    },
-                    'detail' => function ($model, $key, $index, $column){
-                        $searchModel = new ResultadosSearch();
-                        $searchModel->objetivo_e = $model->id_o;
-                        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-                        $indicadores = Indicadores::find()->where(['resultado' => $searchModel->id_r])->all();
-                       
-                        return Yii::$app->controller->renderPartial('../resultados/_resu', [
-                            'searchModel' => $searchModel,
-                            'dataProvider' => $dataProvider,
-                            'id' => $searchModel->objetivo_e,
-                            'objetivo' => $model->nombre,
-                        ]);
-                    },
-                ],
+                ['class'=>'kartik\grid\SerialColumn'],
                 [
                     'attribute' => 'nombre',
                     'contentOptions' => [
@@ -89,45 +61,26 @@ $this->title = 'Objetivos';
                         ],
                     ],
                 ],
-                //'proyecto',
                 [
-                    'class' => 'yii\grid\ActionColumn',
-                    'template' => '{view} {update} {delete}',
-                    
-                    'buttons' => [
-                        'update' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                'class' => 'pjax-update-link',
-                                'delete-url' => $url,
-                                'pjax-container' => 'proyectosGrid',
-                                'title' => Yii::t('yii', 'Update'),
-                            ]);
-                        },
-                        'delete' => function ($url, $model) {
-                            return Html::a(
-                                Yii::t('yii', '<span class="glyphicon glyphicon-trash"></span>'), 
-                                
-                                ['objetivos/deletemodel','id' => $model->id_o, 'id_p' => $model->proyecto],
-                                [
-                                    'title' => Yii::t('yii', 'Delete'),
-                                    'aria-label' => Yii::t('yii', 'Delete'),
-                                    'onclick' => "
-                                        if (confirm('¿Esta seguro de eliminar el Objetivo?')) {
-                                            $.ajax('$url', {
-                                                type: 'POST'
-                                            }).done(function(data) {
-                                                $.pjax.reload({container: '#objGrid', url: $('#tabsGrid li.active a').attr('href')});
-                                            });
-                                        }
-                                        return false;
-                                    ",
-                                ]
-                            );
-                        },
-                    ],
+                    'label' => 'Acciones',
+                    'format' => 'raw',
+                    'value' => function($data){
+                        $id = $data['id_o'];
+                        $id_p = $data['proyecto'];
+                        $btn_view = Html::a('<i class="fa fa-eye"></i>', ['objetivos/viewmodal', 'id' => $id, 'id_p'=> $id_p], ['class' => 'btn btn-warning', 'title' => 'Ver']);
+                        $btn_edit = Html::a('<i class="fa fa-pencil"></i>', ['objetivos/updatemodal', 'id' => $id, 'id_p'=> $id_p], ['class' => 'btn btn-success', 'title' => 'Actualizar']);
+                        $btn_delete = Html::a('<i class="fa fa-trash"></i>', ['objetivos/deletemodal', 'id' => $id, 'id_p'=> $id_p], [
+                            'class' => 'btn btn-danger',
+                            'title' => 'Eliminar',
+                            'data' => [
+                                'confirm' => '¿Esta seguro que desea eliminar el Objetivo?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                        return Html::a($btn_view . ' ' .$btn_edit . ' ' . $btn_delete, '#');
+                    }
                 ],
             ],
         ]); ?>
-        </div>
     </div>
 </div>

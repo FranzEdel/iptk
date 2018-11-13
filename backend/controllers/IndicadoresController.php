@@ -35,15 +35,60 @@ class IndicadoresController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Indicadores();
+
         $searchModel = new IndicadoresSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
+    public function actionFiltro($id=0)
+    {
+        return $this->redirect(['index2', 'id' => $id]);
+    }
+
+    public function actionIndex2($id='0')
+    {
+        $model = new Indicadores();
+
+        $searchModel = new IndicadoresSearch();
+        if($id != '0'){
+            $searchModel->proyecto = $id;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionLists($id)
+    {
+        $countIndicadores = Indicadores::find()
+                ->where(['resultado' => $id])
+                ->count();
+
+        $indicadores = Indicadores::find()
+                ->where(['resultado' => $id])
+                ->all();
+        
+        if($countIndicadores > 0)
+        {
+            foreach($indicadores as $indicador){
+                echo "<option value='".$indicador->id_i."'>".$indicador->nombre."</option>";
+            }
+        }else{
+            echo "<option> - </option>";
+        }
+        
+    }
     /**
      * Displays a single Indicadores model.
      * @param integer $id
@@ -54,6 +99,14 @@ class IndicadoresController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionViewmodal($id, $id_p)
+    {
+        return $this->renderAjax('viewmodal', [
+            'model' => $this->findModel($id),
+            'id_p' => $id_p,
         ]);
     }
 
@@ -73,6 +126,26 @@ class IndicadoresController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionCreatemodal($id_p)
+    {
+        $model = new Indicadores();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->proyecto = $id_p;
+            if($model->save()){
+                echo json_encode(['status' => 'Success', 'message' => 'Registro realizado']);
+            }else{
+                echo json_encode(['status' => 'Error', 'message' => 'Registro no realizado']);
+            }
+            return $this->redirect(['proyectos/view', 'id' => $id_p]);
+        } else {
+            return $this->renderAjax('createmodal', [
+                'model' => $model,
+                'id_p' => $id_p,
+            ]);
+        }
     }
 
     /**
@@ -95,6 +168,22 @@ class IndicadoresController extends Controller
         ]);
     }
 
+    public function actionUpdatemodal($id, $id_p)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->proyecto = $id_p;
+            $model->save();
+            return $this->redirect(['proyectos/view', 'id' => $id_p]);
+        }
+
+        return $this->renderAjax('updatemodal', [
+            'model' => $model,
+            'id_p' => $id_p,
+        ]);
+    }
+
     /**
      * Deletes an existing Indicadores model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -107,6 +196,14 @@ class IndicadoresController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionDeletemodal($id, $id_p)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['proyectos/view', 'id' => $id_p]);
+ 
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 use backend\models\CronogramaEj;
 
@@ -14,67 +14,262 @@ $this->title = 'Cronograma Ejecutado';
 ?>
 <div class="box box-danger box-solid">
     <div class="box-header">
-        <h4><i class="fa fa-usd"></i> <?= Html::encode($this->title) ?></h4>
-    </div>
-    <div class="box-body">
         <div class="row">
             <div class="col-lg-6">
                 <p>
-                    <?= Html::a('<i class="fa fa-plus"></i> Nuevo Item', ['cronograma-ej/create'], ['class' => 'btn btn-info']) ?>
+                    <h4><i class="fa fa-book"></i> Monto total ejecutado en el Proyecto: <b><?= CronogramaEj::instance()->getTotalPro($id_p);?></b></h4>
                 </p>
             </div>
-            <div class="col-lg-6 text-right">
-                <h4><b>Total Ejecutado:  <?= CronogramaEj::instance()->getTotalPro($id_p);?></b></h4>
-            </div>
         </div>
+    </div>
+    <div class="box-body">
 
         <?= GridView::widget([
-            'dataProvider' => $dataProviderEj,
-            //'filterModel' => $searchModelEj,
+            'dataProvider'=>$dataProvider,
+            'filterModel'=>$searchModel,
+            'exportConfig' => [
+                GridView::EXCEL => 'inactive',
+                GridView::PDF => 'inactive',
+            ],
+            //'showPageSummary'=>true,
+            'pjax'=>true,
+            'striped'=>true,
+            'hover'=>true,
+            'panel'=>[
+                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>  <b>Lista principal de todos las Actividades</b></h3>',
+                'type'=>'success',
+                'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nueva Gasto', ['cronograma-ej/createmodal', 'id_p' => $id_p], ['class' => 'btn btn-success']),
+                'footer'=>false
+            ],
+            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
+                ['class'=>'kartik\grid\SerialColumn'],
 
-                //'id_ce',
                 [
-                'attribute' => 'item',
-                'contentOptions' => [
-                    'style' => [
-                        'max-width' => '150px',
-                        'white-space' => 'normal',
+                    'attribute' => 'actividad',
+                    'value' => 'actividad0.nombre',
+                    'width' => '250px', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ],
                     ],
                 ],
+                [
+                    'attribute' => 'item',
+                    'label' => 'Gasto',
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '150px',
+                            'font-weight' => 'bold',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ],
+                    ],
                 ],
-                //'item',
-                'ene',
-                'feb',
-                'mar',
-                'abr',
-                'may',
-                'jun',
-                'jul',
-                'ago',
-                'sep',
-                'oct',
-                'nov',
-                'dic',
+                [
+                    'attribute' => 'ene',
+                    'label' => 'Ene',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'feb',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'mar',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'abr',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'may',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'jun',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'jul',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'ago',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'sep',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'oct',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'nov',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
+                [
+                    'attribute' => 'dic',
+                    'format'=>['decimal', 2],
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
+                    ]
+                ],
                 [
                     'attribute' => 'total',
                     'format'=>['decimal', 2],
                     'contentOptions' => [
-                        'style' => ['font-weight' => 'bold']
+                        'style' => [
+                            'font-weight' => 'bold',
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ]
                     ]
                 ],
-                //'recursos_h',
-                //'actividad',
-
-                ['class' => 'yii\grid\ActionColumn'],
+                [
+                    'attribute'=>'presupuestado',
+                    'label' => 'Presupuesto',
+                    'contentOptions' => [
+                        'style' => [
+                            'font-weight' => 'bold',
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'text-align' => 'center',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->actividad0->presupuestado;
+                    },
+                ],
+                [
+                    'label' => 'Acciones',
+                    'format' => 'raw',
+                    'value' => function($data){
+                        $id = $data['id_ce'];
+                        $id_p = $data['proyecto'];
+                        $btn_view = Html::a('<i class="fa fa-eye"></i>', ['cronograma-ej/viewmodal', 'id' => $id, 'id_p' => $id_p], ['class' => 'btn btn-warning', 'title' => 'Ver']);
+                        $btn_edit = Html::a('<i class="fa fa-pencil"></i>', ['cronograma-ej/updatemodal', 'id' => $id, 'id_p' => $id_p], ['class' => 'btn btn-success', 'title' => 'Actualizar']);
+                        $btn_delete = Html::a('<i class="fa fa-trash"></i>', ['cronograma-ej/deletemodal', 'id' => $id, 'id_p' => $id_p], [
+                            'class' => 'btn btn-danger',
+                            'title' => 'Eliminar',
+                            'data' => [
+                                'confirm' => '¿Esta seguro que desea eliminar la Actividad?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                        return Html::a($btn_view . ' ' .$btn_edit . ' ' . $btn_delete, '#');
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
+                ],
             ],
         ]); ?>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-10  text-right"><b><h4>Total:</h4></b></div>
-    <div class="col-ls-2">
-        <b><h4><?= CronogramaEj::instance()->getTotalPro($id_p);?></h4></b>
     </div>
 </div>

@@ -18,7 +18,7 @@ class IndicadoresSearch extends Indicadores
     public function rules()
     {
         return [
-            [['id_i', 'resultado'], 'integer'],
+            [['id_i', 'resultado', 'proyecto', 'objetivo'], 'integer'],
             [['nombre'], 'safe'],
         ];
     }
@@ -61,6 +61,8 @@ class IndicadoresSearch extends Indicadores
         $query->andFilterWhere([
             'id_i' => $this->id_i,
             'resultado' => $this->resultado,
+            'proyecto' => $this->proyecto,
+            'objetivo' => $this->objetivo,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre]);

@@ -35,12 +35,76 @@ class CronogramaAvController extends Controller
      */
     public function actionIndex()
     {
+        $model = new CronogramaAv();
+
         $searchModel = new CronogramaAvSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionFiltro($id=0)
+    {
+        echo $id;
+
+        return $this->redirect(['index2', 'id' => $id]);
+    }
+
+    public function actionIndex2($id='0')
+    {
+        $model = new CronogramaAv();
+
+        $searchModel = new CronogramaAvSearch();
+        if($id != '0'){
+            $searchModel->proyecto = $id;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionPatav()
+    {
+        $model = new CronogramaAv();
+
+        $searchModel = new CronogramaAvSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('patav', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+    public function actionFiltro2($id=0)
+    {
+        echo $id;
+
+        return $this->redirect(['patav2', 'id' => $id]);
+    }
+
+    public function actionPatav2($id='0')
+    {
+        $model = new CronogramaAv();
+
+        $searchModel = new CronogramaAvSearch();
+        if($id != '0'){
+            $searchModel->proyecto = $id;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('patav', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 

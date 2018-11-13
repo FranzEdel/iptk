@@ -9,7 +9,12 @@ use Yii;
  *
  * @property int $id_a
  * @property string $nombre
+ * @property string $presupuestado
  * @property int $indicador
+ * @property int $proyecto
+ * @property int $objetivo
+ * @property int $resultado
+ * @property int $rrhh
  *
  * @property IndicadoresR $indicador0
  * @property CronogramaA[] $cronogramaAs
@@ -31,8 +36,9 @@ class Actividades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'indicador'], 'required'],
-            [['indicador'], 'integer'],
+            [['nombre', 'presupuestado', 'indicador', 'proyecto', 'objetivo', 'resultado', 'rrhh'], 'required'],
+            [['presupuestado'], 'number'],
+            [['indicador', 'proyecto', 'objetivo', 'resultado', 'rrhh'], 'integer'],
             [['nombre'], 'string', 'max' => 200],
             [['indicador'], 'exist', 'skipOnError' => true, 'targetClass' => Indicadores::className(), 'targetAttribute' => ['indicador' => 'id_i']],
         ];
@@ -46,16 +52,41 @@ class Actividades extends \yii\db\ActiveRecord
         return [
             'id_a' => 'Id A',
             'nombre' => 'Nombre',
+            'presupuestado' => 'Presupuestado',
             'indicador' => 'Indicador',
+            'proyecto' => 'Proyecto',
+            'objetivo' => 'Objetivo',
+            'resultado' => 'Resultado',
+            'rrhh' => 'Rrhh',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getProyecto0()
+    {
+        return $this->hasOne(Proyectos::className(), ['id_p' => 'proyecto']);
+    }
+
+    public function getObjetivo0()
+    {
+        return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo']);
+    }
+
+    public function getResultado0()
+    {
+        return $this->hasOne(Resultados::className(), ['id_r' => 'resultado']);
+    }
+
     public function getIndicador0()
     {
         return $this->hasOne(Indicadores::className(), ['id_i' => 'indicador']);
+    }
+
+    public function getRecursoHumano0()
+    {
+        return $this->hasOne(RecursosHumanos::className(), ['id_rh' => 'rrhh']);
     }
 
     /**
@@ -63,7 +94,7 @@ class Actividades extends \yii\db\ActiveRecord
      */
     public function getCronogramaAs()
     {
-        return $this->hasMany(CronogramaAv::className(), ['actividad' => 'id_a']);
+        return $this->hasMany(CronogramaA::className(), ['actividad' => 'id_a']);
     }
 
     /**
@@ -71,6 +102,6 @@ class Actividades extends \yii\db\ActiveRecord
      */
     public function getCronogramaEs()
     {
-        return $this->hasMany(CronogramaEj::className(), ['actividad' => 'id_a']);
+        return $this->hasMany(CronogramaE::className(), ['actividad' => 'id_a']);
     }
 }

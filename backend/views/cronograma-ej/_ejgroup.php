@@ -13,82 +13,307 @@ use backend\models\CronogramaEj;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 ?>
-<div class="cronograma-ej-index">
+<div class="box box-success box-solid">
+    <div class="box-body">
 
-    <?= GridView::widget([
-            'dataProvider'=>$dataProviderEj,
-            'filterModel'=>$searchModelEj,
-            'showPageSummary'=>true,
-            'pjax'=>true,
-            'striped'=>true,
-            'hover'=>true,
-            'panel'=>['type'=>'info', 'heading'=>'<h4>Ejecución general de los Objetivos</h4>'],
-            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
-            'columns'=>[
-                ['class'=>'kartik\grid\SerialColumn'],
-                [
-                    'attribute'=>'objetivo', 
-                    'contentOptions' => [
-                        'style' => [
-                            'max-width' => '250px',
-                            'white-space' => 'normal',
-                        ],
-                    ],
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->objetivo0->nombre;
-                    },
-                    'filterType'=>GridView::FILTER_SELECT2,
-                    'filter'=>ArrayHelper::map(Objetivos::find()->orderBy('nombre')->asArray()->all(), 'id_o', 'nombre'), 
-                    'filterWidgetOptions'=>[
-                        'pluginOptions'=>['allowClear'=>true],
-                    ],
-                    'filterInputOptions'=>['placeholder'=>'Any supplier'],
-                    'group'=>true,  // enable grouping
+        <?= GridView::widget([
+                'dataProvider'=>$dataProviderEj,
+                'filterModel'=>$searchModelEj,
+                'exportConfig' => [
+                    GridView::EXCEL => 'inactive',
+                    GridView::PDF => 'inactive',
                 ],
-                [
-                    'attribute'=>'actividad', 
-                    'contentOptions' => [
-                        'style' => [
-                            'max-width' => '200px',
-                            'white-space' => 'normal',
-                        ],
-                    ],
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->actividad0->nombre;
-                    },
-                    'filterType'=>GridView::FILTER_SELECT2,
-                    'filter'=>ArrayHelper::map(Actividades::find()->orderBy('nombre')->asArray()->all(), 'id_a', 'nombre'), 
-                    'filterWidgetOptions'=>[
-                        'pluginOptions'=>['allowClear'=>true],
-                    ],
-                    'filterInputOptions'=>['placeholder'=>'Any category'],
-                    'group'=>true,  // enable grouping
-                    'subGroupOf'=>1 // supplier column index is the parent group
+                'responsiveWrap' => true,
+                'showPageSummary'=>true,
+                'pjax'=>true,
+                'striped'=>true,
+                'hover'=>true,
+                'panel'=>[
+                    'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-tasks"></i>  <b>Ejecución presupuestaria de las Actividades del Proyecto</b></h3>',
+                    'type'=>'success',
+                    'footer'=>false
                 ],
-                [
-                    'attribute'=>'item',
-                    'contentOptions' => [
-                        'style' => [
-                            'max-width' => '200px',
-                            'white-space' => 'normal',
+                'toggleDataContainer' => ['class' => 'btn-group mr-2'],
+                'columns'=>[
+                    ['class'=>'kartik\grid\SerialColumn'],
+                    [
+                        'attribute'=>'objetivo', 
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '250px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
                         ],
+                        'value'=>function ($model, $key, $index, $widget) { 
+                            return $model->objetivo0->nombre;
+                        },
+                        'group'=>true,  // enable grouping
                     ],
-                    'pageSummary'=>'Total Ejecutado',
-                    'pageSummaryOptions'=>['class'=>'text-right'],
-                ],
-                [
-                    'attribute'=>'total',
-                    'contentOptions' => [
-                        'style' => [
-                            'max-width' => '150px',
-                            'white-space' => 'normal',
+                    [
+                        'attribute'=>'resultado', 
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '250px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
                         ],
+                        'value'=>function ($model, $key, $index, $widget) { 
+                            return $model->resultado0->nombre;
+                        },
+                        'group'=>true,  // enable grouping
+                        'subGroupOf'=>1 // supplier column index is the parent group
+
                     ],
-                    'hAlign'=>'right',
-                    'format'=>['decimal', 2],
-                    'pageSummary'=>true,
-                    'pageSummaryFunc'=> GridView::F_SUM,
+                    [
+                        'attribute'=>'indicador', 
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '250px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'value'=>function ($model, $key, $index, $widget) { 
+                            return $model->indicador0->nombre;
+                        },
+                    ],
+                    [
+                        'attribute'=>'actividad', 
+                        'label' => 'Actividades',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '200px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'value'=>function ($model, $key, $index, $widget) { 
+                            return $model->actividad0->nombre;
+                        },
+                    ],
+                    [
+                        'attribute'=>'item',
+                        'label' => 'Gasto',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '200px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'pageSummary'=>'Totales',
+                        'pageSummaryOptions'=>['class'=>'text-right'],
+                    ],
+                    [
+                        'attribute'=>'ene',
+                        'label' => 'Ene',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'feb',
+                        'label' => 'Feb',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'mar',
+                        'label' => 'Mar',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'abr',
+                        'label' => 'Abr',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'may',
+                        'label' => 'May',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'jun',
+                        'label' => 'Jun',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'jul',
+                        'label' => 'Jul',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'ago',
+                        'label' => 'Ago',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'sep',
+                        'label' => 'Sep',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'oct',
+                        'label' => 'Oct',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'nov',
+                        'label' => 'Nov',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'dic',
+                        'label' => 'Dic',
+                        'width' => '65px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
+                        'attribute'=>'total',
+                        'label' => 'Total',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'font-weight' => 'bold',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                        'format'=>['decimal', 2],
+                        'pageSummary'=>true,
+                        'pageSummaryFunc'=> GridView::F_SUM,
+                    ],
+                    [
+                        'attribute'=>'presupuestdao', 
+                        'label' => 'PPTO',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '200px',
+                                'white-space' => 'normal',
+                                'font-weight' => 'bold',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'value'=>function ($model, $key, $index, $widget) { 
+                            return $model->actividad0->presupuestado;
+                        },
+                        'hAlign'=>'center',
+                        'format'=>['decimal', 2],
+                        'pageSummary'=>true,
+                        'pageSummaryFunc'=> GridView::F_SUM,
+                    ],
+                    [
+                        'attribute'=>'actividad',
+                        'label' => 'RRHH', 
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '150px',
+                                'white-space' => 'normal',
+                                'font-weight' => 'bold',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'value'=>function ($model, $key, $index, $widget) { 
+                            return $model->actividad0->recursoHumano0->fullName;
+                        },
+                        'width' => '150px',
+                    ],
                 ],
-            ],
-        ]); ?>
+            ]); ?>
+        </div>
 </div>

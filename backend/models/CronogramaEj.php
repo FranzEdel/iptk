@@ -22,15 +22,13 @@ use Yii;
  * @property string $nov
  * @property string $dic
  * @property string $total
- * @property int $recursos_h
  * @property int $actividad
+ * @property int $indicador
+ * @property int $resultado
  * @property int $objetivo
  * @property int $proyecto
  *
  * @property Actividades $actividad0
- * @property RecursosHumanos $recursosH
- * @property Objetivos $objetivo0
- * @property Proyectos $proyecto0
  */
 class CronogramaEj extends \yii\db\ActiveRecord
 {
@@ -48,14 +46,12 @@ class CronogramaEj extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'total'], 'number'],
-            [['recursos_h', 'actividad', 'objetivo', 'proyecto'], 'required'],
-            [['recursos_h', 'actividad', 'objetivo', 'proyecto'], 'integer'],
+            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'total'], 'number', 'message' => 'Tiene que ser un valor numerico'],
+            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'], 'default', 'value' => '0'],
+            [['actividad', 'indicador', 'resultado', 'objetivo'], 'required'],
+            [['actividad', 'indicador', 'resultado', 'objetivo', 'proyecto'], 'integer'],
             [['item'], 'string', 'max' => 200],
             [['actividad'], 'exist', 'skipOnError' => true, 'targetClass' => Actividades::className(), 'targetAttribute' => ['actividad' => 'id_a']],
-            [['recursos_h'], 'exist', 'skipOnError' => true, 'targetClass' => RecursosHumanos::className(), 'targetAttribute' => ['recursos_h' => 'id_rh']],
-            [['objetivo'], 'exist', 'skipOnError' => true, 'targetClass' => Objetivos::className(), 'targetAttribute' => ['objetivo' => 'id_o']],
-            [['proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => Proyectos::className(), 'targetAttribute' => ['proyecto' => 'id_p']],
         ];
     }
 
@@ -80,8 +76,9 @@ class CronogramaEj extends \yii\db\ActiveRecord
             'nov' => 'Nov',
             'dic' => 'Dic',
             'total' => 'Total',
-            'recursos_h' => 'Recursos H',
             'actividad' => 'Actividad',
+            'indicador' => 'Indicador',
+            'resultado' => 'Resultado',
             'objetivo' => 'Objetivo',
             'proyecto' => 'Proyecto',
         ];
@@ -99,6 +96,11 @@ class CronogramaEj extends \yii\db\ActiveRecord
         return number_format($sum, 2) . ' Bs';
     }
 
+    public function getTotal(){
+        $query = (new \yii\db\Query())->from('cronograma_e');
+        $sum = $query->sum('total');
+        return number_format($sum, 2) . ' Bs';
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -107,25 +109,21 @@ class CronogramaEj extends \yii\db\ActiveRecord
         return $this->hasOne(Actividades::className(), ['id_a' => 'actividad']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRecursosH()
+    public function getIndicador0()
     {
-        return $this->hasOne(RecursosHumanos::className(), ['id_rh' => 'recursos_h']);
+        return $this->hasOne(Indicadores::className(), ['id_i' => 'indicador']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    public function getResultado0()
+    {
+        return $this->hasOne(Resultados::className(), ['id_r' => 'resultado']);
+    }
+
     public function getObjetivo0()
     {
         return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getProyecto0()
     {
         return $this->hasOne(Proyectos::className(), ['id_p' => 'proyecto']);

@@ -18,7 +18,7 @@ class CronogramaAvSearch extends CronogramaAv
     public function rules()
     {
         return [
-            [['id_ca', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'recursos_h', 'actividad'], 'integer'],
+            [['id_ca', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'actividad', 'proyecto'], 'integer'],
             [['total', 'avance'], 'number'],
         ];
     }
@@ -75,8 +75,8 @@ class CronogramaAvSearch extends CronogramaAv
             'programados' => $this->programados,
             'total' => $this->total,
             'avance' => $this->avance,
-            'recursos_h' => $this->recursos_h,
             'actividad' => $this->actividad,
+            'proyecto' => $this->proyecto,
         ]);
 
         return $dataProvider;

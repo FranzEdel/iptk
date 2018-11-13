@@ -42,9 +42,14 @@ class RecursosHumanos extends \yii\db\ActiveRecord
     {
         return [
             'id_rh' => 'Id Rh',
-            'nombres' => 'Nombres',
-            'apellidos' => 'Apellidos',
+            'nombres' => 'Nombre',
+            'apellidos' => 'Apellido',
         ];
+    }
+
+    public function getFullName()
+    {
+        return $this->nombres .' '. $this->apellidos;
     }
 
     /**
@@ -61,5 +66,10 @@ class RecursosHumanos extends \yii\db\ActiveRecord
     public function getCronogramaEs()
     {
         return $this->hasMany(CronogramaE::className(), ['recursos_h' => 'id_rh']);
+    }
+
+    public function getActividad()
+    {
+        return $this->hasMany(Actividvades::className(), ['rrhh' => 'id_rh']);
     }
 }

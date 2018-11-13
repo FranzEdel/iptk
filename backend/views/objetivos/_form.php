@@ -15,18 +15,20 @@ use backend\models\Proyectos;
 
     <?php $form = ActiveForm::begin(['id' => $model->formName()]); ?>
 
-    <?= $form->field($model, 'nombre')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;']) ?>
-
-    <?= $form->field($model, 'indicador')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;']) ?>
-
     <?= $form->field($model, 'proyecto')->dropDownList(
                                         ArrayHelper::map(Proyectos::find()->all(),'id_p','nombre_p'),
                                         ['prompt' => '-- Proyecto --']
-    ) ?>
+    )->label('Proyecto',['class'=>'label-class']) ?>
+
+    <?= $form->field($model, 'nombre')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;'])->label('Nombre del Objetivo',['class'=>'label-class']) ?>
+
+    <?= $form->field($model, 'indicador')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;'])->label('Indicador del Objetivo',['class'=>'label-class']) ?>
+
+    
 
     <div class="form-group">
         <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success']) ?>
-        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-remove"></i>Cancelar</button>
+        <?= Html::a('<i class="fa fa-remove"></i> Cancelar', ['index'], ['class' => 'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

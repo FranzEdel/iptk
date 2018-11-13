@@ -6,45 +6,168 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\CronogramaEj */
 
-$this->title = $model->id_ce;
-$this->params['breadcrumbs'][] = ['label' => 'Cronograma Ejs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Información detallada';
+$this->params['breadcrumbs'][] = ['label' => 'Cronograma', 'url' => ['index']];
+
 ?>
-<div class="cronograma-ej-view">
+<div class="box box-success box-solid">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-tasks"></i> <?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::a('Actualizar', ['update', 'id' => $model->id_ce], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Eliminar', ['delete', 'id' => $model->id_ce], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => '¿Esta seguro de eliminar la información?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+            <?= Html::a('Lista Principal', ['index'], ['class' => 'btn btn-info']) ?>
+        </p>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_ce], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_ce], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                [
+                    'attribute' => 'proyecto',
+                    'label' => 'Proyecto',
+                    'value' => function($model){
+                        return $model->proyecto0->nombre_p;
+                    }
+                ],
+                [
+                    'attribute' => 'objetivo',
+                    'label' => 'Objetivo',
+                    'value' => function($model){
+                        return $model->objetivo0->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'resultado',
+                    'label' => 'Resultado',
+                    'value' => function($model){
+                        return $model->resultado0->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'indicador',
+                    'label' => 'Indicador',
+                    'value' => function($model){
+                        return $model->indicador0->nombre;
+                    }
+                ],              
+                [
+                    'attribute' => 'actividad',
+                    'value' => function($model){
+                        return $model->actividad0->nombre;
+                    },
+                ],
+                [
+                    'attribute' => 'item',
+                    'label' => 'Detalle del gasto',
+                ],
+                [
+                    'attribute' => 'ene',
+                    'label' => 'Enero',
+                    'value' => function($model){
+                        return $model->ene . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'feb',
+                    'label' => 'Febrero',
+                    'value' => function($model){
+                        return $model->feb . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'mar',
+                    'label' => 'Marzo',
+                    'value' => function($model){
+                        return $model->mar . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'abr',
+                    'label' => 'Abril',
+                    'value' => function($model){
+                        return $model->abr . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'may',
+                    'label' => 'Mayo',
+                    'value' => function($model){
+                        return $model->may . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'jun',
+                    'label' => 'Junio',
+                    'value' => function($model){
+                        return $model->jun . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'jul',
+                    'label' => 'Julio',
+                    'value' => function($model){
+                        return $model->jul . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'ago',
+                    'label' => 'Agosto',
+                    'value' => function($model){
+                        return $model->ago . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'sep',
+                    'label' => 'Septiembre',
+                    'value' => function($model){
+                        return $model->sep . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'oct',
+                    'label' => 'Octubre',
+                    'value' => function($model){
+                        return $model->oct . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'nov',
+                    'label' => 'Noviembre',
+                    'value' => function($model){
+                        return $model->nov . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'dic',
+                    'label' => 'Diciembre',
+                    'value' => function($model){
+                        return $model->dic . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'total',
+                    'label' => 'Total ejecutado',
+                    'value' => function($model){
+                        return $model->total . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'actividad',
+                    'label' => 'Monto presupuestado',
+                    'value' => function($model){
+                        return $model->actividad0->presupuestado . ' Bs';
+                    }
+                ],
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id_ce',
-            'item',
-            'ene',
-            'feb',
-            'mar',
-            'abr',
-            'may',
-            'jun',
-            'jul',
-            'ago',
-            'sep',
-            'oct',
-            'nov',
-            'dic',
-            'recursos_h',
-            'actividad',
-        ],
-    ]) ?>
-
+    </div>        
 </div>

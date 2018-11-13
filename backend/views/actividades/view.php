@@ -6,13 +6,13 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Actividades */
 
-$this->title = $model->nombre;
+$this->title = 'Información';
 $this->params['breadcrumbs'][] = ['label' => 'Actividades', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="box box-warning box-solid">
     <div class="box-header">
-        <h3 class="box-title"><i class="fa fa-tasks"></i> <?= Html::encode($this->title) ?></h3>
+        <h3 class="box-title"><i class="fa fa-tasks"></i> <?= Html::encode($this->title).' detallada de la Actividad' ?></h3>
     </div>
     <div class="box-body">
         <p>
@@ -30,10 +30,56 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                //'id_a',
-                'nombre',
-                'indicador',
-                'indicador0.nombre',
+                [
+                    'attribute' => 'proyecto',
+                    'label' => 'Proyecto',
+                    'value' => function($model){
+                        return $model->proyecto0->nombre_p;
+                    }
+                ],
+                [
+                    'attribute' => 'objetivo',
+                    'label' => 'Objetivo',
+                    'value' => function($model){
+                        return $model->objetivo0->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'resultado',
+                    'label' => 'Resultado',
+                    'value' => function($model){
+                        return $model->resultado0->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'indicador',
+                    'label' => 'Indicador',
+                    'value' => function($model){
+                        return $model->indicador0->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'nombre',
+                    'label' => 'Nombre de la Actividad',
+                    'value' => function($model){
+                        return $model->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'presupuestado',
+                    'label' => 'Monto presupuestado',
+                    'value' => function($model){
+                        return $model->presupuestado . ' Bs';
+                    }
+                ],
+                [
+                    'attribute' => 'rrhh',
+                    'label' => 'Recursos humanos para la Actividad',
+                    'value' => function($model){
+                        return $model->recursoHumano0->fullName;
+                    }
+                ],
+                
             ],
         ]) ?>
     </div>        

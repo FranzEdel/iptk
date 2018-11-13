@@ -37,6 +37,7 @@ class Proyectos extends \yii\db\ActiveRecord
             [['nombre_p', 'objetivo_general', 'fecha_ini', 'fecha_fin', 'estado'], 'required'],
             [['objetivo_general', 'estado'], 'string'],
             [['fecha_ini', 'fecha_fin'], 'safe'],
+            [['fecha_fin'],'compararFecha'],
             [['nombre_p'], 'string', 'max' => 200],
         ];
     }
@@ -68,6 +69,16 @@ class Proyectos extends \yii\db\ActiveRecord
 
     }
 
+    public function compararFecha($attribute, $params)
+    {
+        $fecha_ini = date($this->fecha_ini);
+        $fecha_fin = date($this->fecha_fin);
+
+        if($fecha_ini > $fecha_fin){
+            $this->addError($attribute, 'La fecha final no puede ser anterior a la fecha inicial');
+        }
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -82,5 +93,20 @@ class Proyectos extends \yii\db\ActiveRecord
     public function getObjetivos()
     {
         return $this->hasMany(Objetivos::className(), ['proyecto' => 'id_p']);
+    }
+
+    public function getResultados()
+    {
+        return $this->hasMany(Resultados::className(), ['proyecto' => 'id_p']);
+    }
+
+    public function getIndicadores()
+    {
+        return $this->hasMany(Indicadores::className(), ['proyecto' => 'id_p']);
+    }
+
+    public function getActividades()
+    {
+        return $this->hasMany(Actividades::className(), ['proyecto' => 'id_p']);
     }
 }

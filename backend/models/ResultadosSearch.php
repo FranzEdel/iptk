@@ -18,7 +18,7 @@ class ResultadosSearch extends Resultados
     public function rules()
     {
         return [
-            [['id_r', 'objetivo_e'], 'integer'],
+            [['id_r', 'objetivo_e', 'proyecto'], 'integer'],
             [['nombre'], 'safe'],
         ];
     }
@@ -61,6 +61,7 @@ class ResultadosSearch extends Resultados
         $query->andFilterWhere([
             'id_r' => $this->id_r,
             'objetivo_e' => $this->objetivo_e,
+            'proyecto' => $this->proyecto,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre]);

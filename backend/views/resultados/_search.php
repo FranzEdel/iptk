@@ -19,8 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre') ?>
 
-    <?= $form->field($model, 'avance') ?>
-
     <?= $form->field($model, 'objetivo_e') ?>
 
     <div class="form-group">

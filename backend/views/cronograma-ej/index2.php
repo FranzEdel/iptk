@@ -1,8 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
+use yii\helpers\ArrayHelper;
+use backend\models\Objetivos;
+use backend\models\Resultados;
+use backend\models\Indicadores;
+use backend\models\Actividades;
 use backend\models\CronogramaEj;
 
 /* @var $this yii\web\View */
@@ -22,51 +27,131 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            //'id_ce',
-            [
-               'attribute' => 'item',
-               'contentOptions' => [
-                   'style' => [
-                       'max-width' => '150px',
-                       'white-space' => 'normal',
-                   ],
-               ],
+            'dataProvider'=>$dataProvider,
+            'filterModel'=>$searchModel,
+            'showPageSummary'=>true,
+            'pjax'=>true,
+            'striped'=>true,
+            'hover'=>true,
+            'panel'=>['type'=>'primary', 'heading'=>'Ejecución general de los Objetivos'],
+            'toggleDataContainer' => ['class' => 'btn-group mr-2'],
+            'columns'=>[
+                ['class'=>'kartik\grid\SerialColumn'],
+                [
+                    'attribute'=>'objetivo', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '250px',
+                            'white-space' => 'normal',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->objetivo0->nombre;
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=>ArrayHelper::map(Objetivos::find()->orderBy('nombre')->asArray()->all(), 'id_o', 'nombre'), 
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>'Any supplier'],
+                    'group'=>true,  // enable grouping
+                ],
+                [
+                    'attribute'=>'resultado', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->actividad0->indicador0->resultado0->nombre;
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=>ArrayHelper::map(Resultados::find()->orderBy('nombre')->asArray()->all(), 'id_r', 'nombre'), 
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>'Any category'],
+                    'group'=>true,  // enable grouping
+                    'subGroupOf'=>1 // supplier column index is the parent group
+                ],
+                [
+                    'attribute'=>'indicador', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->actividad0->indicador0->nombre;
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=>ArrayHelper::map(Indicadores::find()->orderBy('nombre')->asArray()->all(), 'id_i', 'nombre'), 
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>'Any category'],
+                    'group'=>true,  // enable grouping
+                    'subGroupOf'=>1 // supplier column index is the parent group
+                ],
+                [
+                    'attribute'=>'actividad', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->actividad0->nombre;
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=>ArrayHelper::map(Actividades::find()->orderBy('nombre')->asArray()->all(), 'id_a', 'nombre'), 
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>'Actividades'],
+                    'group'=>true,  // enable grouping
+                    'subGroupOf'=>1 // supplier column index is the parent group
+                ],
+                [
+                    'attribute'=>'item',
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                        ],
+                    ],
+                    'pageSummary'=>'Total Ejecutado',
+                    'pageSummaryOptions'=>['class'=>'text-right'],
+                ],
+                [
+                    'attribute'=>'total',
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '150px',
+                            'white-space' => 'normal',
+                        ],
+                    ],
+                    'hAlign'=>'right',
+                    'format'=>['decimal', 2],
+                    'pageSummary'=>true,
+                    'pageSummaryFunc'=> GridView::F_SUM,
+                ],
+                [
+                    'attribute'=>'presupuestado', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->actividad0->presupuestado;
+                    },
+                ],
             ],
-            //'item',
-            'ene',
-            'feb',
-            'mar',
-            'abr',
-            'may',
-            'jun',
-            'jul',
-            'ago',
-            'sep',
-            'oct',
-            'nov',
-            'dic',
-            [
-                'attribute' => 'total',
-                'format'=>['decimal', 2],
-                'contentOptions' => [
-                    'style' => ['font-weight' => 'bold']
-                ]
-            ],
-            //'recursos_h',
-            //'actividad',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-</div>
-<div class="row">
-    <div class="col-lg-10  text-right"><b><h4>Total:</h4></b></div>
-    <div class="col-ls-2">
-        <b><h4><?= CronogramaEj::instance()->getTotal();?></h4></b>
-    </div>
+        ]); ?>
 </div>

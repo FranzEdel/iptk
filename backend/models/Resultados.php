@@ -10,6 +10,7 @@ use Yii;
  * @property int $id_r
  * @property string $nombre
  * @property int $objetivo_e
+ * @property int $proyecto
  *
  * @property IndicadoresR[] $indicadoresRs
  * @property Objetivos $objetivoE
@@ -30,10 +31,11 @@ class Resultados extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'objetivo_e'], 'required'],
-            [['objetivo_e'], 'integer'],
+            [['nombre', 'objetivo_e', 'proyecto'], 'required'],
+            [['objetivo_e', 'proyecto'], 'integer'],
             [['nombre'], 'string', 'max' => 200],
             [['objetivo_e'], 'exist', 'skipOnError' => true, 'targetClass' => Objetivos::className(), 'targetAttribute' => ['objetivo_e' => 'id_o']],
+            [['proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => Proyectos::className(), 'targetAttribute' => ['proyecto' => 'id_p']],
         ];
     }
 
@@ -44,17 +46,28 @@ class Resultados extends \yii\db\ActiveRecord
     {
         return [
             'id_r' => 'Id R',
-            'nombre' => 'Nombre',
-            'objetivo_e' => 'Objetivo E',
+            'nombre' => 'RESULTADO A CONSEGUIR',
+            'objetivo_e' => 'OBJETIVO',
+            'proyecto' => 'Proyecto',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIndicadoresRs()
+    public function getIndicadores()
     {
-        return $this->hasMany(IndicadoresR::className(), ['resultado' => 'id_r']);
+        return $this->hasMany(Indicadores::className(), ['resultado' => 'id_r']);
+    }
+
+    public function getActividades()
+    {
+        return $this->hasMany(Actividades::className(), ['resultado' => 'id_r']);
+    }
+
+    public function getCronogramaEs()
+    {
+        return $this->hasMany(CronogramaEj::className(), ['actividad' => 'id_a']);
     }
 
     /**
@@ -63,5 +76,10 @@ class Resultados extends \yii\db\ActiveRecord
     public function getObjetivoE()
     {
         return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo_e']);
+    }
+
+    public function getProyecto0()
+    {
+        return $this->hasOne(Proyectos::className(), ['id_p' => 'proyecto']);
     }
 }

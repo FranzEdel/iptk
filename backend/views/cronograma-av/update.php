@@ -5,17 +5,18 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\CronogramaAv */
 
-$this->title = 'Update Cronograma Av: ' . $model->id_ca;
-$this->params['breadcrumbs'][] = ['label' => 'Cronograma Avs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_ca, 'url' => ['view', 'id' => $model->id_ca]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Actualización del Avance';
+$this->params['breadcrumbs'][] = ['label' => 'Avance', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'Actualizar';
 ?>
-<div class="cronograma-av-update">
+<div class="box box-success box-solid">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-tasks"></i> <?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
 </div>

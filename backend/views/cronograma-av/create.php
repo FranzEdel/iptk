@@ -6,16 +6,17 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\CronogramaAv */
 
-$this->title = 'Create Cronograma Av';
-$this->params['breadcrumbs'][] = ['label' => 'Cronograma Avs', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Avance de la actividad';
+$this->params['breadcrumbs'][] = ['label' => 'CronogramaAv', 'url' => ['index']];
 ?>
-<div class="cronograma-av-create">
+<div class="box box-success box-solid">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-tasks"></i> <?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
 </div>

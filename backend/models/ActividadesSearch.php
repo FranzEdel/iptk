@@ -18,7 +18,7 @@ class ActividadesSearch extends Actividades
     public function rules()
     {
         return [
-            [['id_a', 'indicador'], 'integer'],
+            [['id_a', 'indicador', 'proyecto', 'objetivo', 'resultado', 'rrhh'], 'integer'],
             [['nombre'], 'safe'],
         ];
     }
@@ -61,6 +61,10 @@ class ActividadesSearch extends Actividades
         $query->andFilterWhere([
             'id_a' => $this->id_a,
             'indicador' => $this->indicador,
+            'proyecto' => $this->proyecto,
+            'objetivo' => $this->objetivo,
+            'resultado' => $this->resultado,
+            'rrhh' => $this->rrhh,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre]);

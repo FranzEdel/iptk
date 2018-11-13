@@ -18,7 +18,7 @@ class CronogramaEjSearch extends CronogramaEj
     public function rules()
     {
         return [
-            [['id_ce', 'recursos_h', 'actividad'], 'integer'],
+            [['id_ce', 'proyecto','objetivo', 'resultado', 'indicador', 'actividad'], 'integer'],
             [['item'], 'safe'],
             [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'], 'number'],
         ];
@@ -73,8 +73,11 @@ class CronogramaEjSearch extends CronogramaEj
             'oct' => $this->oct,
             'nov' => $this->nov,
             'dic' => $this->dic,
-            'recursos_h' => $this->recursos_h,
             'actividad' => $this->actividad,
+            'indicador' => $this->indicador,
+            'resultado' => $this->resultado,
+            'objetivo' => $this->objetivo,
+            'proyecto' => $this->proyecto,
         ]);
 
         $query->andFilterWhere(['like', 'item', $this->item]);

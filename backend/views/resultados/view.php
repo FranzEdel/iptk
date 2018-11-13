@@ -6,33 +6,42 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Resultados */
 
-$this->title = $model->id_r;
+$this->title = 'Información principal del Resultado';
 $this->params['breadcrumbs'][] = ['label' => 'Resultados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="resultados-view">
+<div class="box box-success box-solid">
+    <div class="box-header">
+        <h3 class="box-title"><i class="glyphicon glyphicon-cog"></i> <?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::a('Actualizar', ['update', 'id' => $model->id_r], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Eliminar', ['delete', 'id' => $model->id_r], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => '¿Esta seguro de eliminar el dato?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+            <?= Html::a('Resultados', ['index'], ['class' => 'btn btn-info']) ?>
+        </p>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_r], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_r], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'proyecto0.nombre_p',
+                [
+                    'attribute' => 'objetivo',
+                    'label' => 'Objetivo',
+                    'value' => function($model){
+                        return $model->objetivoE->nombre;
+                    },
+                ],
+                'nombre',
+                
             ],
         ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id_r',
-            'nombre',
-            'avance',
-            'objetivo_e',
-        ],
-    ]) ?>
-
+    </div>       
 </div>

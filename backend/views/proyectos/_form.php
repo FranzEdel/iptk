@@ -12,7 +12,10 @@ use dosamigos\datepicker\DatePicker;
 
 <div class="proyectos-form">
 
-    <?php $form = ActiveForm::begin(['id' => $model->formName()]); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => $model->formName(),
+        'enableAjaxValidation' => true,
+    ]); ?>
 
     <?= $form->field($model, 'nombre_p')->textInput(['maxlength' => true,'style'=>'text-transform:uppercase;']) ?>
 

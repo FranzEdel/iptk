@@ -5,17 +5,18 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Resultados */
 
-$this->title = 'Update Resultados: ' . $model->id_r;
+$this->title = 'Actualizar Resultado: ';
 $this->params['breadcrumbs'][] = ['label' => 'Resultados', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_r, 'url' => ['view', 'id' => $model->id_r]];
-$this->params['breadcrumbs'][] = 'Update';
+
 ?>
-<div class="resultados-update">
+<div class="box box-success box-solid">
+    <div class="box-header">
+        <h3 class="box-title"><i class="glyphicon glyphicon-cog"></i> <?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>                  
 </div>

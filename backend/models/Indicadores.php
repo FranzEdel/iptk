@@ -10,6 +10,8 @@ use Yii;
  * @property int $id_i
  * @property string $nombre
  * @property int $resultado
+ * @property int $proyecto
+ * @property int $objetivo
  *
  * @property Actividades[] $actividades
  * @property Resultados $resultado0
@@ -30,8 +32,8 @@ class Indicadores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'resultado'], 'required'],
-            [['resultado'], 'integer'],
+            [['nombre', 'resultado', 'proyecto', 'objetivo'], 'required'],
+            [['resultado', 'proyecto', 'objetivo'], 'integer'],
             [['nombre'], 'string', 'max' => 200],
             [['resultado'], 'exist', 'skipOnError' => true, 'targetClass' => Resultados::className(), 'targetAttribute' => ['resultado' => 'id_r']],
         ];
@@ -46,6 +48,8 @@ class Indicadores extends \yii\db\ActiveRecord
             'id_i' => 'Id I',
             'nombre' => 'Nombre',
             'resultado' => 'Resultado',
+            'proyecto' => 'Proyecto',
+            'objetivo' => 'Objetivo',
         ];
     }
 
@@ -65,8 +69,13 @@ class Indicadores extends \yii\db\ActiveRecord
         return $this->hasOne(Resultados::className(), ['id_r' => 'resultado']);
     }
 
-    public function getNombreI()
+    public function getProyecto0()
     {
-        return $this->nombre;
+        return $this->hasOne(Proyectos::className(), ['id_p' => 'proyecto']);
+    }
+
+    public function getObjetivo0()
+    {
+        return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo']);
     }
 }

@@ -62,67 +62,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 'fecha_ini',
                 'fecha_fin',
                 'estado',
-
                 [
-                    'class' => 'yii\grid\ActionColumn',
-                    'buttons' => [
-                        'update' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                                'class' => 'pjax-update-link',
-                                'delete-url' => $url,
-                                'pjax-container' => 'proyectosGrid',
-                                'title' => Yii::t('yii', 'Update'),
-                            ]);
-                        },
-                        'delete' => function ($url) {
-                            return Html::a(Yii::t('yii', '<span class="glyphicon glyphicon-trash"></span>'), '#', [
-                                'title' => Yii::t('yii', 'Delete'),
-                                'aria-label' => Yii::t('yii', 'Delete'),
-                                'onclick' => "
-                                    if (confirm('¿Esta seguro de eliminar el Proyecto?')) {
-                                        $.ajax('$url', {
-                                            type: 'POST'
-                                        }).done(function(data) {
-                                            $.pjax.reload({container: '#proyectosGrid'});
-                                        });
-                                    }
-                                    return false;
-                                ",
-                            ]);
-                        },
-                    ],
+                    'label' => 'Acciones',
+                    'format' => 'raw',
+                    'value' => function($data){
+                        $id = $data['id_p'];
+                        $btn_view = Html::a('<i class="fa fa-eye"></i>', ['proyectos/view', 'id' => $id], ['class' => 'btn btn-warning', 'title' => 'Ver']);
+                        $btn_edit = Html::a('<i class="fa fa-pencil"></i>', ['proyectos/update', 'id' => $id], ['class' => 'btn btn-success', 'title' => 'Actualizar']);
+                        $btn_delete = Html::a('<i class="fa fa-trash"></i>', ['proyectos/delete', 'id' => $id], [
+                            'class' => 'btn btn-danger',
+                            'title' => 'Eliminar',
+                            'data' => [
+                                'confirm' => '¿Esta seguro que desea eliminar el Item?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                        return Html::a($btn_view . ' ' .$btn_edit . ' ' . $btn_delete, '#');
+                    }
                 ],
             ],
         ]); ?>
         <?php Pjax::end(); ?>
     </div>
 </div>
-
-<?php
-$script = <<< JS
-    $(document).on('ready pjax:success', function() {
-         $('.ajaxDelete').on('click', function(e) {
-             e.preventDefault();
-             var deleteUrl = $(this).attr('delete-url');
-             var pjaxContainer = $(this).attr('pjax-container');
-             bootbox.confirm('Are you sure you want to change status of this item?',
-                    function (result) {
-                        if (result) {
-                            $.ajax({
-                                url:   deleteUrl,
-                                type:  'post',
-                                error: function (xhr, status, error) {
-                                    alert('There was an error with your request.' 
-                                        + xhr.responseText);
-                                }
-                            }).done(function (data) {
-                                $.pjax.reload({container: '#' + $.trim(pjaxContainer)});
-                            });
-                        }
-                    }
-            );
-         });
-     });
-JS;
-$this->registerJS($script);
-?>

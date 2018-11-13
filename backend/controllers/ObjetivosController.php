@@ -35,35 +35,62 @@ class ObjetivosController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Objetivos();
         $searchModel = new ObjetivosSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
-    public function actionTabObjetivos($id)
+    public function actionFiltro($id=0)
     {
-        $searchModelObj = new ObjetivosSearch();
-        $dataProviderObj = $searchModelObj->searchById(Yii::$app->request->queryParams, $id);
+        echo $id;
 
-        return $this->renderPartial('view', [
-            'searchModelObj' => $searchModelObj,
-            'dataProviderObj' => $dataProviderObj,
+        return $this->redirect(['index2', 'id' => $id]);
+    }
+
+    public function actionIndex2($id='0')
+    {
+        $model = new Objetivos();
+
+        $searchModel = new ObjetivosSearch();
+        if($id != '0'){
+            $searchModel->proyecto = $id;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
-    public function actionAb()
-    {
-        return 'hola del controller';
-    }
 
-     public function actionCrono()
+    public function actionLists($id)
     {
+        $countObjetivos = Objetivos::find()
+                ->where(['proyecto' => $id])
+                ->count();
 
-        return $this->render('_crono');
+        $objetivos = Objetivos::find()
+                ->where(['proyecto' => $id])
+                ->all();
+        
+        if($countObjetivos > 0)
+        {
+            foreach($objetivos as $objetivo){
+                echo "<option value='".$objetivo->id_o."'>".$objetivo->nombre."</option>";
+            }
+        }else{
+            echo "<option> - </option>";
+        }
+        
     }
+   
 
     /**
      * Displays a single Objetivos model.
@@ -75,6 +102,14 @@ class ObjetivosController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionViewmodal($id, $id_p)
+    {
+        return $this->renderAjax('viewmodal', [
+            'model' => $this->findModel($id),
+            'id_p' => $id_p,
         ]);
     }
 
@@ -96,19 +131,22 @@ class ObjetivosController extends Controller
         ]);
     }
 
-    public function actionCreatemodal()
+    public function actionCreatemodal($id_p)
     {
         $model = new Objetivos();
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->proyecto = $id_p;
             if($model->save()){
                 echo json_encode(['status' => 'Success', 'message' => 'Registro realizado']);
             }else{
                 echo json_encode(['status' => 'Error', 'message' => 'Registro no realizado']);
             }
+            return $this->redirect(['proyectos/view', 'id' => $id_p]);
         } else {
             return $this->renderAjax('createmodal', [
                 'model' => $model,
+                'id_p' => $id_p,
             ]);
         }
     }
@@ -134,6 +172,22 @@ class ObjetivosController extends Controller
         ]);
     }
 
+    public function actionUpdatemodal($id, $id_p)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->proyecto = $id_p;
+            $model->save();
+            return $this->redirect(['proyectos/view', 'id' => $id_p]);
+        }
+
+        return $this->renderAjax('updatemodal', [
+            'model' => $model,
+            'id_p' => $id_p,
+        ]);
+    }
+
     /**
      * Deletes an existing Objetivos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -155,13 +209,12 @@ class ObjetivosController extends Controller
         return $this->redirect(['proyectos/view', 'id' => $id_p]);
     }
 
-    public function actionDeletemodel($id, $id_p)
+    public function actionDeletemodal($id, $id_p)
     {
         $this->findModel($id)->delete();
 
-        if (!Yii::$app->request->isAjax) {
-            return $this->redirect(['proyectos/view', 'id' => $id_p]);
-        }
+        return $this->redirect(['proyectos/view', 'id' => $id_p]);
+ 
     }
 
     /**

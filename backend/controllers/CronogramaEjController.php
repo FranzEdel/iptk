@@ -35,15 +35,78 @@ class CronogramaEjController extends Controller
      */
     public function actionIndex()
     {
+        $model = new CronogramaEj();
+
         $searchModel = new CronogramaEjSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
+    public function actionFiltro($id=0)
+    {
+        echo $id;
+
+        return $this->redirect(['index2', 'id' => $id]);
+    }
+
+    public function actionIndex2($id='0')
+    {
+        $model = new CronogramaEj();
+
+        $searchModel = new CronogramaEjSearch();
+        if($id != '0'){
+            $searchModel->proyecto = $id;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionPatej()
+    {
+        $model = new CronogramaEj();
+
+        $searchModel = new CronogramaEjSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('patej', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+    public function actionFiltro2($id=0)
+    {
+        echo $id;
+
+        return $this->redirect(['patej2', 'id' => $id]);
+    }
+
+    public function actionPatej2($id='0')
+    {
+        $model = new CronogramaEj();
+
+        $searchModel = new CronogramaEjSearch();
+        if($id != '0'){
+            $searchModel->proyecto = $id;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('patej', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
     /**
      * Displays a single CronogramaEj model.
      * @param integer $id
@@ -68,6 +131,19 @@ class CronogramaEjController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
+            $model->ene = $this->validateMes($model->ene);
+            $model->feb = $this->validateMes($model->feb);
+            $model->mar = $this->validateMes($model->mar);
+            $model->abr = $this->validateMes($model->abr);
+            $model->may = $this->validateMes($model->may);
+            $model->jun = $this->validateMes($model->jun);
+            $model->jul = $this->validateMes($model->jul);
+            $model->ago = $this->validateMes($model->ago);
+            $model->sep = $this->validateMes($model->sep);
+            $model->oct = $this->validateMes($model->oct);
+            $model->nov = $this->validateMes($model->nov);
+            $model->dic = $this->validateMes($model->may);
+
             $model->total = $model->ene + $model->feb + $model->mar + $model->abr + 
                             $model->may + $model->jun + $model->jul + $model->ago + 
                             $model->sep + $model->oct + $model->nov + $model->dic;
@@ -79,6 +155,16 @@ class CronogramaEjController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function validateMes($mes)
+    {
+        if($mes != Null){
+            return $mes;
+        }else{
+            return 0;
+        }
+
     }
 
     /**

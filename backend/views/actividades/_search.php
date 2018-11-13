@@ -19,6 +19,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre') ?>
 
+    <?= $form->field($model, 'presupuestado') ?>
+
     <?= $form->field($model, 'indicador') ?>
 
     <div class="form-group">
