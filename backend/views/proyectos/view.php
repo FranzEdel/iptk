@@ -30,22 +30,54 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
             <?= Html::a('<i class="fa fa-list"></i> Proyectos', ['index'], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('<i class="glyphicon glyphicon-import"></i> Descargar Documento', ['download', 'id' => $model->id_p], ['class' => 'btn btn-warning']) ?>
         </p>
         
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                //'id_p',
+                [
+                    'label' => 'Herramienta',
+                    'value' => function($model){
+                        return $model->herramienta0->nombre;
+                    },
+                ],
+                'codigo_p',
                 'nombre_p',
                 'objetivo_general:ntext',
                 [
                     'attribute' => 'fecha_ini',
-                    'contentOption' => ['class' => 'col-lg-6'],
+                    'label' => 'Fecha inicio',
                 ],
                 [
                     'attribute' => 'fecha_fin',
-                    'contentOption' => ['class' => 'col-lg-6'],
+                    'label' => 'Fecha Fín',
                 ],
+                [
+                    'attribute' => 'presupuesto',
+                    'label' => 'Presupuesto (Bs)',
+                    'value' => function($model){
+                        return number_format($model->presupuesto, 2) . ' Bs';
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'font-weight' => 'bold',
+                        ],
+                    ],
+                ],
+                [
+                    'label' => 'Presupuesto ($us)',
+                    'value' => function($model){
+                        return number_format(($model->presupuesto / 6.97), 2) . ' $us';
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'font-weight' => 'bold',
+                        ],
+                    ],
+                ],
+                'documento',
+                'periodo',
                 'estado',
             ],
         ]) ?>
@@ -135,14 +167,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'<i class="fa fa-usd"></i> Ejecución',
                 'content'=>  $contenidoEj,
             ],
-            [
+            /*[
                 'label'=>'<i class="glyphicon glyphicon-tasks"></i> PAT Avance',
                 'content'=> $contenidoGroupAv,
             ],
             [
                 'label'=>'<i class="glyphicon glyphicon-pushpin"></i> PAT Ejecución',
                 'content'=> $contenidoGroupEj,
-            ],
+            ],*/
             [
                 'label'=>'<i class="fa fa-calendar"></i> Eventos',
                 'content'=> $contenidoEve,

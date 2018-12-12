@@ -38,13 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 [
-                    'attribute' => 'objetivo',
-                    'label' => 'Objetivo',
-                    'value' => function($model){
-                        return $model->objetivo0->nombre;
-                    }
-                ],
-                [
                     'attribute' => 'resultado',
                     'label' => 'Resultado',
                     'value' => function($model){
@@ -52,10 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 [
-                    'attribute' => 'indicador',
-                    'label' => 'Indicador',
+                    'attribute' => 'codigo_a',
+                    'label' => 'Código',
                     'value' => function($model){
-                        return $model->indicador0->nombre;
+                        return $model->codigo_a;
                     }
                 ],
                 [
@@ -66,10 +59,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 ],
                 [
-                    'attribute' => 'presupuestado',
-                    'label' => 'Monto presupuestado',
+                    'attribute' => 'indicador',
+                    'label' => 'Indicadores',
                     'value' => function($model){
-                        return $model->presupuestado . ' Bs';
+                        return $model->indicador;
+                    }
+                ],
+                [
+                    'attribute' => 'descripcion',
+                    'label' => 'Descripción',
+                    'value' => function($model){
+                        return $model->descripcion;
+                    }
+                ],
+                [
+                    'attribute' => 'recursos',
+                    'label' => 'Recursos',
+                    'value' => function($model){
+                        return $model->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'presupuestado',
+                    'label' => 'Costes($us)',
+                    'value' => function($model){
+                        return $model->presupuestado . ' $us';
                     }
                 ],
                 [

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2021d3fdf83131a472fbe9ee91c36c9",
+    "content-hash": "3e7e59ea6641515198bec0b031b1756f",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -1124,16 +1124,16 @@
         },
         {
             "name": "kartik-v/yii2-grid",
-            "version": "v3.2.7",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "233fcf68fc6197e9451c95117ea45be153db1a8e"
+                "reference": "31ccd84cdd3dcb793bde509bcade8b75bfd94c35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/233fcf68fc6197e9451c95117ea45be153db1a8e",
-                "reference": "233fcf68fc6197e9451c95117ea45be153db1a8e",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/31ccd84cdd3dcb793bde509bcade8b75bfd94c35",
+                "reference": "31ccd84cdd3dcb793bde509bcade8b75bfd94c35",
                 "shasum": ""
             },
             "require": {
@@ -1172,21 +1172,25 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-11-03T18:08:29+00:00"
+            "time": "2018-11-09T15:48:59+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "71bfaf2450d0b338a35d2818039e1c7637e75481"
+                "reference": "0690e9b119d9116098cbae4f15703c14f9c264b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/71bfaf2450d0b338a35d2818039e1c7637e75481",
-                "reference": "71bfaf2450d0b338a35d2818039e1c7637e75481",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/0690e9b119d9116098cbae4f15703c14f9c264b2",
+                "reference": "0690e9b119d9116098cbae4f15703c14f9c264b2",
                 "shasum": ""
+            },
+            "suggest": {
+                "yiisoft/yii2-bootstrap": "for Krajee extensions to work with Bootstrap 3.x version",
+                "yiisoft/yii2-bootstrap4": "for Krajee extensions to work with Bootstrap 4.x version"
             },
             "type": "yii2-extension",
             "extra": {
@@ -1220,7 +1224,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-10-09T07:54:35+00:00"
+            "time": "2018-11-10T11:06:12+00:00"
         },
         {
             "name": "kartik-v/yii2-mpdf",
@@ -1701,16 +1705,16 @@
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
-            "version": "v1.0.8",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-fileinput.git",
-                "reference": "7f76d784cc48733746ff90b53b8474dcf48ea6c4"
+                "reference": "41820a1f2c50e1f9349a8a9a90c36027f57dfaf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/7f76d784cc48733746ff90b53b8474dcf48ea6c4",
-                "reference": "7f76d784cc48733746ff90b53b8474dcf48ea6c4",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/41820a1f2c50e1f9349a8a9a90c36027f57dfaf8",
+                "reference": "41820a1f2c50e1f9349a8a9a90c36027f57dfaf8",
                 "shasum": ""
             },
             "require": {
@@ -1752,7 +1756,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-09-19T13:09:42+00:00"
+            "time": "2018-11-05T12:33:27+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-growl",
@@ -2656,16 +2660,16 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
-                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
                 "shasum": ""
             },
             "require": {
@@ -2699,7 +2703,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2018-11-20T15:27:04+00:00"
         },
         {
             "name": "rmrevin/yii2-fontawesome",
@@ -5781,6 +5785,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "kartik-v/yii2-widget-fileinput": 20,
         "kartik-v/yii2-widget-select2": 20,
         "kartik-v/yii2-mpdf": 20
     },

@@ -17,15 +17,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_p') ?>
 
+    <?= $form->field($model, 'codigo_p') ?>
+
     <?= $form->field($model, 'nombre_p') ?>
 
     <?= $form->field($model, 'objetivo_general') ?>
 
-    <?= $form->field($model, 'fecha_ini') ?>
+    <?= $form->field($model, 'agencias') ?>
 
-    <?= $form->field($model, 'fecha_fin') ?>
+    <?php // echo $form->field($model, 'municipios') ?>
+
+    <?php // echo $form->field($model, 'periodo') ?>
+
+    <?php // echo $form->field($model, 'fecha_ini') ?>
+
+    <?php // echo $form->field($model, 'fecha_fin') ?>
 
     <?php // echo $form->field($model, 'estado') ?>
+
+    <?php // echo $form->field($model, 'responsable') ?>
+
+    <?php // echo $form->field($model, 'num_trabajadores') ?>
+
+    <?php // echo $form->field($model, 'herramienta') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

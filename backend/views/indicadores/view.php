@@ -33,30 +33,37 @@ $this->params['breadcrumbs'][] = $this->title;
             'attributes' => [
                 [
                     'attribute' => 'proyecto',
-                    'label' => 'PROYECTO',
+                    'label' => 'Proyecto',
                     'value' => function($model){
                         return $model->proyecto0->nombre_p;
                     }
                 ],
                 [
-                    'attribute' => 'objetivo',
-                    'label' => 'OBJETIVO',
-                    'value' => function($model){
-                        return $model->objetivo0->nombre;
-                    }
-                ],
-                [
                     'attribute' => 'resultado',
-                    'label' => 'RESULTADO',
+                    'label' => 'Resultado',
                     'value' => function($model){
                         return $model->resultado0->nombre;
                     }
                 ],
                 [
+                    'attribute' => 'codigo_i',
+                    'label' => 'Código',
+                    'value' => function($model){
+                        return $model->codigo_i;
+                    }
+                ],
+                [
                     'attribute' => 'nombre',
-                    'label' => 'NOMBRE DEL INDICADOR',
+                    'label' => 'Indicador anual de Resultado',
                     'value' => function($model){
                         return $model->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'medio_verificacion',
+                    'label' => 'Medio de Verificación',
+                    'value' => function($model){
+                        return $model->fuente_verificacion;
                     }
                 ],
             ],

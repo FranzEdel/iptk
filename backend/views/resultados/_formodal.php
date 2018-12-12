@@ -15,10 +15,8 @@ use backend\models\Objetivos;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'objetivo_e')->dropDownList(
-                                        ArrayHelper::map(Objetivos::find()->where(['proyecto' => $id_p])->all(),'id_o','nombre'),
-                                        ['prompt' => '-- Objetivo --']
-    ) ?>
+    <?= $form->field($model, 'codigo_r')->dropDownList(['R1' => 'R1', 'R2' => 'R2', 'R3' => 'R3', 'R4' => 'R4', 'R5' => 'R5', 'R6' => 'R6', 'R7' => 'R7', 'R8' => 'R8', 'R9' => 'R9', 'R10' => 'R10'],
+                                                        ['prompt' => '-- Código --']) ?>
 
     <?= $form->field($model, 'nombre')->textarea(['rows' => 2])->label('Nombre del Resulatdo',['class'=>'label-class']) ?>
 

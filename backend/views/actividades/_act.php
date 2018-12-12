@@ -29,67 +29,97 @@ $this->title = 'Actividades:';
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>  <b>Lista principal de todos las Actividades</b></h3>',
                 'type'=>'success',
                 'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nueva Actividad', ['actividades/createmodal', 'id_p' => $id_p], ['class' => 'btn btn-success']),
-                'footer'=>false
+                'footer'=>true
             ],
             'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns' => [
                 ['class'=>'kartik\grid\SerialColumn'],
                 [
-                    'attribute'=>'indicador',
-                    'label' => 'Indicadores',
-                    'width' => '400px', 
+                    'attribute'=>'resultado',
+                    'label' => 'Resultados',
+                    'width' => '250px', 
                     'contentOptions' => [
                         'style' => [
-                            'max-width' => '200px',
+                            'max-width' => '300px',
                             'white-space' => 'normal',
                             'vertical-align' => 'middle',
                         ],
                     ],
                     'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->indicador0->nombre;
+                        return $model->resultado0->nombre;
                     },
                     'group'=>true,  // enable grouping
+                    'subGroupOf'=>1 // supplier column index is the parent group
+                ],
+                [
+                    'attribute'=>'codigo_a',
+                    'label' => 'Código',
+                    'width' => '70px',
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '100px',
+                            'white-space' => 'normal',
+                            'font-weight' => 'bold',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
                 ],
                 [
                     'attribute'=>'nombre',
-                    'label' => 'Actividades',
-                    'width' => '400px', 
+                    'label' => 'Nombre de la Actividad',
+                    'width' => '300px',
                     'contentOptions' => [
                         'style' => [
+                            'max-width' => '305px',
+                            'white-space' => 'normal',
                             'font-weight' => 'bold',
-                            'max-width' => '200px',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
+                ],
+                [
+                    'attribute'=>'indicador',
+                    'label' => 'Indicadores',
+                    'width' => '250px',
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '300px',
                             'white-space' => 'normal',
                             'vertical-align' => 'middle',
                         ],
                     ],
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->nombre;
-                    },
-                    'group'=>true,  // enable grouping
-                    'subGroupOf'=>1, // supplier column index is the parent group
-                    'pageSummary'=>'Total Presupuesto',
+                ],
+                [
+                    'attribute'=>'recursos',
+                    'label' => 'Recursos',
+                    'width' => '300px',
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '350px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
+                    'pageSummary'=>'Total Presupuesto ($us)',
                     'pageSummaryOptions'=>['class'=>'text-right'],
                 ],
                 [
                     'attribute'=>'presupuestado',
-                    'label' => 'Presupuesto',
+                    'label' => 'Costo($us)',
                     'contentOptions' => [
                         'style' => [
-                            'font-weight' => 'bold',
-                            'max-width' => '200px',
+                            'max-width' => '100px',
                             'white-space' => 'normal',
+                            'font-weight' => 'bold',
                             'vertical-align' => 'middle',
                         ],
                     ],
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->presupuestado;
-                    },
                     'hAlign' => 'right',
                     'format' => ['decimal', 2],
                     'pageSummary' => true,
                     'pageSummaryFunc' => GridView::F_SUM
                 ],
-                [
+                /*[
                     'attribute'=>'rrhh',
                     'label' => 'Recursos Humanos',
                     'width' => '200px', 
@@ -103,7 +133,7 @@ $this->title = 'Actividades:';
                     'value'=>function ($model, $key, $index, $widget) { 
                         return $model->recursoHumano0->fullName;
                     },
-                ],
+                ],*/
                 [
                     'label' => 'Acciones',
                     'format' => 'raw',

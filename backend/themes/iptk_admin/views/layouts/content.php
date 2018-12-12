@@ -11,7 +11,7 @@ use dmstr\widgets\Alert;
             <h1>
                 <?php
                 if ($this->title !== null) {
-                    echo \yii\helpers\Html::encode('Seguimiento y Monitoreo');
+                    echo \yii\helpers\Html::encode('IPTK');
                 } else {
                     echo \yii\helpers\Inflector::camel2words(
                         \yii\helpers\Inflector::id2camel($this->context->module->id)

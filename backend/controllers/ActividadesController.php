@@ -73,17 +73,17 @@ class ActividadesController extends Controller
     public function actionLists($id)
     {
         $countActividades = Actividades::find()
-                ->where(['indicador' => $id])
+                ->where(['resultado' => $id])
                 ->count();
 
         $actividades = Actividades::find()
-                ->where(['indicador' => $id])
+                ->where(['resultado' => $id])
                 ->all();
         
         if($countActividades > 0)
         {
             foreach($actividades as $actividad){
-                echo "<option value='".$actividad->id_a."'>".$actividad->nombre."</option>";
+                echo "<option value='".$actividad->id_a."'>".$actividad->codigo_a.' - '.$actividad->nombre."</option>";
             }
         }else{
             echo "<option> - </option>";
@@ -121,7 +121,9 @@ class ActividadesController extends Controller
     {
         $model = new Actividades();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->codigo_a = $model->codigo_a.''.$model->resultado0->codigo_r;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id_a]);
         }
 
@@ -136,6 +138,7 @@ class ActividadesController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->proyecto = $id_p;
+            $model->codigo_a = $model->codigo_a.''.$model->resultado0->codigo_r;
             if($model->save()){
                 echo json_encode(['status' => 'Success', 'message' => 'Registro realizado']);
             }else{
@@ -161,7 +164,9 @@ class ActividadesController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->codigo_a = $model->codigo_a.''.$model->resultado0->codigo_r;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id_a]);
         }
 
@@ -176,6 +181,7 @@ class ActividadesController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->proyecto = $id_p;
+            $model->codigo_a = $model->codigo_a.''.$model->resultado0->codigo_r;
             $model->save();
             return $this->redirect(['proyectos/view', 'id' => $id_p]);
         }

@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type'=>'success',
                     'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nuevo Indicador', ['create'], ['class' => 'btn btn-success']),
                     'after'=>Html::a('<i class="fas fa-redo"></i> Actualizar lista', ['index'], ['class' => 'btn btn-info']),
-                    'footer'=>false
+                    //'footer'=>true
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 'columns'=>[
@@ -69,18 +69,26 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value'=>function ($model, $key, $index, $widget) { 
                             return $model->resultado0->nombre;
                         },
-                        'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=>ArrayHelper::map(Resultados::find()->orderBy('proyecto')->asArray()->all(), 'id_r', 'nombre'), 
-                        'filterWidgetOptions'=>[
-                            'pluginOptions'=>['allowClear'=>true],
-                        ],
-                        'filterInputOptions'=>['placeholder'=>'Filtrar por Resultado'],
                         'group'=>true,  // enable grouping
                         'subGroupOf'=>1 // supplier column index is the parent group
                     ],
                     [
+                        'attribute'=>'codigo_i',
+                        'label' => 'Código',
+                        'width' => '70px',
+                        'contentOptions' => [
+                            'style' => [
+                                'font-weight' => 'bold',
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                    ],
+                    [
                         'attribute'=>'nombre',
-                        'label' => 'Nombre del Indicador',
+                        'label' => 'Indicador anual de resultado',
+                        'width' => '350px',
                         'contentOptions' => [
                             'style' => [
                                 'font-weight' => 'bold',
@@ -91,6 +99,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ],
                     [
+                        'attribute'=>'fuente_verificacion',
+                        'label' => 'Fuente de Verificación',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '200px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                    ],
+                    /*[
                         'label' => 'Acciones',
                         'format' => 'raw',
                         'value' => function($data){
@@ -107,6 +126,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]);
                             return Html::a($btn_view . ' ' . $btn_edit . ' ' . $btn_delete, '#');
                         }
+                    ],*/
+                    [
+                        'class' => 'kartik\grid\ActionColumn',
+                        'contentOptions' => [
+                            'style' => [
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                     ],
                 ],
             ]); ?>

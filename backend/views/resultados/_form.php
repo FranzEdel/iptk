@@ -19,18 +19,11 @@ use backend\models\Proyectos;
                             ArrayHelper::map(Proyectos::find()->all(), 'id_p', 'nombre_p'),
                             [
                                 'prompt' => '-- Seleccione un Proyecto --',
-                                'onchange' => '
-                                    $.post( "index.php?r=objetivos/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#resultados-objetivo_e" ).html( data );
-                                    });
-                                '
                             ]
-            )->label('1.- Proyecto',['class'=>'label-class']) ?>
+            )->label('Proyecto',['class'=>'label-class']) ?>
     
-    <?= $form->field($model, 'objetivo_e')->dropDownList(
-                    ArrayHelper::map(Objetivos::find()->all(), 'id_o', 'nombre'),
-                    ['prompt' => '-- Objetivos --']
-    )->label('2- Objetivo',['class'=>'label-class']) ?>
+    <?= $form->field($model, 'codigo_r')->dropDownList(['R1' => 'R1', 'R2' => 'R2', 'R3' => 'R3', 'R4' => 'R4', 'R5' => 'R5', 'R6' => 'R6', 'R7' => 'R7', 'R8' => 'R8', 'R9' => 'R9', 'R10' => 'R10'],
+                                                        ['prompt' => '-- Código --']) ?>
     
     <?= $form->field($model, 'nombre')->textarea(['rows' => 2]) ?>
 

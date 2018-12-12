@@ -15,6 +15,9 @@ return [
         'gridview' =>  [
             'class' => '\kartik\grid\Module',
         ],
+        'personal' => [
+            'class' => 'backend\modules\personal\Module',
+        ],
     ],
     'components' => [
         'request' => [

@@ -60,13 +60,13 @@ $this->title = 'Avance general de Actividades';
             'panel'=>[
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>  <b>Lista principal de todos las Actividades</b></h3>',
                 'type'=>'success',
-                'footer'=>false
+                'footer'=>true
             ],
             'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns' => [
                 ['class' => 'kartik\grid\SerialColumn', 'hidden' => true], 
                 [
-                    'attribute' => 'objetivo',
+                    'attribute' => 'proyecto',
                     'width' => '250px', 
                     'contentOptions' => [
                         'style' => [
@@ -76,7 +76,7 @@ $this->title = 'Avance general de Actividades';
                         ],
                     ],
                     'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->actividad0->indicador0->resultado0->objetivoE->nombre;
+                        return $model->proyecto0->nombre_p;
                     },
                     'group'=>true,  // enable grouping
                 ],
@@ -91,24 +91,10 @@ $this->title = 'Avance general de Actividades';
                         ],
                     ],
                     'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->actividad0->indicador0->resultado0->nombre;
+                        return $model->resultado0->nombre;
                     },
                     'group'=>true,  // enable grouping
                     'subGroupOf'=>1, // supplier column index is the parent group
-                ],
-                [
-                    'attribute' => 'indicador',
-                    'width' => '250px', 
-                    'contentOptions' => [
-                        'style' => [
-                            'max-width' => '200px',
-                            'white-space' => 'normal',
-                            'vertical-align' => 'middle',
-                        ],
-                    ],
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->actividad0->indicador0->nombre;
-                    },
                 ],
                 [
                     'attribute' => 'actividad',

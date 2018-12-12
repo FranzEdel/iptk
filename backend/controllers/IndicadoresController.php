@@ -119,7 +119,9 @@ class IndicadoresController extends Controller
     {
         $model = new Indicadores();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->codigo_i = $model->codigo_i.''.$model->resultado0->codigo_r;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id_i]);
         }
 
@@ -134,6 +136,7 @@ class IndicadoresController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->proyecto = $id_p;
+            $model->codigo_i = $model->codigo_i.''.$model->resultado0->codigo_r;
             if($model->save()){
                 echo json_encode(['status' => 'Success', 'message' => 'Registro realizado']);
             }else{
@@ -159,7 +162,11 @@ class IndicadoresController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->codigo_i = $model->codigo_i.''.$model->resultado0->codigo_r;
+
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id_i]);
         }
 
@@ -174,6 +181,7 @@ class IndicadoresController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->proyecto = $id_p;
+            $model->codigo_i = $model->codigo_i.''.$model->resultado0->codigo_r;
             $model->save();
             return $this->redirect(['proyectos/view', 'id' => $id_p]);
         }

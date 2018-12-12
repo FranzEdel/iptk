@@ -7,12 +7,10 @@ use yii\widgets\Pjax;
 /* @var $searchModel backend\models\EventosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Eventos';
-
 ?>
 <div class="box box-danger box-solid">
     <div class="box-header">
-        <h3 class="box-title"><i class="fa fa-tasks"></i> <?= Html::encode($this->title) ?></h3>
+        <h3 class="box-title"><i class="fa fa-tasks"></i> Eventos</h3>
     </div>
     <div class="box-body">
         <?php Pjax::begin(); ?>

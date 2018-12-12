@@ -18,7 +18,9 @@ class ActividadesSearch extends Actividades
     public function rules()
     {
         return [
-            [['id_a', 'indicador', 'proyecto', 'objetivo', 'resultado', 'rrhh'], 'integer'],
+            [['id_a', 'proyecto', 'resultado', 'rrhh'], 'integer'],
+            [['presupuestado'], 'number'],
+            [['indicador', 'codigo_a', 'nombre', 'descripcion', 'recursos'], 'string'],
             [['nombre'], 'safe'],
         ];
     }
@@ -47,6 +49,9 @@ class ActividadesSearch extends Actividades
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $this->load($params);
@@ -60,9 +65,12 @@ class ActividadesSearch extends Actividades
         // grid filtering conditions
         $query->andFilterWhere([
             'id_a' => $this->id_a,
+            'codigo_a' => $this->codigo_a,
+            'descripcion' => $this->descripcion,
+            'recursos' => $this->recursos,
             'indicador' => $this->indicador,
+            'presupuestado' => $this->presupuestado,
             'proyecto' => $this->proyecto,
-            'objetivo' => $this->objetivo,
             'resultado' => $this->resultado,
             'rrhh' => $this->rrhh,
         ]);

@@ -31,9 +31,9 @@ class Objetivos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'proyecto'], 'required'],
-            [['nombre', 'indicador'], 'string'],
-            [['nombre', 'indicador'], 'filter', 'filter' => 'strtoupper'],
+            [['nombre', 'proyecto','codigo_o'], 'required'],
+            [['nombre', 'codigo_o'], 'string'],
+            [['nombre'], 'filter', 'filter' => 'strtoupper'],
             [['proyecto'], 'integer'],
             [['proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => Proyectos::className(), 'targetAttribute' => ['proyecto' => 'id_p']],
         ];
@@ -46,8 +46,8 @@ class Objetivos extends \yii\db\ActiveRecord
     {
         return [
             'id_o' => 'Id O',
+            'codigo_o' => 'Codigo',
             'nombre' => 'Nombre',
-            'indicador' => 'Indicador',
             'proyecto' => 'Proyecto',
         ];
     }
@@ -55,8 +55,6 @@ class Objetivos extends \yii\db\ActiveRecord
     public function beforeSave($insert){
         //DE FORMA INDIVIDUAL
         $this->nombre = mb_strtoupper($this->nombre, 'UTF-8');
-
-        $this->indicador = mb_strtoupper($this->indicador, 'UTF-8');
         
 
         //TODOS LOS ATRIBUTOS    

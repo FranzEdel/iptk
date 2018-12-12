@@ -18,7 +18,7 @@ class CronogramaEjSearch extends CronogramaEj
     public function rules()
     {
         return [
-            [['id_ce', 'proyecto','objetivo', 'resultado', 'indicador', 'actividad'], 'integer'],
+            [['id_ce', 'proyecto', 'resultado', 'actividad'], 'integer'],
             [['item'], 'safe'],
             [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'], 'number'],
         ];
@@ -48,6 +48,9 @@ class CronogramaEjSearch extends CronogramaEj
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 2,
+            ],
         ]);
 
         $this->load($params);
@@ -74,9 +77,7 @@ class CronogramaEjSearch extends CronogramaEj
             'nov' => $this->nov,
             'dic' => $this->dic,
             'actividad' => $this->actividad,
-            'indicador' => $this->indicador,
             'resultado' => $this->resultado,
-            'objetivo' => $this->objetivo,
             'proyecto' => $this->proyecto,
         ]);
 
@@ -106,9 +107,9 @@ class CronogramaEjSearch extends CronogramaEj
         return $dataProvider;
     }
 
-    public function searchByObj($params, $id_o)
+    public function searchByRe($params, $id_r)
     {
-        $query = CronogramaEj::find()->where(['objetivo' => $id_o]);
+        $query = CronogramaEj::find()->where(['resultado' => $id_r]);
 
         // add conditions that should always apply here
 

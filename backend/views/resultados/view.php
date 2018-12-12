@@ -32,13 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'attributes' => [
                 'proyecto0.nombre_p',
-                [
-                    'attribute' => 'objetivo',
-                    'label' => 'Objetivo',
-                    'value' => function($model){
-                        return $model->objetivoE->nombre;
-                    },
-                ],
+                'codigo_r',
                 'nombre',
                 
             ],

@@ -15,7 +15,7 @@ $this->title = 'Información';
     </div>
     <div class="box-body">
     <p>
-            <?= Html::a('Lista Objetivos', ['proyectos/view', 'id' => $id_p], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('Lista Actividades', ['proyectos/view', 'id' => $id_p], ['class' => 'btn btn-info']) ?>
             <?= Html::a('Actualizar', ['updatemodal', 'id' => $model->id_a, 'id_p' => $id_p], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Eliminar', ['deletemodal', 'id' => $model->id_a, 'id_p' => $id_p], [
                 'class' => 'btn btn-danger',
@@ -30,13 +30,6 @@ $this->title = 'Información';
             'model' => $model,
             'attributes' => [
                 [
-                    'attribute' => 'objetivo',
-                    'label' => 'Objetivo',
-                    'value' => function($model){
-                        return $model->objetivo0->nombre;
-                    }
-                ],
-                [
                     'attribute' => 'resultado',
                     'label' => 'Resultado',
                     'value' => function($model){
@@ -44,10 +37,10 @@ $this->title = 'Información';
                     }
                 ],
                 [
-                    'attribute' => 'indicador',
-                    'label' => 'Indicador',
+                    'attribute' => 'codigo_a',
+                    'label' => 'Código',
                     'value' => function($model){
-                        return $model->indicador0->nombre;
+                        return $model->codigo_a;
                     }
                 ],
                 [
@@ -58,10 +51,31 @@ $this->title = 'Información';
                     }
                 ],
                 [
-                    'attribute' => 'presupuestado',
-                    'label' => 'Monto presupuestado',
+                    'attribute' => 'indicador',
+                    'label' => 'Indicadores',
                     'value' => function($model){
-                        return $model->presupuestado . ' Bs';
+                        return $model->indicador;
+                    }
+                ],
+                [
+                    'attribute' => 'descripcion',
+                    'label' => 'Descripción',
+                    'value' => function($model){
+                        return $model->descripcion;
+                    }
+                ],
+                [
+                    'attribute' => 'recursos',
+                    'label' => 'Recursos',
+                    'value' => function($model){
+                        return $model->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'presupuestado',
+                    'label' => 'Costes($us)',
+                    'value' => function($model){
+                        return $model->presupuestado . ' $us';
                     }
                 ],
                 [

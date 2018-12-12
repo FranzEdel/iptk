@@ -38,6 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
                 'dataProvider'=>$dataProvider,
                 'filterModel'=>$searchModel,
+                'exportConfig' => [
+                    GridView::EXCEL => 'inactive',
+                    GridView::PDF => 'inactive',
+                ],
                 'showPageSummary'=>true,
                 'pjax'=>true,
                 'striped'=>true,
@@ -47,46 +51,59 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type'=>'success',
                     'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nueva Actividad', ['create'], ['class' => 'btn btn-success']),
                     'after'=>Html::a('<i class="fas fa-redo"></i> Actualizar lista', ['index'], ['class' => 'btn btn-info']),
-                    'footer'=>false
+                    //'footer'=>true
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 'columns'=>[
                     ['class'=>'kartik\grid\SerialColumn'],
 
                     [
-                        'attribute'=>'actividad', 
+                        'attribute'=>'actividad',
+                        'label' => 'Código',
+                        'width' => '80px', 
                         'contentOptions' => [
                             'style' => [
-                                'max-width' => '150px',
+                                'max-width' => '100px',
                                 'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                                'font-weight' => 'bold',
+                            ],
+                        ],
+                        'value'=>function ($model, $key, $index, $widget) { 
+                            return $model->actividad0->codigo_a;
+                        },
+                        'group'=>true,  // enable grouping
+                        'subGroupOf'=>1 // supplier column index is the parent group
+                    ],
+                    [
+                        'attribute'=>'actividad',
+                        'width' => '300px', 
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '350px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
                             ],
                         ],
                         'value'=>function ($model, $key, $index, $widget) { 
                             return $model->actividad0->nombre;
                         },
-                        'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=>ArrayHelper::map(Actividades::find()->orderBy('nombre')->asArray()->all(), 'id_a', 'nombre'), 
-                        'filterWidgetOptions'=>[
-                            'pluginOptions'=>['allowClear'=>true],
-                        ],
-                        'filterInputOptions'=>['placeholder'=>'Buscar por Indicador'],
-                        'group'=>true,  // enable grouping
-                        'subGroupOf'=>1 // supplier column index is the parent group
                     ],
-                    
                     [
                         'attribute' => 'item',
-                        'label' => 'Gasto',
+                        'label' => 'Detalle Insumo',
+                        'width' => '300px',
                         'contentOptions' => [
                             'style' => [
-                                'max-width' => '150px',
+                                'max-width' => '350px',
                                 'white-space' => 'normal',
+                                'vertical-align' => 'middle',
                             ],
                         ],
                         'pageSummary'=>'Total Ejecutado',
                         'pageSummaryOptions'=>['class'=>'text-right'],
                     ],
-                    [
+                    /*[
                         'attribute'=>'actividad',
                         'label' => 'Presupuesto', 
                         'contentOptions' => [
@@ -104,8 +121,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => ['decimal', 2],
                         'pageSummary' => true,
                         'pageSummaryFunc' => GridView::F_SUM
-                    ],
-                    [
+                    ],*/
+                    /*[
                         'attribute'=>'actividad',
                         'label' => 'RRHH', 
                         'contentOptions' => [
@@ -119,31 +136,150 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->actividad0->recursoHumano0->fullName;
                         },
                         'width' => '150px',
+                    ],*/
+                    [
+                        'attribute' => 'ene',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
                     ],
-                    'ene',
-                    'feb',
-                    'mar',
-                    'abr',
-                    'may',
-                    'jun',
-                    'jul',
-                    'ago',
-                    'sep',
-                    'oct',
-                    'nov',
-                    'dic',
+                    [
+                        'attribute' => 'feb',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'mar',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'abr',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'may',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'jun',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'jul',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'ago',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'sep',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'oct',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'nov',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
+                    [
+                        'attribute' => 'dic',
+                        'contentOptions' => [
+                            'style' => [
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+
+                    ],
                     [
                         'attribute' => 'total',
-                        'contentOptions' => [
-                            'style' => ['font-weight' => 'bold']
-                        ],
+                        'contentOptions' => function($model){
+                            if($model->total > ($model->actividad0->presupuestado * 6.97)){
+                                $color = 'red';
+                            }else{
+                                $color = 'black';
+                            }
+                            return [
+                                'style' => [
+                                    'font-weight' => 'bold',
+                                    'vertical-align' => 'middle',
+                                    'color' => $color,
+                                ],
+                            ];
+                        },
                         'width' => '150px',
                         'hAlign' => 'right',
                         'format' => ['decimal', 2],
                         'pageSummary' => true,
                         'pageSummaryFunc' => GridView::F_SUM
                     ],
-                    [
+                    /*[
                         'label' => 'Acciones',
                         'format' => 'raw',
                         'value' => function($data){
@@ -160,16 +296,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]);
                             return Html::a($btn_view . ' ' .$btn_edit . ' ' . $btn_delete, '#');
                         }
+                    ],*/
+                    [
+                        'class' => 'kartik\grid\ActionColumn',
+                        'contentOptions' => [
+                            'style' => [
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                     ],
-
                 ],
         ]); ?>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-10  text-right"><b><h4>Total:</h4></b></div>
-    <div class="col-ls-2">
-        <b><h4><?= CronogramaEj::instance()->getTotal();?></h4></b>
     </div>
 </div>

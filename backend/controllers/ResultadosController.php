@@ -71,17 +71,17 @@ class ResultadosController extends Controller
     public function actionLists($id)
     {
         $countResultados = Resultados::find()
-                ->where(['objetivo_e' => $id])
+                ->where(['proyecto' => $id])
                 ->count();
 
         $resultados = Resultados::find()
-                ->where(['objetivo_e' => $id])
+                ->where(['proyecto' => $id])
                 ->all();
         
         if($countResultados > 0)
         {
             foreach($resultados as $resultado){
-                echo "<option value='".$resultado->id_r."'>".$resultado->nombre."</option>";
+                echo "<option value='".$resultado->id_r."'>".$resultado->codigo_r.' - '.$resultado->nombre."</option>";
             }
         }else{
             echo "<option> - </option>";

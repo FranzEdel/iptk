@@ -18,8 +18,8 @@ class ProyectosSearch extends Proyectos
     public function rules()
     {
         return [
-            [['id_p'], 'integer'],
-            [['nombre_p', 'objetivo_general', 'fecha_ini', 'fecha_fin', 'estado'], 'safe'],
+            [['id_p', 'num_trabajadores', 'herramienta', 'programa'], 'integer'],
+            [['codigo_p', 'nombre_p', 'objetivo_general', 'agencias', 'municipios', 'periodo', 'fecha_ini', 'fecha_fin', 'estado', 'responsable'], 'safe'],
         ];
     }
 
@@ -47,6 +47,9 @@ class ProyectosSearch extends Proyectos
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $this->load($params);
@@ -62,11 +65,19 @@ class ProyectosSearch extends Proyectos
             'id_p' => $this->id_p,
             'fecha_ini' => $this->fecha_ini,
             'fecha_fin' => $this->fecha_fin,
+            'num_trabajadores' => $this->num_trabajadores,
+            'herramienta' => $this->herramienta,
+            'programa' => $this->programa,
         ]);
 
-        $query->andFilterWhere(['like', 'nombre_p', $this->nombre_p])
+        $query->andFilterWhere(['like', 'codigo_p', $this->codigo_p])
+            ->andFilterWhere(['like', 'nombre_p', $this->nombre_p])
             ->andFilterWhere(['like', 'objetivo_general', $this->objetivo_general])
-            ->andFilterWhere(['like', 'estado', $this->estado]);
+            ->andFilterWhere(['like', 'agencias', $this->agencias])
+            ->andFilterWhere(['like', 'municipios', $this->municipios])
+            ->andFilterWhere(['like', 'periodo', $this->periodo])
+            ->andFilterWhere(['like', 'estado', $this->estado])
+            ->andFilterWhere(['like', 'responsable', $this->responsable]);
 
         return $dataProvider;
     }

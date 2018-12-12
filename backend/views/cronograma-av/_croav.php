@@ -61,19 +61,38 @@ $this->title = 'Avance general de Actividades';
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-list-alt"></i>  <b>Lista principal de todos las Actividades</b></h3>',
                 'type'=>'success',
                 'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nueva Actividad', ['actividades/createmodal', 'id_p' => $id_p], ['class' => 'btn btn-success']),
-                'footer'=>false
+                'footer'=>true
             ],
             'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns' => [
                 ['class'=>'kartik\grid\SerialColumn'],
-
                 [
-                    'attribute' => 'actividad',
-                    'value' => 'actividad0.nombre',
-                    'width' => '250px', 
+                    'attribute'=>'actividad',
+                    'label' => 'Código',
+                    'width' => '70px', 
                     'contentOptions' => [
                         'style' => [
-                            'max-width' => '200px',
+                            'max-width' => '100px',
+                            'white-space' => 'normal',
+                            'font-weight' => 'bold',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->actividad0->codigo_a;
+                    },
+                    'group'=>true,  // enable grouping
+                    'subGroupOf'=>1 // supplier column index is the parent group
+                ],
+                [
+                    'attribute' => 'actividad',
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->actividad0->nombre;
+                    },
+                    'width' => '350px', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '400px',
                             'white-space' => 'normal',
                             'vertical-align' => 'middle',
                         ],
@@ -82,16 +101,18 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'ene',
                     'label' => 'Ene',
+                    'width' => '80px', 
                     'value' => function($model){
                         if($model->ene == 0){
                             return 'NP';
                         } else {
-                            return $model->ene . ' %';
+                            return $model->ene . '%';
                         }
                     },
                     'contentOptions' => [
                         'style' => [
                             'white-space' => 'normal',
+                            'max-width' => '100px',
                             'vertical-align' => 'middle',
                         ],
                     ],
@@ -99,11 +120,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'feb',
                     'label' => 'Feb',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->feb == 0){
                             return 'NP';
                         } else {
-                            return $model->feb . ' %';
+                            return $model->feb . '%';
                         }
                     },
                     'contentOptions' => [
@@ -116,11 +138,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'mar',
                     'label' => 'Mar',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->mar == 0){
                             return 'NP';
                         } else {
-                            return $model->mar . ' %';
+                            return $model->mar . '%';
                         }
                     },
                     'contentOptions' => [
@@ -133,11 +156,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'abr',
                     'label' => 'Abr',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->abr == 0){
                             return 'NP';
                         } else {
-                            return $model->abr . ' %';
+                            return $model->abr . '%';
                         }
                     },
                     'contentOptions' => [
@@ -150,11 +174,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'may',
                     'label' => 'May',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->may == 0){
                             return 'NP';
                         } else {
-                            return $model->may . ' %';
+                            return $model->may . '%';
                         }
                     },
                     'contentOptions' => [
@@ -167,11 +192,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'jun',
                     'label' => 'Jun',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->jun == 0){
                             return 'NP';
                         } else {
-                            return $model->jun . ' %';
+                            return $model->jun . '%';
                         }
                     },
                     'contentOptions' => [
@@ -184,11 +210,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'ago',
                     'label' => 'Ago',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->ago == 0){
                             return 'NP';
                         } else {
-                            return $model->ago . ' %';
+                            return $model->ago . '%';
                         }
                     },
                     'contentOptions' => [
@@ -201,11 +228,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'sep',
                     'label' => 'Sep',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->sep == 0){
                             return 'NP';
                         } else {
-                            return $model->sep . ' %';
+                            return $model->sep . '%';
                         }
                     },
                     'contentOptions' => [
@@ -218,11 +246,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'oct',
                     'label' => 'Oct',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->oct == 0){
                             return 'NP';
                         } else {
-                            return $model->oct . ' %';
+                            return $model->oct . '%';
                         }
                     },
                     'contentOptions' => [
@@ -235,11 +264,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'nov',
                     'label' => 'Nov',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->nov == 0){
                             return 'NP';
                         } else {
-                            return $model->nov . ' %';
+                            return $model->nov . '%';
                         }
                     },
                     'contentOptions' => [
@@ -252,11 +282,12 @@ $this->title = 'Avance general de Actividades';
                 [
                     'attribute' => 'dic',
                     'label' => 'Dic',
+                    'width' => '80px',
                     'value' => function($model){
                         if($model->dic == 0){
                             return 'NP';
                         } else {
-                            return $model->dic . ' %';
+                            return $model->dic . '%';
                         }
                     },
                     'contentOptions' => [
@@ -271,6 +302,7 @@ $this->title = 'Avance general de Actividades';
                     'value' => function($model){
                         return "{$model->avance}%";
                     },
+                    'width' => '100px',
                     'contentOptions' => function($model){
                                             return [
                                                 'class' => 'progress-bar progress-bar-success progress-bar-striped',

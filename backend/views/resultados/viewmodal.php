@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box-body">
 
         <p>
-            <?= Html::a('Lista Objetivos', ['proyectos/view', 'id' => $id_p], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('Lista Resultados', ['proyectos/view', 'id' => $id_p], ['class' => 'btn btn-info']) ?>
             <?= Html::a('Actualizar', ['updatemodal', 'id' => $model->id_r, 'id_p' => $id_p], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Eliminar', ['deletemodal', 'id' => $model->id_r, 'id_p' => $id_p], [
                 'class' => 'btn btn-danger',
@@ -32,13 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'model' => $model,
             'attributes' => [
                 //'proyecto0.nombre_p',
-                [
-                    'attribute' => 'objetivo',
-                    'label' => 'OBJETIVO',
-                    'value' => function($model){
-                        return $model->objetivoE->nombre;
-                    },
-                ],
+                'codigo_r',
                 'nombre',
                 
             ],

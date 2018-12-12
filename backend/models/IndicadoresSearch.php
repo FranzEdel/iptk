@@ -18,7 +18,8 @@ class IndicadoresSearch extends Indicadores
     public function rules()
     {
         return [
-            [['id_i', 'resultado', 'proyecto', 'objetivo'], 'integer'],
+            [['id_i', 'proyecto', 'resultado'], 'integer'],
+            [['codigo_i', 'fuente_verificacion'], 'string'],
             [['nombre'], 'safe'],
         ];
     }
@@ -47,6 +48,9 @@ class IndicadoresSearch extends Indicadores
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $this->load($params);
@@ -58,14 +62,18 @@ class IndicadoresSearch extends Indicadores
         }
 
         // grid filtering conditions
+
+        //$query->joinWith('resultado0');
+
         $query->andFilterWhere([
             'id_i' => $this->id_i,
+            'codigo_i' => $this->codigo_i,
             'resultado' => $this->resultado,
             'proyecto' => $this->proyecto,
-            'objetivo' => $this->objetivo,
         ]);
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre]);
+                //->andFilterWhere(['like', 'resultados.nombre', $this->resultado]);
 
         return $dataProvider;
     }

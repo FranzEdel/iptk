@@ -20,9 +20,10 @@ use backend\models\Proyectos;
                                         ['prompt' => '-- Proyecto --']
     )->label('Proyecto',['class'=>'label-class']) ?>
 
-    <?= $form->field($model, 'nombre')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;'])->label('Nombre del Objetivo',['class'=>'label-class']) ?>
+    <?= $form->field($model, 'codigo_o')->dropDownList(['OE1' => 'OE1', 'OE2' => 'OE2', 'OE3' => 'OE3', 'OE4' => 'OE4', 'OE5' => 'OE5', 'OE6' => 'OE6', 'OE7' => 'OE7', 'OE8' => 'OE8', 'OE9' => 'OE9', 'OE10' => 'OE10'],
+                                                        ['prompt' => '-- Código --']) ?>
 
-    <?= $form->field($model, 'indicador')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;'])->label('Indicador del Objetivo',['class'=>'label-class']) ?>
+    <?= $form->field($model, 'nombre')->textarea(['rows' => 2, 'style'=>'text-transform:uppercase;'])->label('Nombre del Objetivo',['class'=>'label-class']) ?>
 
     
 

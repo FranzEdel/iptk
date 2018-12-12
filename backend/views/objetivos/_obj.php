@@ -38,22 +38,28 @@ $this->title = 'Objetivos';
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-tags"></i><b> Lista principal de todos los Objetivos</b></h3>',
                 'type'=>'success',
                 'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nuevo Objetivo', ['objetivos/createmodal', 'id_p' => $id_p], ['class' => 'btn btn-success']),
-                'footer'=>false
+                'footer'=>true
             ],
             'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns' => [
                 ['class'=>'kartik\grid\SerialColumn'],
                 [
-                    'attribute' => 'nombre',
+                    'attribute'=>'codigo_o',
+                    'label' => 'Código',
+                    'width' => '70px',
                     'contentOptions' => [
                         'style' => [
-                            'max-width' => '600px',
+                            'max-width' => '100px',
                             'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                            'font-weight' => 'bold',
                         ],
                     ],
+                    'hAlign'=>'center',
                 ],
                 [
-                    'attribute' => 'indicador',
+                    'attribute' => 'nombre',
+                    'label' => 'Objetivos Especificos del Proyecto',
                     'contentOptions' => [
                         'style' => [
                             'max-width' => '600px',

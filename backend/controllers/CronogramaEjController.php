@@ -142,7 +142,7 @@ class CronogramaEjController extends Controller
             $model->sep = $this->validateMes($model->sep);
             $model->oct = $this->validateMes($model->oct);
             $model->nov = $this->validateMes($model->nov);
-            $model->dic = $this->validateMes($model->may);
+            $model->dic = $this->validateMes($model->dic);
 
             $model->total = $model->ene + $model->feb + $model->mar + $model->abr + 
                             $model->may + $model->jun + $model->jul + $model->ago + 

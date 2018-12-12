@@ -18,7 +18,7 @@ class CronogramaAvSearch extends CronogramaAv
     public function rules()
     {
         return [
-            [['id_ca', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'actividad', 'proyecto'], 'integer'],
+            [['id_ca', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'programados', 'actividad', 'proyecto', 'gestion'], 'integer'],
             [['total', 'avance'], 'number'],
         ];
     }
@@ -47,6 +47,9 @@ class CronogramaAvSearch extends CronogramaAv
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 2,
+            ],
         ]);
 
         $this->load($params);
@@ -75,6 +78,7 @@ class CronogramaAvSearch extends CronogramaAv
             'programados' => $this->programados,
             'total' => $this->total,
             'avance' => $this->avance,
+            'gestion' => $this->gestion,
             'actividad' => $this->actividad,
             'proyecto' => $this->proyecto,
         ]);
@@ -103,9 +107,9 @@ class CronogramaAvSearch extends CronogramaAv
         return $dataProvider;
     }
 
-    public function searchByObj($params, $id_o)
+    public function searchByRes($params, $id_r)
     {
-        $query = CronogramaAv::find()->where(['objetivo' => $id_o]);
+        $query = CronogramaAv::find()->where(['resultado' => $id_r]);
 
         // add conditions that should always apply here
 

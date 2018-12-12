@@ -45,13 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->nombre;
                     }
                 ],
-                [
-                    'attribute' => 'indicador',
-                    'label' => 'Nombre del Indicador:',
-                    'value' => function($model){
-                        return $model->indicador;
-                    }
-                ],
             ],
         ]) ?>
 

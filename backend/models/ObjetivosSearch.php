@@ -19,7 +19,8 @@ class ObjetivosSearch extends Objetivos
     {
         return [
             [['id_o', 'proyecto'], 'integer'],
-            [['nombre', 'indicador'], 'safe'],
+            [['codigo_o'], 'string'],
+            [['nombre'], 'safe'],
         ];
     }
 
@@ -47,6 +48,9 @@ class ObjetivosSearch extends Objetivos
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $this->load($params);
@@ -63,8 +67,7 @@ class ObjetivosSearch extends Objetivos
             'proyecto' => $this->proyecto,
         ]);
 
-        $query->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'indicador', $this->indicador]);
+        $query->andFilterWhere(['like', 'nombre', $this->nombre]);
 
         return $dataProvider;
     }

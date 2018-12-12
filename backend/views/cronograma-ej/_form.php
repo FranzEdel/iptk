@@ -5,9 +5,7 @@ use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
 use backend\models\Proyectos;
-use backend\models\Objetivos;
 use backend\models\Resultados;
-use backend\models\Indicadores;
 use backend\models\Actividades;
 
 
@@ -27,54 +25,25 @@ use backend\models\Actividades;
                             [
                                 'prompt' => '-- Seleccione un Proyecto --',
                                 'onchange' => '
-                                    $.post( "index.php?r=objetivos/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#cronogramaej-objetivo" ).html( data );
+                                    $.post( "index.php?r=resultados/lists&id='.'"+$(this).val(), function(data){
+                                        $( "select#cronogramaej-resultado" ).html( data );
                                     });
                                 '
                             ]
             )->label('1.- Proyecto',['class'=>'label-class']) ?>
         </div>
         <div class="col-lg-6">
-            <?= $form->field($model, 'objetivo')->dropDownList(
-                        ArrayHelper::map(Objetivos::find()->all(), 'id_o', 'nombre'),
-                        [
-                            'prompt' => '-- Seleccione un Objetivo --',
-                            'onchange' => '
-                                    $.post( "index.php?r=resultados/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#cronogramaej-resultado" ).html( data );
-                                    });
-                                '
-                        ]
-            )->label('2.- Objetivo',['class'=>'label-class']) ?>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-6">
             <?= $form->field($model, 'resultado')->dropDownList(
-                            ArrayHelper::map(Resultados::find()->all(), 'id_r', 'nombre'),
+                            ArrayHelper::map(Resultados::find()->all(), 'id_r', 'codNom'),
                             [
                                 'prompt' => '-- Seleccione un Resultado --',
                                 'onchange' => '
-                                    $.post( "index.php?r=indicadores/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#cronogramaej-indicador" ).html( data );
-                                    });
-                                '
-                            ]
-                )->label('3.- Resultado',['class'=>'label-class']) ?>
-        </div>
-        <div class="col-lg-6">
-            <?= $form->field($model, 'indicador')->dropDownList(
-                        ArrayHelper::map(Indicadores::find()->all(), 'id_i', 'nombre'),
-                        [
-                            'prompt' => '-- Seleccione un Indicador --',
-                            'onchange' => '
                                     $.post( "index.php?r=actividades/lists&id='.'"+$(this).val(), function(data){
                                         $( "select#cronogramaej-actividad" ).html( data );
                                     });
-                                '    
-                        ]
-            )->label('4.- Indicador',['class'=>'label-class']) ?>
+                                '
+                            ]
+            )->label('2.- Resultado',['class'=>'label-class']) ?>
         </div>
     </div>
 
@@ -83,11 +52,11 @@ use backend\models\Actividades;
             <?= $form->field($model, 'actividad')->dropDownList(
                             ArrayHelper::map(Actividades::find()->all(), 'id_a', 'nombre'),
                             ['prompt' => '-- Seleccione una Actividad']
-            )->label('5.- Actividad',['class'=>'label-class']) ?>
+            )->label('3.- Actividad',['class'=>'label-class']) ?>
         </div>
     </div>
 
-    <?= $form->field($model, 'item')->textInput(['maxlength' => true])->label('Detalle del Gasto',['class'=>'label-class']) ?>
+    <?= $form->field($model, 'item')->textarea(['rows' => 3])->label('Detalle del Gasto',['class'=>'label-class']) ?>
 
     <div class="row">
         <div class="col-lg-2">

@@ -5,9 +5,7 @@ use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
 use backend\models\Proyectos;
-use backend\models\Objetivos;
 use backend\models\Resultados;
-use backend\models\Indicadores;
 use backend\models\RecursosHumanos;
 
 /* @var $this yii\web\View */
@@ -19,73 +17,44 @@ use backend\models\RecursosHumanos;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <?= $form->field($model, 'proyecto')->dropDownList(
-                            ArrayHelper::map(Proyectos::find()->all(), 'id_p', 'nombre_p'),
-                            [
-                                'prompt' => '-- Seleccione un Proyecto --',
-                                'onchange' => '
-                                    $.post( "index.php?r=objetivos/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#actividades-objetivo" ).html( data );
-                                    });
-                                '
-                            ]
-            )->label('1.- Proyecto',['class'=>'label-class']) ?>
-        </div>
-        <div class="col-lg-6">
-            <?= $form->field($model, 'objetivo')->dropDownList(
-                        ArrayHelper::map(Objetivos::find()->all(), 'id_o', 'nombre'),
-                        [
-                            'prompt' => '-- Seleccione un Objetivo --',
-                            'onchange' => '
-                                    $.post( "index.php?r=resultados/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#actividades-resultado" ).html( data );
-                                    });
-                                '
-                        ]
-            )->label('2.- Objetivo',['class'=>'label-class']) ?>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <?= $form->field($model, 'resultado')->dropDownList(
-                            ArrayHelper::map(Resultados::find()->all(), 'id_r', 'nombre'),
-                            [
-                                'prompt' => '-- Seleccione un Resultado --',
-                                'onchange' => '
-                                    $.post( "index.php?r=indicadores/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#actividades-indicador" ).html( data );
-                                    });
-                                '
-                            ]
-                )->label('3.- Resultado',['class'=>'label-class']) ?>
-        </div>
-        <div class="col-lg-6">
-            <?= $form->field($model, 'indicador')->dropDownList(
-                        ArrayHelper::map(Indicadores::find()->all(), 'id_i', 'nombre'),
-                        ['prompt' => '-- Seleccione un Indicador --']
-            )->label('4.- Indicador',['class'=>'label-class']) ?>
-        </div>
-    </div>
+    <?= $form->field($model, 'proyecto')->dropDownList(
+                    ArrayHelper::map(Proyectos::find()->all(), 'id_p', 'nombre_p'),
+                    [
+                        'prompt' => '-- Seleccione un Proyecto --',
+                        'onchange' => '
+                            $.post( "index.php?r=resultados/lists&id='.'"+$(this).val(), function(data){
+                                $( "select#actividades-resultado" ).html( data );
+                            });
+                        '
+                    ]
+    )->label('1.- Proyecto',['class'=>'label-class']) ?>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <?= $form->field($model, 'nombre')->textarea(['rows' => 2])->label('Nombre de la nueva Actividad',['class'=>'label-class']) ?>
-        </div>
-
-        <div class="col-lg-2">
-            <?= $form->field($model, 'presupuestado')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-lg-4">
-            <?= $form->field($model, 'rrhh')->dropDownList(
-                        ArrayHelper::map(RecursosHumanos::find()->all(), 'id_rh', 'fullName'),
-                        ['prompt' => '-- Seleccione los Recursos --']
-            )->label('Recursos humanos para la actividad',['class'=>'label-class']) ?>
-        </div>
-    </div>
+    <?= $form->field($model, 'resultado')->dropDownList(
+                    ArrayHelper::map(Resultados::find()->all(), 'id_r', 'codNom'),
+                    [
+                        'prompt' => '-- Seleccione un Resultado --',
+                    ]
+        )->label('2.- Resultado',['class'=>'label-class']) ?>
     
+    <?= $form->field($model, 'codigo_a')->dropDownList(['A1.' => 'A1.', 'A2.' => 'A2.', 'A3.' => 'A3.', 'A4.' => 'A4.', 'A5.' => 'A5.', 'A6.' => 'A6.', 'A7.' => 'A7.', 'A8.' => 'A8.', 'A9.' => 'A9.', 'A10.' => 'A10.'],
+                                                        ['prompt' => '-- Código --']) ?>
+ 
+    <?= $form->field($model, 'nombre')->textarea(['rows' => 2])->label('Nombre de la nueva Actividad',['class'=>'label-class']) ?>
+
+    <?= $form->field($model, 'indicador')->textarea(['rows' => 2])->label('Indicadores',['class'=>'label-class']) ?>
+
+    <?= $form->field($model, 'descripcion')->textarea(['rows' => 4])->label('Descripción',['class'=>'label-class']) ?>
+
+    <?= $form->field($model, 'recursos')->textarea(['rows' => 2])->label('recursos',['class'=>'label-class']) ?>
+
+    <?= $form->field($model, 'presupuestado')->textInput(['maxlength' => true])->label('Costos ($us)',['class'=>'label-class']) ?>
+
+    <?= $form->field($model, 'rrhh')->dropDownList(
+                ArrayHelper::map(RecursosHumanos::find()->all(), 'id_rh', 'fullName'),
+                ['prompt' => '-- Seleccione los Recursos --']
+    )->label('Recursos humanos para la actividad',['class'=>'label-class']) ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

@@ -52,14 +52,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type'=>'success',
                     'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nuevo Resultado', ['create'], ['class' => 'btn btn-success']),
                     'after'=>Html::a('<i class="fas fa-redo"></i> Actualizar lista', ['index'], ['class' => 'btn btn-info']),
-                    'footer'=>false
+                    //'footer'=>true
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 'columns'=>[
                     ['class'=>'kartik\grid\SerialColumn'],
                     [
-                        'attribute'=>'objetivo_e',
-                        'width' => '400px', 
+                        'attribute'=>'proyecto',
+                        'width' => '200px', 
                         'contentOptions' => [
                             'style' => [
                                 'max-width' => '200px',
@@ -68,10 +68,23 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                         'value'=>function ($model, $key, $index, $widget) { 
-                            return $model->objetivoE->nombre;
+                            return $model->proyecto0->nombre_p;
                         },
                         'group'=>true,  // enable grouping
                         'subGroupOf'=>1 // supplier column index is the parent group
+                    ],
+                    [
+                        'attribute'=>'codigo_r',
+                        'label' => 'Código',
+                        'width' => '70px',
+                        'contentOptions' => [
+                            'style' => [
+                                'font-weight' => 'bold',
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                     ],
                     [
                         'attribute'=>'nombre',
@@ -84,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                     ],
-                    [
+                    /*[
                         'label' => 'Acciones',
                         'format' => 'raw',
                         'value' => function($data){
@@ -101,6 +114,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]);
                             return Html::a($btn_view . ' ' .$btn_edit . ' ' . $btn_delete, '#');
                         }
+                    ],*/
+                    [
+                        'class' => 'kartik\grid\ActionColumn',
+                        'contentOptions' => [
+                            'style' => [
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                     ],
                 ],
             ]); ?>

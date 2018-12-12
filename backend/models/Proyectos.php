@@ -4,22 +4,36 @@ namespace backend\models;
 
 use Yii;
 
-
 /**
  * This is the model class for table "proyectos".
  *
  * @property int $id_p
+ * @property string $codigo_p
  * @property string $nombre_p
  * @property string $objetivo_general
+ * @property string $agencias
+ * @property string $municipios
+ * @property string $periodo
  * @property string $fecha_ini
  * @property string $fecha_fin
+ * @property string $presupuesto
  * @property string $estado
+ * @property string $responsable
+ * @property int $num_trabajadores
+ * @property string $documento
+ * @property int $herramienta
+ * @property int $programa
+
  *
+ * @property CronogramaA[] $cronogramaAs
  * @property Eventos[] $eventos
  * @property Objetivos[] $objetivos
+ * @property Herramientas $herramienta0
+ * @property Programas $programa0
  */
 class Proyectos extends \yii\db\ActiveRecord
 {
+    public $proyecto_doc;
     /**
      * {@inheritdoc}
      */
@@ -34,11 +48,15 @@ class Proyectos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre_p', 'objetivo_general', 'fecha_ini', 'fecha_fin', 'estado'], 'required'],
-            [['objetivo_general', 'estado'], 'string'],
+            [['codigo_p', 'nombre_p', 'objetivo_general', 'agencias', 'municipios', 'periodo', 'fecha_ini', 'fecha_fin', 'estado', 'responsable', 'num_trabajadores', 'herramienta', 'programa'], 'required'],
+            [['nombre_p', 'objetivo_general', 'estado'], 'string'],
             [['fecha_ini', 'fecha_fin'], 'safe'],
-            [['fecha_fin'],'compararFecha'],
-            [['nombre_p'], 'string', 'max' => 200],
+            [['presupuesto'],'number'],
+            [['num_trabajadores', 'herramienta', 'programa'], 'integer'],
+            [['codigo_p', 'municipios', 'periodo', 'responsable'], 'string', 'max' => 100],
+            [['agencias'], 'string', 'max' => 200],
+            [['herramienta'], 'exist', 'skipOnError' => true, 'targetClass' => Herramientas::className(), 'targetAttribute' => ['herramienta' => 'id_h']],
+            [['proyecto_doc'], 'file', 'skipOnEmpty' => true, 'on' => 'update', 'extensions' => 'xls, xlsx, doc, docx, pdf'],
         ];
     }
 
@@ -49,11 +67,22 @@ class Proyectos extends \yii\db\ActiveRecord
     {
         return [
             'id_p' => 'Id P',
-            'nombre_p' => 'Nombre del Proyecto',
+            'codigo_p' => 'Codigo',
+            'nombre_p' => 'Nombre Proyecto',
             'objetivo_general' => 'Objetivo General',
-            'fecha_ini' => 'Fecha Inicio',
+            'agencias' => 'Agencias',
+            'municipios' => 'Municipios',
+            'periodo' => 'Periodo',
+            'fecha_ini' => 'Fecha Ini',
             'fecha_fin' => 'Fecha Fin',
+            'presupuesto' => 'Presupuesto',
             'estado' => 'Estado',
+            'responsable' => 'Responsable',
+            'num_trabajadores' => 'Num. Trab.',
+            'documento' => 'Documento',
+            'proyecto_doc' => 'Documento',
+            'herramienta' => 'Herramienta',
+            'programa' => 'Programa',
         ];
     }
 
@@ -82,6 +111,19 @@ class Proyectos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCronogramaAs()
+    {
+        return $this->hasMany(CronogramaAv::className(), ['proyecto' => 'id_p']);
+    }
+
+    public function getCronogramaEs()
+    {
+        return $this->hasMany(CronogramaEj::className(), ['proyecto' => 'id_p']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getEventos()
     {
         return $this->hasMany(Eventos::className(), ['proyecto' => 'id_p']);
@@ -90,6 +132,16 @@ class Proyectos extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getPrograma0()
+    {
+        return $this->hasOne(Programas::className(), ['id_pr' => 'programa']);
+    }
+
+    public function getHerramienta0()
+    {
+        return $this->hasOne(Herramientas::className(), ['id_h' => 'herramienta']);
+    }
+
     public function getObjetivos()
     {
         return $this->hasMany(Objetivos::className(), ['proyecto' => 'id_p']);

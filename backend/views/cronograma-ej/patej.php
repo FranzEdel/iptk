@@ -6,7 +6,7 @@ use kartik\grid\GridView;
 
 use yii\helpers\ArrayHelper;
 use backend\models\Proyectos;
-use backend\models\Objetivos;
+use backend\models\Resultados;
 use backend\models\Actividades;
 use backend\models\CronogramaEj;
 
@@ -53,51 +53,33 @@ $this->params['breadcrumbs'][] = $this->title;
                     'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-usd"></i>  <b>PAT de ejecución de todos los proyectos</b></h3>',
                     'type'=>'success',
                     'after'=>Html::a('<i class="fas fa-redo"></i> Actualizar lista', ['patej'], ['class' => 'btn btn-info']),
-                    'footer'=>false
+                    //'footer'=>true
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 //'options' => ['style' => 'vertical-align:middle;'],
                 'columns'=>[
                     ['class'=>'kartik\grid\SerialColumn'],
-
-                    /*[
-                        'attribute'=>'proyecto',
-                        //'width' => '250px', 
-                        'contentOptions' => [
-                            'style' => [
-                                'font-size' => '12px',
-                                'font-weight' => 'bold',
-                                'white-space' => 'normal',
-                                'vertical-align' => 'middle',
-                            ],
-                        ],
-                        'value'=>function ($model, $key, $index, $widget) { 
-                            return $model->actividad0->indicador0->resultado0->objetivoE->proyecto0->nombre_p;
-                        },
-                        'group'=>true,  // enable grouping
-                        'subGroupOf'=>1 // supplier column index is the parent group
-                    ],*/
                     [
-                        'attribute'=>'objetivo', 
+                        'attribute'=>'proyecto',
+                        'label' => 'Proyecto', 
                         'contentOptions' => [
                             'style' => [
-                                'font-size' => '12px',
+                                'max-width' => '200px',
                                 'white-space' => 'normal',
                                 'vertical-align' => 'middle',
                             ],
                         ],
                         'value'=>function ($model, $key, $index, $widget) { 
-                            return $model->objetivo0->nombre;
+                            return $model->proyecto0->nombre_p;
                         },
                         'group'=>true,  // enable grouping
-                        //'subGroupOf'=>1 // supplier column index is the parent group
                     ],
                     [
                         'attribute'=>'resultado',
                         'label' => 'Resultados', 
                         'contentOptions' => [
                             'style' => [
-                                'max-width' => '150px',
+                                'max-width' => '200px',
                                 'white-space' => 'normal',
                                 'vertical-align' => 'middle',
                             ],
@@ -109,7 +91,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'subGroupOf'=>1 // supplier column index is the parent group
                     ],
                     [
-                        'attribute'=>'indicador', 
+                        'attribute'=>'actividad',
+                        'label' => 'Código', 
                         'contentOptions' => [
                             'style' => [
                                 'max-width' => '150px',
@@ -118,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                         'value'=>function ($model, $key, $index, $widget) { 
-                            return $model->indicador0->nombre;
+                            return $model->actividad0->codigo_a;
                         },
                     ],
                     [
@@ -134,7 +117,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->actividad0->nombre;
                         },
                     ],
-                    
                     [
                         'attribute' => 'item',
                         'label' => 'Gasto',
@@ -150,7 +132,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute'=>'actividad',
-                        'label' => 'PPTO', 
+                        'label' => 'Presupuesto', 
                         'contentOptions' => [
                             'style' => [
                                 'max-width' => '150px',
@@ -160,7 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                         'value'=>function ($model, $key, $index, $widget) { 
-                            return $model->actividad0->presupuestado;
+                            return $model->actividad0->presupuestado * 6.97;
                         },
                         'width' => '150px',
                         'hAlign' => 'right',
@@ -182,6 +164,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value'=>function ($model, $key, $index, $widget) { 
                             return $model->actividad0->recursoHumano0->fullName;
                         },
+                        'width' => '150px',
                     ],
                     [
                         'attribute' => 'ene',

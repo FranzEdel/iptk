@@ -17,43 +17,32 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <?= $form->field($model, 'proyecto')->dropDownList(
-                            ArrayHelper::map(Proyectos::find()->all(), 'id_p', 'nombre_p'),
-                            [
-                                'prompt' => '-- Seleccione un Proyecto --',
-                                'onchange' => '
-                                    $.post( "index.php?r=objetivos/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#indicadores-objetivo" ).html( data );
-                                    });
-                                '
-                            ]
-            )->label('1.- Proyecto',['class'=>'label-class']) ?>
-        </div>
-        <div class="col-lg-6">
-            <?= $form->field($model, 'objetivo')->dropDownList(
-                        ArrayHelper::map(Objetivos::find()->all(), 'id_o', 'nombre'),
-                        [
-                            'prompt' => '-- Seleccione un Objetivo --',
-                            'onchange' => '
-                                    $.post( "index.php?r=resultados/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#indicadores-resultado" ).html( data );
-                                    });
-                                '
-                        ]
-            )->label('2.- Objetivo',['class'=>'label-class']) ?>
-        </div>
-    </div>
+    <?= $form->field($model, 'proyecto')->dropDownList(
+                    ArrayHelper::map(Proyectos::find()->all(), 'id_p', 'nombre_p'),
+                    [
+                        'prompt' => '-- Seleccione un Proyecto --',
+                        'onchange' => '
+                            $.post( "index.php?r=resultados/lists&id='.'"+$(this).val(), function(data){
+                                $( "select#indicadores-resultado" ).html( data );
+                            });
+                        '
+                    ]
+    )->label('1.- Proyecto',['class'=>'label-class']) ?>
 
     <?= $form->field($model, 'resultado')->dropDownList(
-                        ArrayHelper::map(Resultados::find()->all(), 'id_r', 'nombre'),
+                        ArrayHelper::map(Resultados::find()->all(), 'id_r', 'codNom'),
                         [
                             'prompt' => '-- Seleccione un Resultado --'
                         ]
-            )->label('3.- Resultado',['class'=>'label-class']) ?>
+            )->label('2.- Resultado',['class'=>'label-class']) ?>
+    
+    <?= $form->field($model, 'codigo_i')->dropDownList(['I1.' => 'I1.', 'I2.' => 'I2.', 'I3.' => 'I3.', 'I4.' => 'I4.', 'I5.' => 'I5.', 'I6.' => 'I6.', 'I7.' => 'I7.', 'I8.' => 'I8.', 'I9.' => 'I9.', 'I10.' => 'I10.'],
+                                                        ['prompt' => '-- Código --']) ?>
 
-    <?= $form->field($model, 'nombre')->textarea(['rows' => 2])->label('Nombre del nuevo Indicador',['class'=>'label-class']) ?>
+    <?= $form->field($model, 'nombre')->textarea(['rows' => 4])->label('Nombre del nuevo Indicador',['class'=>'label-class']) ?>
+
+    <?= $form->field($model, 'fuente_verificacion')->textarea(['rows' => 2])->label('Fuentes de verificación',['class'=>'label-class']) ?>
+
     
     <div class="form-group">
         <?= Html::submitButton('<i class="glyphicon glyphicon-ok"></i> Guardar', ['class' => 'btn btn-success']) ?>

@@ -5,9 +5,12 @@ use yii\widgets\ActiveForm;
 
 use yii\helpers\ArrayHelper;
 use backend\models\Proyectos;
-use backend\models\Objetivos;
+use backend\models\Resultados;
 use backend\models\Actividades;
 use backend\models\RecursosHumanos;
+
+use dosamigos\datepicker\DatePicker;
+
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\CronogramaAv */
@@ -25,25 +28,37 @@ use backend\models\RecursosHumanos;
                             [
                                 'prompt' => '-- Seleccione un Proyecto',
                                 'onchange' => '
-                                    $.post( "index.php?r=objetivos/lists&id='.'"+$(this).val(), function(data){
-                                        $( "select#cronogramaav-objetivo" ).html( data );
+                                    $.post( "index.php?r=resultados/lists&id='.'"+$(this).val(), function(data){
+                                        $( "select#cronogramaav-resultado" ).html( data );
                                     });
                                 '
                             ]
-            ) ?>
+            )->label('1.- Proyecto',['class'=>'label-class']) ?>
         </div>
         <div class="col-lg-6">
-            <?= $form->field($model, 'objetivo')->dropDownList(
-                        ArrayHelper::map(Objetivos::find()->all(), 'id_o', 'nombre'),
+            <?= $form->field($model, 'resultado')->dropDownList(
+                        ArrayHelper::map(Resultados::find()->all(), 'id_r', 'codNom'),
                         [
-                            'prompt' => '-- Seleccione un Objetivo',
+                            'prompt' => '-- Seleccione un Resultado',
                             'onchange' => '
                                     $.post( "index.php?r=actividades/lists&id='.'"+$(this).val(), function(data){
                                         $( "select#cronogramaav-actividad" ).html( data );
                                     });
                                 '
                         ]
-            ) ?>
+            )->label('2.- Resultado',['class'=>'label-class']) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <?= $form->field($model, 'actividad')->dropDownList(
+                            ArrayHelper::map(Actividades::find()->all(), 'id_a', 'nombre'),
+                            ['prompt' => '-- Seleccione una Actividad --']
+            )->label('3.- Seguimiento a la Actividad',['class'=>'label-class']) ?>
+        </div>
+        <div class="col-lg-6">
+            <?= $form->field($model, 'gestion')->textInput(['maxlength' => true])->label('Gestión',['class'=>'label-class'])?>
         </div>
     </div>
 
@@ -100,15 +115,6 @@ use backend\models\RecursosHumanos;
             <?= $form->field($model, 'dic')->dropDownList(['0' => 'NP','25' =>'25%', '50' => '50%', '75' =>'75%', '100' => '100%'])->label('Diciembre',['class'=>'label-class']) ?>
         </div>
 
-    </div>
-
-    <div class="row">
-        <div class="col-lg-6">
-            <?= $form->field($model, 'actividad')->dropDownList(
-                            ArrayHelper::map(Actividades::find()->all(), 'id_a', 'nombre'),
-                            ['prompt' => '-- Seleccione una Actividad --']
-            ) ?>
-        </div>
     </div>
 
     <div class="form-group">

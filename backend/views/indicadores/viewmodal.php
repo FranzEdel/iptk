@@ -16,7 +16,7 @@ $this->title = 'Información';
     <div class="box-body">
 
         <p>
-            <?= Html::a('Lista Objetivos', ['proyectos/view', 'id' => $id_p], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('Lista Indicadores', ['proyectos/view', 'id' => $id_p], ['class' => 'btn btn-info']) ?>
             <?= Html::a('Actualizar', ['updatemodal', 'id' => $model->id_i, 'id_p' => $id_p], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Eliminar', ['deletemodal', 'id' => $model->id_i, 'id_p' => $id_p], [
                 'class' => 'btn btn-danger',
@@ -31,24 +31,31 @@ $this->title = 'Información';
             'model' => $model,
             'attributes' => [
                 [
-                    'attribute' => 'objetivo',
-                    'label' => 'OBJETIVO',
-                    'value' => function($model){
-                        return $model->objetivo0->nombre;
-                    }
-                ],
-                [
                     'attribute' => 'resultado',
-                    'label' => 'RESULTADO',
+                    'label' => 'Resultado',
                     'value' => function($model){
                         return $model->resultado0->nombre;
                     }
                 ],
                 [
+                    'attribute' => 'codigo_i',
+                    'label' => 'Código',
+                    'value' => function($model){
+                        return $model->codigo_i;
+                    }
+                ],
+                [
                     'attribute' => 'nombre',
-                    'label' => 'NOMBRE DEL INDICADOR',
+                    'label' => 'Indicador anual de Resultado',
                     'value' => function($model){
                         return $model->nombre;
+                    }
+                ],
+                [
+                    'attribute' => 'medio_verificacion',
+                    'label' => 'Medio de Verificación',
+                    'value' => function($model){
+                        return $model->fuente_verificacion;
                     }
                 ],
             ],

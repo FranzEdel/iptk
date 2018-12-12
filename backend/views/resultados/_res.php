@@ -36,21 +36,17 @@ $this->title = 'Resultados';
             'columns' => [
                 ['class'=>'kartik\grid\SerialColumn'],
                 [
-                    'attribute'=>'objetivo_e',
-                    'label' => 'Objetivos',
-                    'width' => '400px', 
+                    'attribute'=>'codigo_r',
+                    'label' => 'Código',
+                    'width' => '70px',
                     'contentOptions' => [
                         'style' => [
-                            'max-width' => '200px',
+                            'font-weight' => 'bold',
+                            'max-width' => '100px',
                             'white-space' => 'normal',
                             'vertical-align' => 'middle',
                         ],
                     ],
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        return $model->objetivoE->nombre;
-                    },
-                    'group'=>true,  // enable grouping
-                    'subGroupOf'=>1 // supplier column index is the parent group
                 ],
                 [
                     'attribute'=>'nombre',

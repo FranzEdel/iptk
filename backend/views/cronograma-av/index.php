@@ -52,11 +52,29 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type'=>'success',
                     'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nueva Actividad', ['create'], ['class' => 'btn btn-success']),
                     'after'=>Html::a('<i class="fas fa-redo"></i> Actualizar lista', ['index'], ['class' => 'btn btn-info']),
-                    'footer'=>false
+                    //'footer'=>true
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 'columns'=>[
                     ['class'=>'kartik\grid\SerialColumn'],
+                    [
+                        'attribute'=>'actividad',
+                        'label' => 'Código',
+                        'width' => '70px', 
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'font-weight' => 'bold',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                        'value'=>function ($model, $key, $index, $widget) { 
+                            return $model->actividad0->codigo_a;
+                        },
+                        'group'=>true,  // enable grouping
+                        'subGroupOf'=>1 // supplier column index is the parent group
+                    ],
                     [
                         'attribute'=>'actividad',
                         'label' => 'Actividades',
@@ -70,19 +88,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value'=>function ($model, $key, $index, $widget) { 
                             return $model->actividad0->nombre;
                         },
-                        'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=>ArrayHelper::map(Actividades::find()->orderBy('nombre')->asArray()->all(), 'id_a', 'nombre'), 
-                        'filterWidgetOptions'=>[
-                            'pluginOptions'=>['allowClear'=>true],
-                        ],
-                        'filterInputOptions'=>['placeholder'=>'Buscar por Indicador'],
-                        'group'=>true,  // enable grouping
-                        'subGroupOf'=>1 // supplier column index is the parent group
                     ],
                     [
                         'attribute' => 'ene',
                         'label' => 'Ene',
                         'width' => '60px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->ene == 0){
                                 return 'NP';
@@ -94,6 +111,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'feb',
                         'label' => 'Feb',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->feb == 0){
                                 return 'NP';
@@ -105,6 +129,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'mar',
                         'label' => 'Mar',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->mar == 0){
                                 return 'NP';
@@ -116,6 +147,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'abr',
                         'label' => 'Abr',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->abr == 0){
                                 return 'NP';
@@ -127,6 +165,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'may',
                         'label' => 'May',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->may == 0){
                                 return 'NP';
@@ -138,6 +183,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'jun',
                         'label' => 'Jun',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->jun == 0){
                                 return 'NP';
@@ -149,6 +201,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'jul',
                         'label' => 'Jul',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->jun == 0){
                                 return 'NP';
@@ -160,6 +219,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'ago',
                         'label' => 'Ago',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->ago == 0){
                                 return 'NP';
@@ -171,6 +237,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'sep',
                         'label' => 'Sep',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->sep == 0){
                                 return 'NP';
@@ -182,6 +255,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'oct',
                         'label' => 'Oct',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->oct == 0){
                                 return 'NP';
@@ -193,6 +273,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'nov',
                         'label' => 'Nov',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->nov == 0){
                                 return 'NP';
@@ -204,6 +291,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'dic',
                         'label' => 'Dic',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                         'value' => function($model){
                             if($model->dic == 0){
                                 return 'NP';
@@ -214,21 +308,42 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'avance',
+                        //'width' => '80px',
                         'value' => function($model){
-                            return "{$model->avance}%";
+                            $info = $model->avance;
+                            return "{$info}%";
                         },
                         'contentOptions' => function($model){
-                                                return [
-                                                    'class' => 'progress-bar progress-bar-success progress-bar-striped',
-                                                    'style' => [
-                                                        'width' => "{$model->avance}%",
-                                                        'font-weight' => 'bold',
-                                                        'color' => 'black',
-                                                    ],
-                                                ];
-                                            },
+                            $info = $model->avance;
+                            if ( $info >= 0 and $info <= 30){
+                                $clase = 'progress-bar progress-bar-danger progress-bar-striped';
+                            }elseif ($info >= 31 and $info <= 75){
+                                $clase = 'progress-bar progress-bar-warning progress-bar-striped';
+                            }else{
+                                $clase = 'progress-bar progress-bar-success progress-bar-striped';
+                            }
+                            return [
+                                'class' => $clase,
+                                'style' => [
+                                    'width' => "{$model->avance}%",
+                                    'font-weight' => 'bold',
+                                    'vertical-align' => 'middle',
+                                    'color' => 'black',
+                                ],
+                            ];
+                        },
                     ],
                     [
+                        'attribute' => 'gestion',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
+                    ],
+                    /*[
                         'label' => 'Acciones',
                         'format' => 'raw',
                         'value' => function($data){
@@ -245,6 +360,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]);
                             return Html::a($btn_view . ' ' .$btn_edit . ' ' . $btn_delete, '#');
                         }
+                    ],*/
+                    [
+                        'class' => 'kartik\grid\ActionColumn',
+                        'contentOptions' => [
+                            'style' => [
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                     ],
                 ],
             ]); ?>

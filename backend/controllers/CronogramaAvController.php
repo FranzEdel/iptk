@@ -108,6 +108,43 @@ class CronogramaAvController extends Controller
         ]);
     }
 
+    public function actionInformeav()
+    {
+        $model = new CronogramaAv();
+
+        $searchModel = new CronogramaAvSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('informeav', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+    public function actionFiltro3($id=0)
+    {
+        echo $id;
+
+        return $this->redirect(['informeav2', 'id' => $id]);
+    }
+
+    public function actionInformeav2($id='0')
+    {
+        $model = new CronogramaAv();
+
+        $searchModel = new CronogramaAvSearch();
+        if($id != '0'){
+            $searchModel->proyecto = $id;
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('informeav', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
     public function actionIndexById()
     {
         $searchModel = new CronogramaAvSearch();

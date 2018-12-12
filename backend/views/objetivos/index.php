@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     GridView::EXCEL => 'inactive',
                     GridView::PDF => 'inactive',
                 ],
-                'showPageSummary'=>true,
+                //'showPageSummary'=>true,
                 'pjax'=>true,
                 'striped'=>true,
                 'hover'=>true,
@@ -77,7 +77,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         'subGroupOf'=>1 // supplier column index is the parent group
                     ],*/
                     [
+                        'attribute'=>'codigo_o',
+                        'label' => 'Código',
+                        'width' => '70px',
+                        'contentOptions' => [
+                            'style' => [
+                                'max-width' => '100px',
+                                'white-space' => 'normal',
+                                'vertical-align' => 'middle',
+                                'font-weight' => 'bold',
+                            ],
+                        ],
+                        'hAlign'=>'center',
+                    ],
+                    [
                         'attribute'=>'nombre',
+                        'label' => 'Objetivos Especificos del Proyecto',
                         'contentOptions' => [
                             'style' => [
                                 'max-width' => '200px',
@@ -85,16 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                     ],
-                    [
-                        'attribute'=>'indicador',
-                        'contentOptions' => [
-                            'style' => [
-                                'max-width' => '200px',
-                                'white-space' => 'normal',
-                            ],
-                        ],
-                    ],
-                    [
+                    /*[
                         'label' => 'Acciones',
                         'format' => 'raw',
                         'value' => function($data){
@@ -111,6 +117,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]);
                             return Html::a($btn_view . ' ' .$btn_edit . ' ' . $btn_delete, '#');
                         }
+                    ],*/
+                    [
+                        'class' => 'kartik\grid\ActionColumn',
+                        'contentOptions' => [
+                            'style' => [
+                                'vertical-align' => 'middle',
+                            ],
+                        ],
                     ],
                 ],
             ]); ?>

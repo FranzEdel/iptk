@@ -12,7 +12,6 @@ use Yii;
  * @property string $presupuestado
  * @property int $indicador
  * @property int $proyecto
- * @property int $objetivo
  * @property int $resultado
  * @property int $rrhh
  *
@@ -36,11 +35,11 @@ class Actividades extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'presupuestado', 'indicador', 'proyecto', 'objetivo', 'resultado', 'rrhh'], 'required'],
-            [['presupuestado'], 'number'],
-            [['indicador', 'proyecto', 'objetivo', 'resultado', 'rrhh'], 'integer'],
-            [['nombre'], 'string', 'max' => 200],
-            [['indicador'], 'exist', 'skipOnError' => true, 'targetClass' => Indicadores::className(), 'targetAttribute' => ['indicador' => 'id_i']],
+            [['nombre', 'presupuestado', 'proyecto', 'resultado', 'rrhh'], 'required'],
+            ['presupuestado', 'exist', 'targetClass' => '\app\models\Proyecto', 'targetAttribute' => 'presupuesto'],
+            [['presupuestado'], 'number', 'min' => '0', 'max' => $this->maxVal],
+            [['proyecto', 'resultado', 'rrhh'], 'integer'],
+            [['codigo_a','nombre', 'indicador', 'descripcion', 'recursos'], 'string'],
         ];
     }
 
@@ -51,14 +50,26 @@ class Actividades extends \yii\db\ActiveRecord
     {
         return [
             'id_a' => 'Id A',
+            'codigo_a' => 'Código',
             'nombre' => 'Nombre',
-            'presupuestado' => 'Presupuestado',
             'indicador' => 'Indicador',
+            'descripcion' => 'Descripcion',
+            'recursos' => 'Recursos',
+            'presupuestado' => 'Costo($us)',
             'proyecto' => 'Proyecto',
-            'objetivo' => 'Objetivo',
             'resultado' => 'Resultado',
             'rrhh' => 'Rrhh',
         ];
+    }
+
+    public function getMaxVal(){
+        $presu = round(($this->proyecto0['presupuesto'] / 6.97), 2);
+        return $presu;
+    }
+
+    public function getCodNom()
+    {
+        return $this->codigo_a.' - '.$this->nombre;
     }
 
     /**
@@ -69,19 +80,9 @@ class Actividades extends \yii\db\ActiveRecord
         return $this->hasOne(Proyectos::className(), ['id_p' => 'proyecto']);
     }
 
-    public function getObjetivo0()
-    {
-        return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo']);
-    }
-
     public function getResultado0()
     {
         return $this->hasOne(Resultados::className(), ['id_r' => 'resultado']);
-    }
-
-    public function getIndicador0()
-    {
-        return $this->hasOne(Indicadores::className(), ['id_i' => 'indicador']);
     }
 
     public function getRecursoHumano0()

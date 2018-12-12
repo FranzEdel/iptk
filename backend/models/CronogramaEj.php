@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use backend\models\Actividades;
 
 /**
  * This is the model class for table "cronograma_e".
@@ -23,9 +24,7 @@ use Yii;
  * @property string $dic
  * @property string $total
  * @property int $actividad
- * @property int $indicador
  * @property int $resultado
- * @property int $objetivo
  * @property int $proyecto
  *
  * @property Actividades $actividad0
@@ -44,13 +43,16 @@ class CronogramaEj extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-    {
+    {   $val = $this->maxVal;
+        //$val = 20000;
         return [
             [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic', 'total'], 'number', 'message' => 'Tiene que ser un valor numerico'],
+            [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'], 'number', 'min' => '0', 'max' => $val],
             [['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'], 'default', 'value' => '0'],
-            [['actividad', 'indicador', 'resultado', 'objetivo'], 'required'],
-            [['actividad', 'indicador', 'resultado', 'objetivo', 'proyecto'], 'integer'],
-            [['item'], 'string', 'max' => 200],
+            [['actividad', 'resultado', 'proyecto'], 'required'],
+            [['actividad', 'resultado', 'proyecto'], 'integer'],
+            [['item'], 'string'],
+            [['presupuestado'], 'safe'],
             [['actividad'], 'exist', 'skipOnError' => true, 'targetClass' => Actividades::className(), 'targetAttribute' => ['actividad' => 'id_a']],
         ];
     }
@@ -77,11 +79,15 @@ class CronogramaEj extends \yii\db\ActiveRecord
             'dic' => 'Dic',
             'total' => 'Total',
             'actividad' => 'Actividad',
-            'indicador' => 'Indicador',
             'resultado' => 'Resultado',
-            'objetivo' => 'Objetivo',
             'proyecto' => 'Proyecto',
+            'presupuestado' => 'presupuestado',
         ];
+    }
+
+    public function getMaxVal(){
+        $presu = round(($this->actividad0['presupuestado'] * 6.97), 2);
+        return $presu;
     }
 
     public function getTotalPro($id_p){
@@ -90,8 +96,8 @@ class CronogramaEj extends \yii\db\ActiveRecord
         return number_format($sum, 2) . ' Bs';
     }
 
-    public function getTotalObj($id_o){
-        $query = (new \yii\db\Query())->from('cronograma_e')->where(['objetivo' => $id_o]);
+    public function getTotalRe($id_r){
+        $query = (new \yii\db\Query())->from('cronograma_e')->where(['resultado' => $id_r]);
         $sum = $query->sum('total');
         return number_format($sum, 2) . ' Bs';
     }
@@ -109,19 +115,9 @@ class CronogramaEj extends \yii\db\ActiveRecord
         return $this->hasOne(Actividades::className(), ['id_a' => 'actividad']);
     }
 
-    public function getIndicador0()
-    {
-        return $this->hasOne(Indicadores::className(), ['id_i' => 'indicador']);
-    }
-
     public function getResultado0()
     {
         return $this->hasOne(Resultados::className(), ['id_r' => 'resultado']);
-    }
-
-    public function getObjetivo0()
-    {
-        return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo']);
     }
 
     public function getProyecto0()

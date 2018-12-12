@@ -31,7 +31,27 @@ $this->params['breadcrumbs'][] = ['label' => 'Avance', 'url' => ['index']];
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
-                'actividad0.nombre',
+                [
+                    'attribute' => 'proyecto',
+                    'label' => 'Proyecto:',
+                    'value' => function($model){
+                        return $model->proyecto0->nombre_p;
+                    },
+                ],
+                [
+                    'attribute' => 'resultado',
+                    'label' => 'Resultado:',
+                    'value' => function($model){
+                        return $model->resultado0->nombre;
+                    },
+                ],
+                [
+                    'attribute' => 'actividad',
+                    'label' => 'Actividad:',
+                    'value' => function($model){
+                        return $model->actividad0->nombre;
+                    },
+                ],
                 [
                     'attribute' => 'ene',
                     'label' => 'Enero',

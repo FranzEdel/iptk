@@ -39,26 +39,12 @@ $this->params['breadcrumbs'][] = ['label' => 'Cronograma', 'url' => ['index']];
                     }
                 ],
                 [
-                    'attribute' => 'objetivo',
-                    'label' => 'Objetivo',
-                    'value' => function($model){
-                        return $model->objetivo0->nombre;
-                    }
-                ],
-                [
                     'attribute' => 'resultado',
                     'label' => 'Resultado',
                     'value' => function($model){
                         return $model->resultado0->nombre;
                     }
-                ],
-                [
-                    'attribute' => 'indicador',
-                    'label' => 'Indicador',
-                    'value' => function($model){
-                        return $model->indicador0->nombre;
-                    }
-                ],              
+                ],           
                 [
                     'attribute' => 'actividad',
                     'value' => function($model){
@@ -158,15 +144,20 @@ $this->params['breadcrumbs'][] = ['label' => 'Cronograma', 'url' => ['index']];
                     'label' => 'Total ejecutado',
                     'value' => function($model){
                         return $model->total . ' Bs';
-                    }
+                    },
+                    'contentOptions' => [
+                        'style' => [
+                            'font-weight' => 'bold',
+                        ],
+                    ],
                 ],
-                [
+                /*[
                     'attribute' => 'actividad',
                     'label' => 'Monto presupuestado',
                     'value' => function($model){
                         return $model->actividad0->presupuestado . ' Bs';
                     }
-                ],
+                ],*/
             ],
         ]) ?>
     </div>        

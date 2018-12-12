@@ -9,11 +9,9 @@ use Yii;
  *
  * @property int $id_r
  * @property string $nombre
- * @property int $objetivo_e
  * @property int $proyecto
  *
  * @property IndicadoresR[] $indicadoresRs
- * @property Objetivos $objetivoE
  */
 class Resultados extends \yii\db\ActiveRecord
 {
@@ -31,10 +29,9 @@ class Resultados extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'objetivo_e', 'proyecto'], 'required'],
-            [['objetivo_e', 'proyecto'], 'integer'],
-            [['nombre'], 'string', 'max' => 200],
-            [['objetivo_e'], 'exist', 'skipOnError' => true, 'targetClass' => Objetivos::className(), 'targetAttribute' => ['objetivo_e' => 'id_o']],
+            [['nombre', 'proyecto'], 'required'],
+            [['proyecto'], 'integer'],
+            [['codigo_r'], 'string'],
             [['proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => Proyectos::className(), 'targetAttribute' => ['proyecto' => 'id_p']],
         ];
     }
@@ -46,10 +43,15 @@ class Resultados extends \yii\db\ActiveRecord
     {
         return [
             'id_r' => 'Id R',
-            'nombre' => 'RESULTADO A CONSEGUIR',
-            'objetivo_e' => 'OBJETIVO',
+            'codigo_r' => 'Código',
+            'nombre' => 'Resultados',
             'proyecto' => 'Proyecto',
         ];
+    }
+
+    public function getCodNom()
+    {
+        return $this->codigo_r.' - '.$this->nombre;
     }
 
     /**
@@ -67,16 +69,17 @@ class Resultados extends \yii\db\ActiveRecord
 
     public function getCronogramaEs()
     {
-        return $this->hasMany(CronogramaEj::className(), ['actividad' => 'id_a']);
+        return $this->hasMany(CronogramaEj::className(), ['resultado' => 'id_r']);
+    }
+
+    public function getCronogramaAs()
+    {
+        return $this->hasMany(CronogramaAv::className(), ['resultado' => 'id_r']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getObjetivoE()
-    {
-        return $this->hasOne(Objetivos::className(), ['id_o' => 'objetivo_e']);
-    }
 
     public function getProyecto0()
     {

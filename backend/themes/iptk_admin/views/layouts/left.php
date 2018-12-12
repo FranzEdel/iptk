@@ -33,6 +33,7 @@
                         ],
                     ],
                     ['label' => 'Eventos', 'icon' => 'calendar', 'url' => ['/eventos']],
+                    ['label' => 'Informes', 'icon' => 'file', 'url' => ['/proyectos/informe']],
                     ['label' => 'Gráficos', 'icon' => 'signal', 'url' => ['/graficos']],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     [
@@ -40,9 +41,10 @@
                         'icon' => 'wrench',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Usuarios', 'icon' => 'user', 'url' => ['/user'],],
-                            ['label' => 'Recursos Humanos', 'icon' => 'euro', 'url' => ['/user'],],
-                            ['label' => 'historial', 'icon' => 'random', 'url' => ['/debug'],],
+                            ['label' => 'Usuarios', 'icon' => 'user', 'url' => ['/personal/personal'],],
+                            ['label' => 'Programas', 'icon' => 'folder-open', 'url' => ['/programas'],],
+                            ['label' => 'Herramientas', 'icon' => 'wrench', 'url' => ['/herramientas'],],
+                            ['label' => 'Backups', 'icon' => 'random', 'url' => ['/backuprestore'],],
                         ],
                     ],
                 ],

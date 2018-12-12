@@ -30,15 +30,15 @@ $this->title = 'Indicadores:';
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-leaf"></i>  <b>Lista principal de todos los Resultados</b></h3>',
                 'type'=>'success',
                 'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Nuevo Indicador', ['indicadores/createmodal', 'id_p' => $id_p], ['class' => 'btn btn-success']),
-                'footer'=>false
+                //'footer'=>true
             ],
             'toggleDataContainer' => ['class' => 'btn-group mr-2'],
             'columns' => [
                 ['class'=>'kartik\grid\SerialColumn'],
                 [
                     'attribute'=>'resultado',
-                    'label' => 'Resulatdosss',
-                    'width' => '400px', 
+                    'label' => 'Resulatdos',
+                    'width' => '200px', 
                     'contentOptions' => [
                         'style' => [
                             'max-width' => '200px',
@@ -53,9 +53,24 @@ $this->title = 'Indicadores:';
                     'subGroupOf'=>1 // supplier column index is the parent group
                 ],
                 [
+                    'attribute'=>'codigo_i',
+                    'label' => 'Código',
+                    'width' => '70px', 
+                    'contentOptions' => [
+                        'style' => [
+                            'font-weight' => 'bold',
+                            'max-width' => '100px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->codigo_i;
+                    },
+                ],[
                     'attribute'=>'nombre',
                     'label' => 'Indicadores',
-                    'width' => '400px', 
+                    'width' => '350px', 
                     'contentOptions' => [
                         'style' => [
                             'font-weight' => 'bold',
@@ -67,8 +82,21 @@ $this->title = 'Indicadores:';
                     'value'=>function ($model, $key, $index, $widget) { 
                         return $model->nombre;
                     },
-                    'group'=>true,  // enable grouping
-                    'subGroupOf'=>1 // supplier column index is the parent group
+                ],
+                [
+                    'attribute'=>'fuente_verificacion',
+                    'label' => 'Medios de verificacion',
+                    'width' => '200px', 
+                    'contentOptions' => [
+                        'style' => [
+                            'max-width' => '200px',
+                            'white-space' => 'normal',
+                            'vertical-align' => 'middle',
+                        ],
+                    ],
+                    'value'=>function ($model, $key, $index, $widget) { 
+                        return $model->fuente_verificacion;
+                    },
                 ],
                 [
                     'label' => 'Acciones',

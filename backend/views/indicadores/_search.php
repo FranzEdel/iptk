@@ -17,7 +17,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_i') ?>
 
+    <?= $form->field($model, 'codigo_i') ?>
+
     <?= $form->field($model, 'nombre') ?>
+
+    <?= $form->field($model, 'fuente_verificacion') ?>
 
     <?= $form->field($model, 'resultado') ?>
 

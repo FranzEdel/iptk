@@ -18,7 +18,8 @@ class ResultadosSearch extends Resultados
     public function rules()
     {
         return [
-            [['id_r', 'objetivo_e', 'proyecto'], 'integer'],
+            [['id_r', 'proyecto'], 'integer'],
+            [['codigo_r'], 'string'],
             [['nombre'], 'safe'],
         ];
     }
@@ -47,6 +48,9 @@ class ResultadosSearch extends Resultados
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $this->load($params);
@@ -60,7 +64,6 @@ class ResultadosSearch extends Resultados
         // grid filtering conditions
         $query->andFilterWhere([
             'id_r' => $this->id_r,
-            'objetivo_e' => $this->objetivo_e,
             'proyecto' => $this->proyecto,
         ]);
 

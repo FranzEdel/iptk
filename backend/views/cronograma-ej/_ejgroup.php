@@ -31,13 +31,13 @@ use backend\models\CronogramaEj;
                 'panel'=>[
                     'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-tasks"></i>  <b>Ejecución presupuestaria de las Actividades del Proyecto</b></h3>',
                     'type'=>'success',
-                    'footer'=>false
+                    //'footer'=>true
                 ],
                 'toggleDataContainer' => ['class' => 'btn-group mr-2'],
                 'columns'=>[
                     ['class'=>'kartik\grid\SerialColumn'],
                     [
-                        'attribute'=>'objetivo', 
+                        'attribute'=>'proyecto', 
                         'contentOptions' => [
                             'style' => [
                                 'max-width' => '250px',
@@ -46,7 +46,7 @@ use backend\models\CronogramaEj;
                             ],
                         ],
                         'value'=>function ($model, $key, $index, $widget) { 
-                            return $model->objetivo0->nombre;
+                            return $model->proyecto0->nombre_p;
                         },
                         'group'=>true,  // enable grouping
                     ],
@@ -65,19 +65,6 @@ use backend\models\CronogramaEj;
                         'group'=>true,  // enable grouping
                         'subGroupOf'=>1 // supplier column index is the parent group
 
-                    ],
-                    [
-                        'attribute'=>'indicador', 
-                        'contentOptions' => [
-                            'style' => [
-                                'max-width' => '250px',
-                                'white-space' => 'normal',
-                                'vertical-align' => 'middle',
-                            ],
-                        ],
-                        'value'=>function ($model, $key, $index, $widget) { 
-                            return $model->indicador0->nombre;
-                        },
                     ],
                     [
                         'attribute'=>'actividad', 
